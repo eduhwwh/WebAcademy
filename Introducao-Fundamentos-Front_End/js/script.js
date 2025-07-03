@@ -1,1 +1,1 @@
-console.log(sim);
+console.log("Página carregada com sucesso!");

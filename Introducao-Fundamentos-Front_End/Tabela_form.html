@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Primeira Página</title>
+    <link href="./styles/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <img src="https://picsum.photos/48/48" alt="Imagem aleatória" />
+            <a href="http://www.ufac.br" target="_blank">
+                <img src="./img/Logo-ufac.png" width="48" alt="Logo da UFAC" />
+            </a>
+            <h1>Bem-vindo ao WebAcademy</h1>
+            <p>Seja um grande programador fullstack</p>
+        </div>
+    </header>
+
+    <nav>
+        <a href="http://csi.ufac.br" target="_blank">SI-UFAC</a>
+        <a href="#turma7">Turma 7</a>
+        <a href="#equipe">Equipe</a>
+    </nav>
+
+    <main>
+        <section id="turma7">
+            <h2>Turma 7</h2>
+            <p>A <strong>turma 7</strong> começou dia 11/06/2025</p>
+
+            <!--
+            <p>Lista de Alunos:</p>
+            <ul type="square">
+                <li>Alonso Martins</li>
+                <li>Ludymilla Valentim</li>
+                <li>André Gustavo</li>
+            </ul>
+
+            <p>Cronograma das Disciplinas:</p>
+            <ol type="I">
+                <li>Tópicos Fundamentais</li>
+                <li>UX & Design Thinking</li>
+                <li>Fundamentos de Front End</li>
+            </ol>
+            -->
+        </section>
+
+        <p><strong>Texto em negrito</strong></p>
+        <!-- <p><em>Texto em itálico</em></p> -->
+
+        <section>
+            <h3>Quadro de Horários</h3>
+            <table border="1" cellpadding="1" cellspacing="15">
+                <thead>
+                    <tr>
+                        <th>Horas</th>
+                        <th>Seg</th>
+                        <th>Ter</th>
+                        <th>Qua</th>
+                        <th>Qui</th>
+                        <th>Sex</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>14-16</td>
+                        <td>Laboratório</td>
+                        <td>Intervalo</td>
+                        <td>Intervalo</td>
+                        <td>Intervalo</td>
+                        <td>Intervalo</td>
+                    </tr>
+                    <tr>
+                        <td>16-18</td>
+                        <td>Laboratório</td>
+                        <td>Intervalo</td>
+                        <td>Intervalo</td>
+                        <td>Intervalo</td>
+                        <td>Intervalo</td>
+                    </tr>
+                    <tr>
+                        <td>18-20:30</td>
+                        <td>Fundamentos de Front-End</td>
+                        <td>Fundamentos de Front-End</td>
+                        <td>Fundamentos de Front-End</td>
+                        <td>Fundamentos de Front-End</td>
+                        <td>Fundamentos de Front-End</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6">Quadro de Horários Semanal</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+        <section>
+            <h3>Formulário de Cadastro</h3>
+            <form>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome">
+                <br>
+                <label for="sobrenome">Sobrenome:</label>
+                <input type="text" id="sobrenome" name="sobrenome" placeholder="Digite seu sobrenome">
+                <br>
+                <input type="submit" value="Enviar">
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <h5>BR-364, Rio Branco/AC, Distrito Industrial</h5>
+        <p>&copy; 2021 <span>WebAcademy</span></p>
+    </footer>
+
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
