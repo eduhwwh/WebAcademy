@@ -1,33 +1,66 @@
 * {
-    margin: 0;
+    /* margin: 0; */
     font-family: Arial, Helvetica, sans-serif;
     box-sizing: border-box;
 }
 
-.container-form {
-    position: relative;
-    border: 2px solid #08896e; 
-    border-radius: 8px;
-    text-align: center;
-    align-items: center;
-    min-height: 10px;
-    background-color: rgb(240, 255, 251);
+body {
+    margin: 0;
 }
 
-.formulario {
-    justify-items: center;
-    border-radius: 15px;
-    background-color: rgb(119, 207, 182);
-    margin: auto;
-    text-align: left;
-    padding: 2rem;
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+header {
+    background: linear-gradient(#003366, #006699);
+    color: #fff;
+    padding: 40px;
 }
+
+div#topo {
+    display: flex;
+    background-color: linear-gradient(#003366, #006699);
+    color: #fff;
+    padding: 5px;
+}
+
+div#topo p {
+    font-size: 1em;
+    margin-left: 20px;
+}
+
+/*navegacao*/
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+
+ul li a {
+    padding: 58px;
+}
+
+ul,
+ul li a {
+    display: flex;
+    list-style-type: none;
+    background-color: #06517f;
+    color: #ffff;
+    margin: 0;
+    gap: 10px;
+    text-decoration: none;
+    padding: 15px;
+    justify-content: center;
+}
+
+ul li a:hover {
+    background-color: #75c4f6;
+    color: #070707;
+    /* padding: 20px; */
+}
+
+/*Tabela*/
 
 
 .tabela h2 {
+    text-align: center;
     padding: 5px;
     margin: 10px 20px 2px 10px;
 
@@ -37,13 +70,69 @@
     font-size: 1rem;
     padding: 5px;
     margin: 25px;
+    text-align: center;
 }
 
-.tabela {
-    justify-items: center;
-    margin: 25px;
+thead{
+    justify-content: center;
+}
+
+table th,
+table td {
+    padding: 8px;
+    text-align: left;
+}
+
+thead th,
+tfoot tr {
+    background-color: #003366;
+    color: #fff;
+}
+
+table tr:nth-child(odd) {
+    background-color: #44758d;
+}
+
+table tr:nth-child(even) {
+    background-color: #a8a6a6;
+}
+
+
+
+/*Fomulario*/
+
+form.profissional {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: fit-content;
+    gap: 5px;
+    padding: 10px;
+}
+
+/*botoes*/
+input[type="submit"],
+.botaoVerde {
+    background-color: green;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.4em;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input[type="reset"],
+.botaoRed {
+    background-color: rgb(247, 33, 5);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.4em;
+    text-decoration: none;
+    cursor: pointer;
 
 }
+
 
 footer {
     background-color: rgb(143, 220, 197);
