@@ -58,6 +58,10 @@ ul li a:hover {
 
 /*Tabela*/
 
+.tabela {
+    margin: 80px;
+    justify-items: center;
+}
 
 .tabela h2 {
     text-align: center;
@@ -73,12 +77,14 @@ ul li a:hover {
     text-align: center;
 }
 
-thead{
+thead {
     justify-content: center;
 }
 
+
 table th,
 table td {
+    margin: 52px;
     padding: 8px;
     text-align: left;
 }
@@ -90,11 +96,11 @@ tfoot tr {
 }
 
 table tr:nth-child(odd) {
-    background-color: #44758d;
+    background-color: #1e6f987a;
 }
 
 table tr:nth-child(even) {
-    background-color: #a8a6a6;
+    background-color: #e2dfdf;
 }
 
 
@@ -103,10 +109,12 @@ table tr:nth-child(even) {
 
 form.profissional {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     width: fit-content;
     gap: 5px;
     padding: 10px;
+
+
 }
 
 /*botoes*/
@@ -135,8 +143,22 @@ input[type="reset"],
 
 
 footer {
-    background-color: rgb(143, 220, 197);
+    color: #fff;
+    background: linear-gradient(#003366, #44758d);
     text-align: center;
-    padding: 35px 0;
+    padding: 30px 0;
 
+}
+
+/* resposivo */
+
+@media screen and (max-width: 910px) {
+    ul,
+    ul li a{
+        display: block;
+    }
+
+    form.profissional{
+        grid-template-columns: 1fr ;
+    }
 }
