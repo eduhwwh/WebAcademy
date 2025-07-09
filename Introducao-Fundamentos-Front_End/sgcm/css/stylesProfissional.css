@@ -105,7 +105,7 @@ table tr:nth-child(even) {
 
 
 
-/*Fomulario*/
+/*Fomulario
 
 form.profissional {
     display: grid;
@@ -115,7 +115,7 @@ form.profissional {
     padding: 10px;
 
 
-}
+}*/
 
 /*botoes*/
 input[type="submit"],
@@ -141,6 +141,73 @@ input[type="reset"],
 
 }
 
+/* Centraliza o formulário na tela */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+main h2 {
+    margin-top: 100px;
+
+}
+
+/* Estilo do formulário */
+form.profissional {
+    background-color: #f2f2f2;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 50px 0;
+}
+
+/* Alinha os campos do formulário */
+
+form.profissional label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+form.profissional input[type="text"],
+form.profissional input[type="email"],
+form.profissional select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Botões do formulário */
+form.profissional input[type="submit"],
+form.profissional input[type="reset"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #005ba3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form.profissional input[type="reset"] {
+    background-color: #999;
+    margin-left: 10px;
+}
+
+form.profissional input[type="submit"]:hover,
+form.profissional input[type="reset"]:hover {
+    opacity: 0.9;
+}
+
+
+
+
 
 footer {
     color: #fff;
@@ -153,12 +220,13 @@ footer {
 /* resposivo */
 
 @media screen and (max-width: 910px) {
+
     ul,
-    ul li a{
+    ul li a {
         display: block;
     }
 
-    form.profissional{
-        grid-template-columns: 1fr ;
+    form.profissional {
+        grid-template-columns: 1fr;
     }
 }
