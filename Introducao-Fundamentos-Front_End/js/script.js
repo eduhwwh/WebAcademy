@@ -112,3 +112,23 @@ function excluirLinha() {
 
 
 }
+
+// Esconde e mostra o botao de adicionar profissionais
+
+const mostrar = document.getElementById('botaoAdd')
+const formulario = document.getElementById('formProf');
+
+mostrar.addEventListener('click', () =>{
+    mostrar.classList.add('esconder');
+    formulario.classList.remove('esconder');
+    formulario.reset();
+});
+
+function ProfissionalCadastrado(){
+    alert("Profissional adicionado!");
+}
+
+// function atualizar(){
+//     const contador = document.getElementById('quantProfissionais');
+//     const total = 
+// }

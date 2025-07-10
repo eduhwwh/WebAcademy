@@ -117,6 +117,26 @@ form.profissional {
 
 }*/
 
+/* botao de cadastro profissionais */
+#botaoAdd{
+    background-color: #06517f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 20px 100px;
+    margin-top: 100px;
+    cursor: grab;
+    text-decoration: none;
+    font-size: 16px;
+   
+}
+
+#botaoAdd:hover {
+    background-color: #75c4f6;
+    color: #070707;
+}
+
+
 /*botoes*/
 input[type="submit"],
 .botao_verde {
@@ -154,6 +174,7 @@ main h2 {
 
 }
 
+
 /* Estilo do formulário */
 form.profissional {
     background-color: #f2f2f2;
@@ -163,6 +184,10 @@ form.profissional {
     width: 100%;
     max-width: 500px;
     margin: 50px 0;
+}
+
+.esconder{
+    display: none;
 }
 
 /* Alinha os campos do formulário */
@@ -211,8 +236,12 @@ form.profissional input[type="reset"]:hover {
 
 footer {
     color: #fff;
+    bottom: 0;
     background: linear-gradient(#003366, #44758d);
     text-align: center;
+    position:relative;
+    margin-top: 40px;
+    width: 100%;
     padding: 30px 0;
 
 }

@@ -40,8 +40,11 @@
         </ul>
     </nav>
     <main>
-        <h1>Cadastro de Profissionais</h1>
-        <form class="profissional" action="">
+        
+        <button id="botaoAdd">Adicionar</button>
+
+        <form id="formProf" class="profissional esconder" action="">
+            <h1>Cadastro de Profissionais</h1>
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome">
 
@@ -70,10 +73,10 @@
                 <option value="3">Ginecologista</option>
             </select>
 
-            <input type="submit" value="Enviar">
+            <input type="submit" value="Enviar" onclick="ProfissionalCadastrado()">
             <input type="reset" value="Limpar">
         </form>
-        <table>
+        <table id="Prof">
               <h2>Lista de Profissionais</h2>
             <!-- tr*6>td{X}*8 
              Gera 6 linhas com 8 colunas preenchidas com X -->
@@ -143,7 +146,7 @@
             </tr> -->
             <tfoot>
                 <tr>
-                    <td colspan="8">Quantidade de Profissionais: 5</td>
+                    <td colspan="8" id="quantProfissionais">Quantidade de Profissionais: 5</td>
                 </tr>
             </tfoot>
         </table>
