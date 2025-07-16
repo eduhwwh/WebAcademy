@@ -16,8 +16,6 @@ public class ConexaoDB {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return con;
     }
-
 }

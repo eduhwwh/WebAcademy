@@ -1,6 +1,10 @@
 package br.ufac.sgcm.model;
 
-public class Especialidade {
+import java.io.Serializable;
+
+
+
+public class Especialidade  implements Serializable{
     private Long id;
     private String nome;
 
@@ -20,8 +24,8 @@ public class Especialidade {
         this.nome = nome;
     }
 
-    public String toString(){
-        return this.id+" : "+this.nome;
+    public String toString() {
+        return this.id + ": " + this.nome;
     }
 
 }
