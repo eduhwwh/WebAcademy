@@ -46,6 +46,50 @@ public class EspecialidadeDao {
 
     }
 
+    // Metodo para listar de acordo com um termo de busca
+    public List<Especialidade> get(String termoBusca){
+        String sql = "SELECT * FROM especialidade WHERE nome LIKE ?";
+
+        List<Especialidade> registros = new ArrayList<>();
+
+        try{
+            conexao.prepareStatement(sql);
+            ps.setString(1, "%"+termoBusca+"%");
+            rs = ps.executeQuery();
+
+            while(rs.next()){
+                Especialidade objeto = new Especialidade();
+                objeto.setId(rs.getLong("id"));
+                objeto.setNome(rs.getString("nome"));
+                registros.add(objeto);
+
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return registros;
+    }
+
+
+    // Metodo para rertonar uma unica especialidade
+    public Especialidade get(Long id){
+        String sql = "SELECT * FROM especialidade WHERE id=?";
+        Especialidade esp = new Especialidade();
+        try{
+            ps = conexao.prepareStatement(sql);
+            ps.setLong(1, id);
+            rs = ps.executeQuery();
+
+            if(rs.next()){
+                esp.setId(rs.getLong("id"));
+                esp.setNome(rs.getString("nome"));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return esp;
+    }
+
     // Metodo para inserir uma especialidade
 
     public int insert(Especialidade objeto) {
