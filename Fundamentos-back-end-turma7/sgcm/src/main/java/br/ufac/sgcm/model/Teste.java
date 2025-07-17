@@ -12,7 +12,7 @@ import br.ufac.sgcm.dao.EspecialidadeDao;
 public class Teste {
     public static void main(String[] args) throws Exception {
         Especialidade e1 = new Especialidade();
-        e1.setId(10L);
+        e1.setId(8L);
         // e1.setNome("Endricologia");
         // System.out.println(e1.getNome());
 
@@ -46,13 +46,24 @@ public class Teste {
 
         // eDao.insert(e1);
         // eDao.update(e1);
-        eDao.delete(e1);
+        // eDao.delete(e1);
 
-        List<Especialidade> lista = eDao.get();
+        String s = "gia";
+        List<Especialidade> lista = eDao.get(s);
         for(Especialidade item : lista){
             System.out.println(item);
         }
 
+        Long i = 6L;
+        System.out.println("Especialidade unica: "+eDao.get(i));
 
+        Especialidade esp = eDao.get(i); //especialidade a ser deletada
+        eDao.delete(esp);
+        
+        // Verificando se excluiu a especialidade
+        lista = eDao.get();//Atualiza a lista
+        for(Especialidade item : lista){
+            System.out.println(item);
+        }
     }
 }

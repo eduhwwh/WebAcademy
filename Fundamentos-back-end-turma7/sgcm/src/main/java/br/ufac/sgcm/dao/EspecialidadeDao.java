@@ -19,133 +19,114 @@ public class EspecialidadeDao {
         conexao = new ConexaoDB().getConexao();
     }
 
-    // Metodo para retornar uma lista de especialidade
+    // Método para retornar uma lista de especialidades
     public List<Especialidade> get() {
-
-        String sql = "SELECT * FROM especialidade ";
-
+        String sql = "SELECT * FROM especialidade";
         List<Especialidade> registros = new ArrayList<>();
-        try {
 
-            ps = conexao.prepareStatement(sql);
-            rs = ps.executeQuery();
+        try (PreparedStatement ps = conexao.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-
                 Especialidade objeto = new Especialidade();
                 objeto.setId(rs.getLong("id"));
                 objeto.setNome(rs.getString("nome"));
                 registros.add(objeto);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return registros;
-
     }
 
-    // Metodo para listar de acordo com um termo de busca
-    public List<Especialidade> get(String termoBusca){
+    // Método para listar de acordo com um termo de busca
+    public List<Especialidade> get(String termoBusca) {
         String sql = "SELECT * FROM especialidade WHERE nome LIKE ?";
-
         List<Especialidade> registros = new ArrayList<>();
 
-        try{
-            conexao.prepareStatement(sql);
-            ps.setString(1, "%"+termoBusca+"%");
-            rs = ps.executeQuery();
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setString(1, "%" + termoBusca + "%");
 
-            while(rs.next()){
-                Especialidade objeto = new Especialidade();
-                objeto.setId(rs.getLong("id"));
-                objeto.setNome(rs.getString("nome"));
-                registros.add(objeto);
-
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Especialidade objeto = new Especialidade();
+                    objeto.setId(rs.getLong("id"));
+                    objeto.setNome(rs.getString("nome"));
+                    registros.add(objeto);
+                }
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return registros;
     }
 
-
-    // Metodo para rertonar uma unica especialidade
-    public Especialidade get(Long id){
+    // Método para retornar uma única especialidade
+    public Especialidade get(Long id) {
         String sql = "SELECT * FROM especialidade WHERE id=?";
         Especialidade esp = new Especialidade();
-        try{
-            ps = conexao.prepareStatement(sql);
-            ps.setLong(1, id);
-            rs = ps.executeQuery();
 
-            if(rs.next()){
-                esp.setId(rs.getLong("id"));
-                esp.setNome(rs.getString("nome"));
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setLong(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    esp.setId(rs.getLong("id"));
+                    esp.setNome(rs.getString("nome"));
+                }
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return esp;
     }
 
-    // Metodo para inserir uma especialidade
-
+    // Método para inserir uma especialidade
     public int insert(Especialidade objeto) {
         String sql = "INSERT INTO especialidade (nome) VALUES (?)";
         int registrosAfetados = 0;
-        try {
-            ps = conexao.prepareStatement(sql);
+
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
             ps.setString(1, objeto.getNome());
             registrosAfetados = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return registrosAfetados;
     }
 
-    // Metodo para atualizar
-
-    public int update(Especialidade objeto){
-
+    // Método para atualizar uma especialidade
+    public int update(Especialidade objeto) {
         int registrosAfetados = 0;
-
         String sql = "UPDATE especialidade SET nome=? WHERE id=?";
-        try{
-            ps = conexao.prepareStatement(sql);
-            ps.setString(1, objeto.getNome());
-            ps.setLong(2,objeto.getId());
-            ps.executeUpdate();
 
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setString(1, objeto.getNome());
+            ps.setLong(2, objeto.getId());
             registrosAfetados = ps.executeUpdate();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return registrosAfetados;
     }
 
-    // metodo para excluir
-
-    public int delete (Especialidade objeto){
-
-
-        String sql = "DELETE  FROM especialidade WHERE id=?";
+    // Método para excluir uma especialidade
+    public int delete(Especialidade objeto) {
+        String sql = "DELETE FROM especialidade WHERE id=?";
         int registrosAfetados = 0;
 
-        try{
-            ps = conexao.prepareStatement(sql);
-            // ps.setString(1, objeto.getNome());
-            ps.setLong(1,objeto.getId());
-            ps.executeUpdate();
-
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setLong(1, objeto.getId());
             registrosAfetados = ps.executeUpdate();
-
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return registrosAfetados;
     }
-
-
 }
