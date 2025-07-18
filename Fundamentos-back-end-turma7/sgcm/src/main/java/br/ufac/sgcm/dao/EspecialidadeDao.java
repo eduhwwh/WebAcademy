@@ -9,7 +9,7 @@ import java.util.List;
 
 import br.ufac.sgcm.model.Especialidade;
 
-public class EspecialidadeDao {
+public class EspecialidadeDao implements InterfaceDao<Especialidade>{
 
     private PreparedStatement ps;
     private ResultSet rs;

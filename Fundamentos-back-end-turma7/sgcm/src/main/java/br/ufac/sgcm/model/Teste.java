@@ -8,6 +8,7 @@ import java.util.List;
 
 import br.ufac.sgcm.dao.ConexaoDB;
 import br.ufac.sgcm.dao.EspecialidadeDao;
+import br.ufac.sgcm.dao.ProfissionalDao;
 
 public class Teste {
     public static void main(String[] args) throws Exception {
@@ -57,13 +58,23 @@ public class Teste {
         Long i = 6L;
         System.out.println("Especialidade unica: "+eDao.get(i));
 
-        Especialidade esp = eDao.get(i); //especialidade a ser deletada
-        eDao.delete(esp);
+        // Especialidade esp = eDao.get(i); //especialidade a ser deletada
+        // eDao.delete(esp);
         
         // Verificando se excluiu a especialidade
-        lista = eDao.get();//Atualiza a lista
-        for(Especialidade item : lista){
+        // lista = eDao.get();//Atualiza a lista
+        // for(Especialidade item : lista){
+        //     System.out.println(item);
+        // }
+
+
+        // Testando a lista de profissional
+
+        ProfissionalDao pDao = new ProfissionalDao();
+        List<Profissional> listaProfissionais = pDao.get();
+        for(Profissional item : listaProfissionais){
             System.out.println(item);
         }
+
     }
 }
