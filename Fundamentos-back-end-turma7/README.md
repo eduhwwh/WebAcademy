@@ -88,3 +88,33 @@ A demonstração de uso das ferramentas e tecnologias abordadas na capacitação
 - [Histórias de usuário](https://github.com/webacademyufac/sgcmdocs#histórias-de-usuário)
 - [Diagrama de Classes](https://github.com/webacademyufac/sgcmdocs#diagrama-de-classes)
 - [Diagrama Entidade Relacionamento](https://github.com/webacademyufac/sgcmdocs#diagrama-entidade-relacionamento)
+
+
+## Atividades práticas
+
+1. [INDIVIDUAL] Crie uma classe chamada GerenciadorAlunos. Dentro dessa classe, declare um List<String> chamado alunos.
+
+Implemente um método chamado adicionarAluno(String nome) que adiciona um nome de aluno à lista.
+Ao adicionar, o método deve verificar se o aluno já existe na lista.
+
+Crie um método chamado removerAluno(String nome) que remove o aluno da lista pelo nome. Caso o nome não seja encontrado, exiba uma mensagem apropriada.
+
+Implemente um método chamado atualizarAluno(String nomeAntigo, String nomeNovo) que busca o nome de um aluno na lista e o atualiza. Se o nome não for encontrado, exiba uma mensagem de erro.
+
+Crie um método chamado listarAlunos() que imprime todos os alunos armazenados na lista em ordem alfabética.
+
+Implemente um método chamado buscarAluno(String nome) que verifica se o aluno existe na lista. O método deve retornar uma mensagem dizendo se o aluno foi encontrado ou não.
+
+Adicione um método chamado obterQuantidadeDeAlunos() que retorna o número total de alunos na lista.
+
+Crie um método chamado limparLista() que remove todos os alunos da lista.
+
+Usando Orientação a Objetos, modifique o programa para que, além do nome, cada aluno tenha um número de matrícula, ou seja, crie uma classe Aluno. Todos os métodos devem ser refatorados para continuar funcionando. Os elementos do vetor dinâmico devem ser objetos da classe Aluno.
+
+Link de Entrega: https://classroom.github.com/a/keF-wCmR
+Data: 18/07/2025 até 23:59h
+
+2. [INDIVIDUAL] Finalizar as classes `UnidadeController`, `ProfissionalController`, `UnidadeDao` e `ProfissionalDao` de forma semelhante à classe `EspecialideDao` implementando todos os métodos da interface InterfaceDao. 
+
+Link de Entrega: https://classroom.github.com/a/5RjOY-Bs
+Data: 21/07/2024 até 18:00h

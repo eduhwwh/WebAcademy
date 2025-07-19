@@ -3,6 +3,7 @@ package br.ufac.sgcm.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import br.ufac.sgcm.model.Unidade;
@@ -17,50 +18,43 @@ public class UnidadeDao implements InterfaceDao<Unidade> {
         conexao = new ConexaoDB().getConexao();
     }
 
-    @Override
     public Unidade get(Long id) {
         Unidade u = new Unidade();
         String sql = "SELECT * FROM unidade WHERE id=?";
-
         try {
             ps = conexao.prepareStatement(sql);
             ps.setLong(1, id);
             rs = ps.executeQuery();
-
             if (rs.next()) {
                 u.setId(rs.getLong("id"));
-                u.setNome(rs.getString("nome")); // Corrigido
+                u.setNome(rs.getString("nome"));
                 u.setEndereco(rs.getString("endereco"));
             }
-        } catch (Exception e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return u;
     }
 
-    @Override
-    public List<Unidade> get() {
-        return null; // implementar depois
-    }
+    // Atividade consiste em implementar os métodos sobrescritos
 
-    @Override
-    public List<Unidade> get(String termoBusca){
+    public List<Unidade> get(String termoBusca) {
         return null;
     }
 
-    @Override
-    public int insert(Unidade objeto){
+    public List<Unidade> get() {
+        return null;
+    }
+
+    public int insert(Unidade objeto) {
         return 0;
     }
 
-    @Override
-    public int update(Unidade objeto){
+    public int update(Unidade objeto) {
         return 0;
     }
 
-    @Override
-    public int delete(Unidade objeto){
+    public int delete(Unidade objeto) {
         return 0;
     }
-
 }

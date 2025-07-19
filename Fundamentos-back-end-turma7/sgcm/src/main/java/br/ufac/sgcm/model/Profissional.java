@@ -65,9 +65,8 @@ public class Profissional {
         this.especialidade = especialidade;
     }
 
-    public String toString(){
-        return this.nome + " | " + this.especialidade.getNome() + " | " + this.unidade.getNome();
-
+    public String toString() {
+        return this.nome + "|" + this.especialidade.getNome() + "|" + this.unidade.getNome();
     }
 
 }
