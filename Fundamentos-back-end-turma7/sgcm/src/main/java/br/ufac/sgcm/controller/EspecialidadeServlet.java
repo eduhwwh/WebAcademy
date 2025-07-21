@@ -14,24 +14,18 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class EspecialidadeServlet extends HttpServlet {
     public void service(HttpServletRequest req, HttpServletResponse res) {
-
         List<Especialidade> registros = new ArrayList<>();
-        EspecialidadeController controler = new EspecialidadeController();
-        registros = controler.get();
-        res.setContentType("apllication/json");
+        EspecialidadeController controle = new EspecialidadeController();
+        registros = controle.get();
+        res.setContentType("application/json");
         res.setCharacterEncoding("utf-8");
-
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(registros);
             PrintWriter saida = res.getWriter();
-            
             saida.print(json);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 }

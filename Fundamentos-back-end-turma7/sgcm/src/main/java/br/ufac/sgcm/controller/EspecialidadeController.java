@@ -39,27 +39,19 @@ public class EspecialidadeController {
         return eDao.delete(objeto);
     }
 
-
     // Método que usa servlet
-    public List<Especialidade> processList(HttpServletRequest req, HttpServletResponse res){
+    public List<Especialidade> processList(HttpServletRequest req, HttpServletResponse res) {
         List<Especialidade> registros = new ArrayList<>();
         registros = this.get();
-
         return registros;
-
     }
 
-    public Especialidade processRequest(HttpServletRequest req, HttpServletResponse res){
-
+    public Especialidade processRequest(HttpServletRequest req, HttpServletResponse res) {
         Especialidade objeto = new Especialidade();
         String paramSubmit = req.getParameter("submit");
         String paramNome = req.getParameter("nome");
         objeto.setNome(paramNome);
-
         this.insert(objeto);
         return objeto;
-
-
     }
-
 }
