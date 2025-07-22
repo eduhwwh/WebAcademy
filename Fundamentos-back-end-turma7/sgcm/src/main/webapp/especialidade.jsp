@@ -68,12 +68,19 @@
                 </tr>
             </thead>
             <tbody>
+                <% for(Especialidade item : registros){ %>
+                <tr>
+                    <td><%=item.getId()%></td>
+                    <td><%=item.getNome()%></td>
+                    <td><a class="botao_verde" href="especialidadeForm.jsp">Editar</a> | <a class="botao_vermelho" href="especialidade.jsp?excluir=<%=item.getId()%>">Excluir</a></td>
+                </tr>
+                <% } %>
                 <%-- Inserir corpo da tabela --%>
             </tbody>
             <tfoot>
                 <tr>
                     <%-- Inserir total de registros --%>
-                    <td id="total" colspan="3">Total de registros: </td>
+                    <td id="total" colspan="3">Total de registros: <%=registros.size()%></td>
                 </tr>
                 
             </tfoot>

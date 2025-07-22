@@ -14,7 +14,6 @@
     <url-pattern>/primeiroservlet</url-pattern>
   </servlet-mapping>
 
-
   <display-name>Servlet da Especialidade</display-name>
   <description>Exemplo de Servlet da Especialidade</description>
   <servlet>
@@ -25,5 +24,4 @@
     <servlet-name>EspecialidadeServlet</servlet-name>
     <url-pattern>/especialidadeservlet</url-pattern>
   </servlet-mapping>
-
 </web-app>

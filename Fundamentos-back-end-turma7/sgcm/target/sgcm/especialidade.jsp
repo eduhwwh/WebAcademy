@@ -58,11 +58,6 @@
                     Adicionar
                 </a>
             </div>
-            <div>
-                <label for="busca">Busca</label>
-                <input type="search" name="busca" id="busca"
-                    placeholder="Digite para buscar">
-            </div>
         </div>
         <table>
             <thead>
@@ -73,30 +68,19 @@
                 </tr>
             </thead>
             <tbody>
+                <% for(Especialidade item : registros){ %>
+                <tr>
+                    <td><%=item.getId()%></td>
+                    <td><%=item.getNome()%></td>
+                    <td><a class="botao_verde" href="especialidadeForm.jsp">Editar</a> | <a class="botao_vermelho" href="especialidade.jsp?excluir=<%=item.getId()%>">Excluir</a></td>
+                </tr>
+                <% } %>
                 <%-- Inserir corpo da tabela --%>
-                    <%for (Especialidade e : registros){ %>
-                        <tr>
-                            <td>
-                                <%=e.getId()%>
-                            </td>
-                            <td>
-                                <%=e.getNome()%>
-                            </td>
-                            <td>
-                                <a class="botao_verde"
-                                    href="especialidadeForm.jsp?id=<%=e.getId()%>">Editar</a>
-                                <a class="botao_vermelho"
-                                    href="especialidade.jsp?excluir=<%=e.getId()%>">Excluir</a>
-                            </td>
-                        </tr>
-                    <%}%>
             </tbody>
             <tfoot>
                 <tr>
                     <%-- Inserir total de registros --%>
-                        <td id="total" colspan="3">Total de registros:
-                            <%=registros.size()%>
-                        </td>
+                    <td id="total" colspan="3">Total de registros: <%=registros.size()%></td>
                 </tr>
                 
             </tfoot>

@@ -42,7 +42,17 @@ public class EspecialidadeController {
     // Método que usa servlet
     public List<Especialidade> processList(HttpServletRequest req, HttpServletResponse res) {
         List<Especialidade> registros = new ArrayList<>();
+
+        String paramExcluir = req.getParameter("excluir");
+        if(paramExcluir != null && !paramExcluir.isEmpty()){
+            Long id = Long.parseLong(paramExcluir);
+            Especialidade objeto = this.get(id);
+            this.delete(objeto);
+        }
         registros = this.get();
+
+
+        
         return registros;
     }
 
@@ -51,7 +61,19 @@ public class EspecialidadeController {
         String paramSubmit = req.getParameter("submit");
         String paramNome = req.getParameter("nome");
         objeto.setNome(paramNome);
-        this.insert(objeto);
+        
+
+        if(paramSubmit !=null && !paramSubmit.isEmpty()){
+            String paramNome = req.getParameter("nome");
+            objeto.setNome(paramNome);
+                    
+            this.insert(objeto);
+            try {
+                res.sendRedirect("especialiadade.jsp");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return objeto;
     }
 }

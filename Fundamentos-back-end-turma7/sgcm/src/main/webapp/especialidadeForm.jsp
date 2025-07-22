@@ -49,6 +49,11 @@
     
         <main>
         <%-- Inserir o form --%>
+        <form class="grid" method="post">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome"/>
+            <button class="botao_verde" type="submit" name"submit"/>Salvar</button>
+        </form>
         </main>
         <footer>
             <p>Telefone para contato: <a>+556832233030</a> | Email: <a>suporte.sgcm@ufac.br</a></p>
