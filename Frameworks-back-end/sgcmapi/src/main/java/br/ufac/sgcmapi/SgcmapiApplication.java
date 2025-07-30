@@ -12,7 +12,7 @@ public class SgcmapiApplication {
 
 	@RequestMapping(value = "/")
 	public String exemplo() {
-		return "SGCM";
+		return "teste";
 	}
 
 	public static void main(String[] args) {
