@@ -1,5 +1,6 @@
 package br.ufac.sgcmapi;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
@@ -11,16 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SgcmapiApplication {
 
+	@Autowired
 	private ExemploService exemploService;
 
-	public SgcmapiApplication(ExemploService exemploService){
-		this.exemploService = exemploService;
-	}
+	// public SgcmapiApplication(ExemploService exemploService) {
+	// 	this.exemploService = exemploService;
+	// }
 
 	@RequestMapping(value = "/")
 	public String exemplo() {
 		// return "SGCM";
-
 		return exemploService.exibirMensagem();
 	}
 
@@ -30,13 +31,9 @@ public class SgcmapiApplication {
 
 	@Service
 	public static class ExemploService {
-
-		public String exibirMensagem(){
-
-			return "SGCM funcionando";
-
+		public String exibirMensagem() {
+			return "SGCM funcionando!";
 		}
-		
 	}
 
 }
