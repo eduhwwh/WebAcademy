@@ -2,10 +2,13 @@ package br.ufac.sgcmapi.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import br.ufac.sgcmapi.model.Atendimento;
 import br.ufac.sgcmapi.model.EStatus;
 import br.ufac.sgcmapi.repository.AtendimentoRepository;
 
+@Service
 public class AtendimentoService implements ICrudService<Atendimento>{
 
 
