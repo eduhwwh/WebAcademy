@@ -61,4 +61,3 @@ public class AtendimentoController implements ICrudController<Atendimento> {
         return ResponseEntity.ok().build();
     }
 }
-f
