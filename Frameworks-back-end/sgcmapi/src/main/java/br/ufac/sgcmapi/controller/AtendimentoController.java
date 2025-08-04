@@ -29,6 +29,14 @@ public class AtendimentoController implements ICrudController<Atendimento> {
     @GetMapping("/consultar/{id}")
     public ResponseEntity<Atendimento> consultar(@PathVariable Long id) {
         var registro = servico.consultar(id);
+
+        // resolução da atividade do dia 01/08/2025
+        if(registro == null){
+
+            return ResponseEntity.notFound().build();
+
+        }
+
         return ResponseEntity.ok(registro);
     }
 
@@ -53,3 +61,4 @@ public class AtendimentoController implements ICrudController<Atendimento> {
         return ResponseEntity.ok().build();
     }
 }
+f
