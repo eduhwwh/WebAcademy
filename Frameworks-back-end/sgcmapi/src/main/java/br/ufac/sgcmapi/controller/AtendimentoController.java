@@ -6,7 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.ufac.sgcmapi.model.Atendimento;
+import br.ufac.sgcmapi.model.EStatus;
 import br.ufac.sgcmapi.service.AtendimentoService;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/atendimento")
@@ -59,5 +64,12 @@ public class AtendimentoController implements ICrudController<Atendimento> {
     public ResponseEntity<Void> remover(@PathVariable Long id) {
         servico.remover(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/status/{id}")
+    public ResponseEntity<EStatus> atualizarStatus(@PathVariable Long id){
+        var registro = servico.atualizarStatus(id);
+
+        return ResponseEntity.ok(registro.getStatus());
     }
 }
