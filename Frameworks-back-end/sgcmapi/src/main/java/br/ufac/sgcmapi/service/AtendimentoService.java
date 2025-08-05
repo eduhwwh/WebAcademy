@@ -3,6 +3,7 @@ package br.ufac.sgcmapi.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import br.ufac.sgcmapi.model.Atendimento;
 import br.ufac.sgcmapi.model.EStatus;
@@ -24,7 +25,7 @@ public class AtendimentoService implements ICrudService<Atendimento>{
     @Override
     public List<Atendimento> consultar(String termoBuscar) {
         
-        return repo.findAll();
+        return repo.consultar(StringUtils.trimAllWhitespace(termoBuscar));
 
     }
 
