@@ -2,19 +2,22 @@ package br.ufac.sgcmapi.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import br.ufac.sgcmapi.model.Convenio;
 import br.ufac.sgcmapi.repository.ConvenioRepository;
 
-public class ConvenioService implements ICrudService<Convenio>{
+@Service
+public class ConvenioService implements ICrudService<Convenio> {
 
     private final ConvenioRepository repo;
 
-    public ConvenioService(ConvenioRepository repo){
+    public ConvenioService(ConvenioRepository repo) {
         this.repo = repo;
     }
 
     @Override
-    public List<Convenio> consultar(String termoBuscar) {
+    public List<Convenio> consultar(String termoBusca) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'consultar'");
     }
@@ -36,8 +39,9 @@ public class ConvenioService implements ICrudService<Convenio>{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'remover'");
     }
-    
-    public List<Convenio> consultarAtivos(){
+
+    public List<Convenio> consultarAtivos() {
         return repo.findByAtivo(true);
     }
+    
 }

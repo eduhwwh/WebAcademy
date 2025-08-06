@@ -9,15 +9,12 @@ public enum EStatus {
     ATENDIMENTO,
     ENCERRADO;
 
-
-    public EStatus proximo(){
+    public EStatus proximo() {
         var status = this;
         var index = ordinal() + 1;
-
-        if(index > 1 && index < values().length){
+        if (index > 1 && index < values().length) {
             status = values()[index];
         }
-        
         return status;
     }
 

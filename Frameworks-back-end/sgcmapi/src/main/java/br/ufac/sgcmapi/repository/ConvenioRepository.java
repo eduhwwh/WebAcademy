@@ -6,10 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.ufac.sgcmapi.model.Convenio;
 
-public interface ConvenioRepository extends JpaRepository<Convenio, Long>{
+public interface ConvenioRepository extends JpaRepository<Convenio, Long> {
 
     public List<Convenio> findByAtivo(boolean ativo);
-
-    
     
 }

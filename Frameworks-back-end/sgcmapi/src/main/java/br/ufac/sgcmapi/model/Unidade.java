@@ -16,11 +16,11 @@ public class Unidade implements Serializable {
     @Column(nullable = false, updatable = false)
     private Long id;
 
-    @Column(nullable = false, unique =  true)
+    @Column(nullable = false, unique = true)
     private String nome;
-    
-    private String endereco;
 
+    private String endereco;
+    
     public Long getId() {
         return id;
     }

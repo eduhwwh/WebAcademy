@@ -11,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-
 @Entity
 public class Paciente implements Serializable {
 
@@ -22,7 +21,7 @@ public class Paciente implements Serializable {
 
     @Column(nullable = false)
     private String nome;
-    
+
     private String email;
 
     @Column(nullable = false)
@@ -35,9 +34,10 @@ public class Paciente implements Serializable {
     private EGrupoSanguineo grupoSanguineo;
 
     @Column(nullable = false)
+
     @Enumerated(EnumType.STRING)
     private ESexo sexo;
-
+    
     private String cep;
 
     private String endereco;

@@ -16,69 +16,76 @@ import br.ufac.sgcmapi.model.Paciente;
 import br.ufac.sgcmapi.model.Profissional;
 import br.ufac.sgcmapi.repository.AtendimentoRepository;
 
+
 @SpringBootApplication
 @RestController
 public class SgcmapiApplication {
 
-    @Autowired
-    private ExemploService exemploService;
+	@Autowired
+	private ExemploService exemploService;
 
-    @Autowired
-    private AtendimentoRepository atendimentoRepository;
+	@Autowired
+	private AtendimentoRepository atendimentoRepository;
 
-    @RequestMapping("/")
-    public String exemplo() {
-        return exemploService.exibirMensagem();
-    }
+	// public SgcmapiApplication(ExemploService exemploService) {
+	// 	this.exemploService = exemploService;
+	// }
 
-    @RequestMapping("/teste")
-    public String teste() {
-        var atendimentos = atendimentoRepository.findAll();
-        var resultado = new StringBuilder();
+	@RequestMapping(value = "/")
+	public String exemplo() {
+		// return "SGCM";
+		return exemploService.exibirMensagem();
+	}
 
-        for (var item : atendimentos) {
-            resultado.append(item.getData() + "\n");
-            resultado.append(item.getHora() + "\n");
-            resultado.append(item.getPaciente().getNome() + "\n");
-            resultado.append(item.getProfissional().getNome() + "\n");
+	@RequestMapping(value = "/teste")
+	public String teste() {
+		var atendimentos = atendimentoRepository.findAll();
+		var resultado = new StringBuilder();
+		for (var item : atendimentos) {
+			resultado.append(item.getData() + "\n");
+			resultado.append(item.getHora() + "\n");
+			resultado.append(item.getPaciente().getNome() + "\n");
+			resultado.append(item.getProfissional().getNome() + "\n");
 			if (item.getConvenio() != null) {
 				resultado.append(item.getConvenio().getNome() + "\n");
 			}
-            resultado.append("\n");
-        }
+			resultado.append(item.getStatus() + "\n");
+			resultado.append("\n");
+		}
+		return "<pre>" + resultado.toString() + "</pre>";
+	}
 
-        return "<pre>" + resultado.toString() + "</pre>";
-    }
+	@RequestMapping(value = "/salvar")
+	public String salvar() {
+		var atendimento = new Atendimento();
+		var profissional = new Profissional();
+		var paciente = new Paciente();
+		var convenio = new Convenio();
 
-    @RequestMapping("/salvar")
-    public String salvar() {
-        var atendimento = new Atendimento();
-        var profissional = new Profissional();
-        var paciente = new Paciente();
-        var convenio = new Convenio();
+		profissional.setId(1L);
+		paciente.setId(1L);
+		convenio.setId(1L);
 
-        profissional.setId(1L);
-        paciente.setId(1L);
-        convenio.setId(1L);
+		atendimento.setData(LocalDate.of(2025, 8, 1));
+		atendimento.setHora(LocalTime.of(14, 0));
+		atendimento.setProfissional(profissional);
+		atendimento.setPaciente(paciente);
+		atendimento.setConvenio(convenio);
 
-        atendimento.setData(LocalDate.of(2025, 8, 1));
-        atendimento.setHora(LocalTime.of(14, 0));
-        atendimento.setProfissional(profissional);
-        atendimento.setPaciente(paciente);
-        atendimento.setConvenio(convenio);
+		atendimentoRepository.save(atendimento);
 
-        atendimentoRepository.save(atendimento);
-        return "Atendimento salvo com sucesso!";
-    }
+		return "Registro inserido com sucesso";
+	}
 
-    @Service
-    public static class ExemploService {
-        public String exibirMensagem() {
-            return "SGCM funcionando!";
-        }
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(SgcmapiApplication.class, args);
+	}
 
-    public static void main(String[] args) {
-        SpringApplication.run(SgcmapiApplication.class, args);
-    }
+	@Service
+	public static class ExemploService {
+		public String exibirMensagem() {
+			return "SGCM funcionando!";
+		}
+	}
+
 }

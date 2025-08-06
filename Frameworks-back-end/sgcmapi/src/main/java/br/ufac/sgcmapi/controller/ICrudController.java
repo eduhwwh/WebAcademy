@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 public interface ICrudController<T> {
-    
 
     public ResponseEntity<List<T>> consultar(String termoBusca);
     public ResponseEntity<T> consultar(Long id);

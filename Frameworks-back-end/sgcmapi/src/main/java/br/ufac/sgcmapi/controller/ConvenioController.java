@@ -3,15 +3,12 @@ package br.ufac.sgcmapi.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ufac.sgcmapi.model.Convenio;
 import br.ufac.sgcmapi.service.ConvenioService;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @RestController
 @RequestMapping("/convenio")
@@ -19,10 +16,9 @@ public class ConvenioController implements ICrudController<Convenio> {
 
     private final ConvenioService servico;
 
-    public ConvenioController (ConvenioService servico){
-         this.servico = servico;
+    public ConvenioController(ConvenioService servico) {
+        this.servico = servico;
     }
-
 
     @Override
     public ResponseEntity<List<Convenio>> consultar(String termoBusca) {
@@ -53,12 +49,11 @@ public class ConvenioController implements ICrudController<Convenio> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'remover'");
     }
-    
+
     @GetMapping("/ativos")
-    public ResponseEntity<List<Convenio>> consultarAtivos(){
-        var registro = servico.consultarAtivos();
-        return ResponseEntity.ok(registro);
+    public ResponseEntity<List<Convenio>> consultarAtivos() {
+        var registros = servico.consultarAtivos();
+        return ResponseEntity.ok(registros);
     }
-    
     
 }

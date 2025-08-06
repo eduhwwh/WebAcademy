@@ -13,19 +13,16 @@ import jakarta.persistence.Id;
 @Entity
 public class Usuario implements Serializable {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Long id;
 
-
     private String nomeCompleto;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nomeUsuario;
 
-    
     private String senha;
 
     @Column(nullable = false)

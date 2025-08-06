@@ -34,7 +34,7 @@ public class Profissional implements Serializable {
 
     @Column(nullable = false)
     private String email;
-
+    
     public Long getId() {
         return id;
     }
