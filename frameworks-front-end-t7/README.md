@@ -1,4 +1,4 @@
-# frameworks-front-end-t7
+# Frameworks-front-end-t7
 
 Repositório da disciplina Frameworks Front-end (Turma 7)
 
