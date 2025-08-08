@@ -1,73 +1,59 @@
-# Frameworks-front-end-t7
+# Sgcmapp
 
-Repositório da disciplina Frameworks Front-end (Turma 7)
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
 
-## Atualizando seu repositório local
+## Development server
 
-O código produzido em sala de aula, e compartilhado neste repositório, pode ser atualizado em seu repositório local com o comando:
+To start a local development server, run:
 
-```console
-git pull
+```bash
+ng serve
 ```
 
-No entanto, se você fez alterações no seu repositório local, o comando acima pode gerar conflitos. Para evitar lidar com isso, você pode forçar uma atualização com o repositório remoto por meio dos comandos:
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-```console
-git fetch origin
-git reset --hard origin/main
+## Code scaffolding
+
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+
+```bash
+ng generate component component-name
 ```
 
-O primeiro comando recebe as atualizações mais recentes do repositório remoto, e o segundo descarta todas as alterações locais e atualiza com o histórico mais recente do repositório remoto (branch main).
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-## Dependências do projeto
+```bash
+ng generate --help
+```
 
-As dependências do projeto não são compartilhadas no repositório. Para instalar as dependências, a partir da raiz do projeto, no prompt de comandos, digite: `npm install`.
+## Building
 
-## Sites de referência
+To build the project run:
 
-- Angular Docs: <https://v17.angular.io/docs>
-- TypeScript Documentation: <https://www.typescriptlang.org/docs/>
-- MDN Web Docs - Aprendendo desenvolvimento web: <https://developer.mozilla.org/pt-BR/docs/Learn>
-- Using Angular in Visual Studio Code: <https://code.visualstudio.com/docs/nodejs/angular-tutorial>
-- Engenharia de Software Moderna: <https://engsoftmoderna.info/>
+```bash
+ng build
+```
 
-## Ferramentas
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-- **Visual Studio Code**
-  - <https://code.visualstudio.com/Download>
-- **Angular Language Service (Extensão do VS Code)**
-  - <https://marketplace.visualstudio.com/items?itemName=Angular.ng-template>
-- **Git**
-  - <https://git-scm.com/downloads>
-- **Node.js (e npm)**
-  - Versão 20 (LTS).
-  - Para verificar a versão do Node.js, no prompt de comandos digite:
+## Running unit tests
 
-    ```console
-    node --version
-    ```
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
-  - Link para download: <https://nodejs.org/dist/v20.14.0/node-v20.14.0-x64.msi>
-- **Angular CLI**
-  - Versão 19.
-  - Para verificar a versão do Angular CLI, no prompt de comandos digite:
+```bash
+ng test
+```
 
-    ```console
-    ng version
-    ```
+## Running end-to-end tests
 
-  - Tutorial de instalação: <https://v19.angular.io/guide/setup-local>
-  - Para instalar o Angular CLI, no prompt de comandos digite:
+For end-to-end (e2e) testing, run:
 
-    ```console
-    npm i -g @angular/cli@19.2.15
-    ```
+```bash
+ng e2e
+```
 
-## SGCM - Sistema de Gerenciamento de Clínica Médica
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-A demonstração de uso das ferramentas e tecnologias abordadas na capacitação é baseada em um projeto de exemplo, o SGCM. A documentação básica deste projeto está disponível [em outro repositório](https://github.com/webacademyufac/sgcmdocs) e aborda os seguintes tópicos:
+## Additional Resources
 
-- [Principais funcionalidades](https://github.com/webacademyufac/sgcmdocs#principais-funcionalides)
-- [Histórias de usuário](https://github.com/webacademyufac/sgcmdocs#histórias-de-usuário)
-- [Diagrama de Classes](https://github.com/webacademyufac/sgcmdocs#diagrama-de-classes)
-- [Diagrama Entidade Relacionamento](https://github.com/webacademyufac/sgcmdocs#diagrama-entidade-relacionamento)
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
