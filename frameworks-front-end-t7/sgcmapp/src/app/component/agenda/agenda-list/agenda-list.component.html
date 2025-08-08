@@ -12,7 +12,7 @@
     </thead>
     <tbody>
         <tr>
-            <td class="fit">11/08/2025</td>
+            <td class="fit">{{"2025-05-08"| date: "dd/MM/yyyy"}} </td>
             <td class="fit">14:00</td>
             <td>Paciente A</td>
             <td>Profissional A</td>
@@ -22,7 +22,7 @@
                 <a href="javascript:void(0)" class="botao chegada inativo">Chegada</a>
                 <a href="javascript:void(0)" class="botao confirmacao">Confirmar</a>
                 <a href="javascript:void(0)" class="botao">Editar</a>
-                <a href="javascript:void(0)" class="botao excluir">Cancelar</a>
+                <a (click)="remover(1)" class="botao excluir">Cancelar</a>
             </td>
         </tr>
         <tr>
