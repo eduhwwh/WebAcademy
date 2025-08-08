@@ -12,8 +12,8 @@
         </header>
         <nav>
             <ul>
-                <li><a href="agenda.html">Agenda</a></li>
-                <li><a href="atendimento.html">Atendimento</a></li>
+                <li><a routerLink="/agenda-list">Agenda</a></li>
+                <li><a routerLink="/atendimento">Atendimento</a></li>
                 <li><a href="pacientes.html">Pacientes</a></li>
                 <li><a href="profissionais.html">Profissionais</a></li>
                 <li><a href="convenios.html">Convênios</a></li>
@@ -31,6 +31,7 @@
             </ul>
         </nav>
         <main>
+            <router-outlet></router-outlet>
         </main>
         <footer>
             <span>SGCM - Sistema de Gerenciamento de Clínica Médica</span>
