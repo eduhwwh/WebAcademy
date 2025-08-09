@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Atendimento } from '../../../model/atendimento';
 import { ICrudForm } from '../../i-crud-form';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-agenda-form',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './agenda-form.component.html',
   styles: ``
 })
