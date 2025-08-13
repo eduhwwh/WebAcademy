@@ -34,7 +34,16 @@ export class AtendimentoService implements ICrudService<Atendimento> {
   }
 
   salvar(objeto: Atendimento): Observable<number | void> {
-    throw new Error('Method not implemented.');
+    let url = this.apiUrl;
+
+    if(objeto.id){
+      url += '/atulizar'
+      return this.http.put<void>(url, objeto)
+
+    }else{
+      url += '/inserir'
+      return this.http.post<number>(url, objeto)
+    }
   }
 
   remover(id: number): Observable<void> {
