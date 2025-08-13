@@ -14,12 +14,16 @@ export class AtendimentoService implements ICrudService<Atendimento> {
 
   apiUrl: string = `${environment.API_URL}/atendimento`;
 
-  consultar(termoBusca?: string): Observable<Atendimento[]> {
+  consultar(termoBusca?: string, status?: string[]): Observable<Atendimento[]> {
     let url = `${this.apiUrl}/consultar`;
     let parametros = new HttpParams();
 
     if (termoBusca) {
       parametros = parametros.set('termoBusca', termoBusca);
+    }
+
+    if(status){
+      parametros = parametros.set("status",status.join(","))
     }
 
     return this.http.get<Atendimento[]>(url, { params: parametros });

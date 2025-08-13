@@ -22,7 +22,11 @@ public class AtendimentoService implements ICrudService<Atendimento> {
 
     @Override
     public List<Atendimento> consultar(String termoBusca) {
-        return repo.consultar(StringUtils.trimAllWhitespace(termoBusca));
+        return repo.consultar(StringUtils.trimAllWhitespace(termoBusca),null);
+    }
+
+    public List<Atendimento> consultar(String termoBusca, List<EStatus> status) {
+        return repo.consultar(StringUtils.trimAllWhitespace(termoBusca),null);
     }
 
     @Override

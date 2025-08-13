@@ -22,7 +22,8 @@ export class AgendaListComponent implements ICrudList<Atendimento>, OnInit {
   registros: Atendimento[] = [];
 
   consultar(termoBusca?: string): void {
-    this.servico.consultar(termoBusca).subscribe({
+    const status = ['AGENDADO','CONFIRMADO']
+    this.servico.consultar(termoBusca, status).subscribe({
       next: resposta => this.registros = resposta
     });
   }

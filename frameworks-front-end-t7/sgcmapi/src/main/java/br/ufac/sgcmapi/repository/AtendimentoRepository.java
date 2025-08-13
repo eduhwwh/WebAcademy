@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import br.ufac.sgcmapi.model.Atendimento;
+import br.ufac.sgcmapi.model.EStatus;
 
 public interface AtendimentoRepository extends JpaRepository<Atendimento, Long> {
 
@@ -17,13 +18,14 @@ public interface AtendimentoRepository extends JpaRepository<Atendimento, Long> 
         LEFT JOIN Paciente pa ON pa = a.paciente
         LEFT JOIN Convenio c ON c = a.convenio
         LEFT JOIN Unidade u ON u = p.unidade
-        WHERE :termoBusca IS NULL
+        WHERE (:termoBusca IS NULL
         OR p.nome LIKE %:termoBusca%
         OR pa.nome LIKE %:termoBusca%
         OR c.nome LIKE %:termoBusca%
-        OR u.nome LIKE %:termoBusca%
+        OR u.nome LIKE %:termoBusca%)
+        AND (:status IS NULL OR a.status IN :status)
     """)
-    public List<Atendimento> consultar(String termoBusca);
+    public List<Atendimento> consultar(String termoBusca, List<EStatus> status);
 
     @Query("""
         SELECT a.hora FROM Atendimento a

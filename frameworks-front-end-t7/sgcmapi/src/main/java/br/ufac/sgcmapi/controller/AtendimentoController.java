@@ -36,6 +36,12 @@ public class AtendimentoController implements ICrudController<Atendimento> {
         return ResponseEntity.ok(registros);
     }
 
+    @GetMapping(value = "/consultar", params = "status")
+    public ResponseEntity<List<Atendimento>> consultar(@RequestParam(required = false) String termoBusca, @RequestParam List<EStatus> status) {
+        var registros = servico.consultar(termoBusca);
+        return ResponseEntity.ok(registros);
+    }
+
     @Override
     @GetMapping("/consultar/{id}")
     public ResponseEntity<Atendimento> consultar(@PathVariable Long id) {
