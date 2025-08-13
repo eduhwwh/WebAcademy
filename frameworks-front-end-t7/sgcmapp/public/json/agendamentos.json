@@ -19,16 +19,7 @@
                 "endereco": "Rua Independência, 56 - Conjunto Bela Vista"
             }
         },
-        "convenio": {
-            "id": 1,
-            "nome": "Unimed",
-            "razaoSocial": "Unimed Rio Branco Cooperativa de Trabalho Médico Ltda.",
-            "cnpj": "46.560.030/0001-53",
-            "representante": "Thayline Figueredo Vaz",
-            "email": "contato@unimedriobranco.com.br",
-            "telefone": "(68) 3668-1546",
-            "ativo": true
-        },
+        "convenio": null,
         "paciente": {
             "id": 1,
             "nome": "Giulia Farias Bencatel",

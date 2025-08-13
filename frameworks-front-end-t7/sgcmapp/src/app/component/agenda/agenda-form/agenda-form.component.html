@@ -24,7 +24,7 @@
 
         <label for="data">Data</label>
         <input type="date" name="data" id="data" required
-                [(ngModel)]="registro.data">
+               [(ngModel)]="registro.data">
 
         <label for="hora">Hora</label>
         <select name="hora" id="hora" required>
@@ -60,8 +60,7 @@
     <input type="submit" value="Salvar" [disabled]="form.invalid">
 
 </form>
-
 <pre>
-    {{'Data: ' + registro.data}}
-    {{'Formulario: ' + form.valid}}
+{{ 'Data: ' + registro.data }}
+{{ 'Formulário válido? ' + form.valid }}
 </pre>

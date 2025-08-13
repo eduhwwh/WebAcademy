@@ -1,11 +1,34 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { BarraComandosComponent } from "../barra-comandos/barra-comandos.component";
+import { ICrudList } from '../i-crud-list';
+import { Atendimento } from '../../model/atendimento';
+import { AtendimentoService } from '../../service/atendimento.service';
 
 @Component({
   selector: 'app-atendimento',
-  imports: [],
+  imports: [CommonModule, BarraComandosComponent],
   templateUrl: './atendimento.component.html',
   styles: ``
 })
-export class AtendimentoComponent {
+export class AtendimentoComponent implements ICrudList<Atendimento> {
+  
+  private servico = inject(AtendimentoService);
+
+  ngOnInit(): void {
+    this.consultar();
+  }
+
+  registros: Atendimento[] = [];
+
+  consultar(termoBusca?: string): void {
+    this.servico.consultar(termoBusca).subscribe({
+      next: resposta => this.registros = resposta
+    });
+  }
+
+  remover(id: number): void {
+    throw new Error('Method not implemented.');
+  }
 
 }

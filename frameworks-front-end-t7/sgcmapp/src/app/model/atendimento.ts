@@ -7,7 +7,7 @@ export type Atendimento = {
     data: string;
     hora: string;
     status: string;
-    convenio: Convenio;
+    convenio: Convenio | null;
     paciente: Paciente;
     profissional: Profissional;
 }
