@@ -1,9 +1,9 @@
-import { Injectable, inject } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ICrudService } from './i-crud-service';
-import { Profissional } from '../model/profissional';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { Profissional } from '../model/profissional';
+import { ICrudService } from './i-crud-service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 export class ProfissionalService implements ICrudService<Profissional> {
   
   private http = inject(HttpClient);
+
   apiUrl: string = `${environment.API_URL}/profissional`;
 
   consultar(termoBusca?: string): Observable<Profissional[]> {
@@ -21,28 +22,19 @@ export class ProfissionalService implements ICrudService<Profissional> {
       parametros = parametros.set('termoBusca', termoBusca);
     }
 
-    return this.http.get<Profissional[]>(url, {
-      params: parametros
-    });
+    return this.http.get<Profissional[]>(url, { params: parametros });
   }
 
   consultarPorId(id: number): Observable<Profissional> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<Profissional>(url);
+    throw new Error('Method not implemented.');
   }
 
   salvar(objeto: Profissional): Observable<number | void> {
-    if (objeto.id) {
-      // PUT para atualizar
-      return this.http.put<void>(`${this.apiUrl}/${objeto.id}`, objeto);
-    } else {
-      // POST para criar
-      return this.http.post<number>(this.apiUrl, objeto);
-    }
+    throw new Error('Method not implemented.');
   }
 
   remover(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    throw new Error('Method not implemented.');
   }
 
 }

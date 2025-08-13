@@ -23,7 +23,7 @@ export class AtendimentoComponent implements ICrudList<Atendimento> {
 
   consultar(termoBusca?: string): void {
     const status = ['CHEGADA', 'ATENDIMENTO']
-    this.servico.consultar(termoBusca,status).subscribe({
+    this.servico.consultar(termoBusca, status).subscribe({
       next: resposta => this.registros = resposta
     });
   }

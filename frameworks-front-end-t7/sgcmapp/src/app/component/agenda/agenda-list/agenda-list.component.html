@@ -29,8 +29,11 @@
                 <a (click)="atualizarStatus(item.id)"
                    class="botao confirmacao"
                    [ngClass]="{ 'inativo': item.status == 'CONFIRMADO' }">Confirmar</a>
-                <a href="javascript:void(0)" class="botao">Editar</a>
-                <a (click)="remover(item.id)" class="botao excluir">Cancelar</a>
+                <a routerLink="/agenda-form"
+                   [queryParams]="{id: item.id}"
+                   class="botao">Editar</a>
+                <a (click)="remover(item.id)"
+                   class="botao excluir">Cancelar</a>
             </td>
         </tr>
         }

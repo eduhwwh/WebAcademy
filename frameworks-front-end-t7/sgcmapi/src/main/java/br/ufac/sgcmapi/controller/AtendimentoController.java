@@ -31,14 +31,17 @@ public class AtendimentoController implements ICrudController<Atendimento> {
 
     @Override
     @GetMapping("/consultar")
-    public ResponseEntity<List<Atendimento>> consultar(@RequestParam(required = false) String termoBusca) {
+    public ResponseEntity<List<Atendimento>> consultar(
+            @RequestParam(required = false) String termoBusca) {
         var registros = servico.consultar(termoBusca);
         return ResponseEntity.ok(registros);
     }
 
     @GetMapping(value = "/consultar", params = "status")
-    public ResponseEntity<List<Atendimento>> consultar(@RequestParam(required = false) String termoBusca, @RequestParam List<EStatus> status) {
-        var registros = servico.consultar(termoBusca);
+    public ResponseEntity<List<Atendimento>> consultar(
+            @RequestParam(required = false) String termoBusca,
+            @RequestParam List<EStatus> status) {
+        var registros = servico.consultar(termoBusca, status);
         return ResponseEntity.ok(registros);
     }
 

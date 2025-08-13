@@ -21,28 +21,26 @@ export class AtendimentoService implements ICrudService<Atendimento> {
     if (termoBusca) {
       parametros = parametros.set('termoBusca', termoBusca);
     }
-
-    if(status){
-      parametros = parametros.set("status",status.join(","))
+    if (status) {
+      parametros = parametros.set('status', status.join(','));
     }
 
     return this.http.get<Atendimento[]>(url, { params: parametros });
   }
 
   consultarPorId(id: number): Observable<Atendimento> {
-    throw new Error('Method not implemented.');
+    let url = `${this.apiUrl}/consultar/${id}`;
+    return this.http.get<Atendimento>(url);
   }
 
   salvar(objeto: Atendimento): Observable<number | void> {
     let url = this.apiUrl;
-
-    if(objeto.id){
-      url += '/atulizar'
-      return this.http.put<void>(url, objeto)
-
-    }else{
-      url += '/inserir'
-      return this.http.post<number>(url, objeto)
+    if (objeto.id) {
+      url += '/atualizar';
+      return this.http.put<void>(url, objeto);
+    } else {
+      url += '/inserir';
+      return this.http.post<number>(url, objeto);
     }
   }
 
