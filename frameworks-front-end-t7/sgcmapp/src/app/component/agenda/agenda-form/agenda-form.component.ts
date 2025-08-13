@@ -9,7 +9,7 @@ import { ConvenioService } from '../../../service/convenio.service';
 import { PacienteService } from '../../../service/paciente.service';
 import { ProfissionalService } from '../../../service/profissional.service';
 import { Paciente } from '../../../model/paciente';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-agenda-form',
@@ -23,6 +23,7 @@ export class AgendaFormComponent implements ICrudForm<Atendimento>, OnInit {
   private servicoConvenio = inject(ConvenioService);
   private servicoPaciente = inject(PacienteService);
   private servicoProfissional = inject(ProfissionalService);
+  private roteador = inject(Router)
 
   ngOnInit(): void {
     this.servicoConvenio.consultarAtivos().subscribe({
@@ -45,7 +46,13 @@ export class AgendaFormComponent implements ICrudForm<Atendimento>, OnInit {
   profissionais: Profissional[] = [];
 
   salvar(): void {
-    throw new Error('Method not implemented.');
+    this.servico.salvar(this.registro).subscribe({
+      next: id => alert(`Resgistro inserido com sucesso. ID: ${id}`),
+      complete: () => {
+        alert('Operação realizada com sucesso.');
+        this.roteador.navigate(['/agenda-list']);
+      }
+    })
   }
 
 }
