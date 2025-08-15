@@ -21,7 +21,13 @@ public class CalculadoraBasica {
         for (int i = 0; i < expoente; i++) {
             resultado *= base;
         }
-        return resultado;
+
+        return resultado; 
+        // return resultado +1; Forçando o erro 
+    }
+
+    public int fatorial(int numero){
+        return 0;
     }
 
 }
