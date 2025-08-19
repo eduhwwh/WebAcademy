@@ -22,7 +22,7 @@ import br.ufac.sgcmapi.service.AtendimentoService;
 
 @WebMvcTest(AtendimentoController.class)
 public class AtendimentoControllerTest {
-    
+
     @MockitoBean
     private AtendimentoService servico;
 
@@ -33,16 +33,15 @@ public class AtendimentoControllerTest {
     private String conteudoJson;
 
     @BeforeEach
-    void setUp() throws JsonProcessingException{
+    void setUp() throws JsonProcessingException {
         atendimento = new Atendimento();
         atendimento.setId(1L);
 
         conteudoJson = new ObjectMapper().writeValueAsString(atendimento);
-
     }
 
     @Test
-    void testAtendimentoInseri()throws Exception{
+    void testAtendimentoInserir() throws Exception {
         Mockito.when(servico.salvar(any(Atendimento.class)))
             .thenReturn(atendimento);
         mockMvc.perform(MockMvcRequestBuilders.post("/atendimento/inserir")
@@ -51,5 +50,5 @@ public class AtendimentoControllerTest {
             .andExpect(MockMvcResultMatchers.status().isCreated())
             .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.is(1)));
     }
-
+    
 }

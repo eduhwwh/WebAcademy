@@ -6,22 +6,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class AtendimentoTest {
-    
+
     private Atendimento atendimento;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         atendimento = new Atendimento();
-
     }
 
     @Test
-    void testAtendimentoId(){
+    void testAtendimentoId() {
         var id = 1L;
-
         atendimento.setId(id);
-        assertEquals(1L, atendimento.getId());   
+        assertEquals(1L, atendimento.getId());
     }
-
-
+    
 }
