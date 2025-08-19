@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { AtendimentoService } from './atendimento.service';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
