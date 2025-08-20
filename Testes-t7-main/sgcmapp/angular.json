@@ -148,7 +148,6 @@
     "analytics": false,
     "schematicCollections": [
       "@cypress/schematic",
-      "@cypress/schematic",
       "@schematics/angular"
     ]
   }
