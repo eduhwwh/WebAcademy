@@ -36,5 +36,9 @@ public class UsuarioService implements ICrudService<Usuario> {
     public void remover(Long id) {
         repo.deleteById(id);
     }
+
+    public Usuario consultarPorNomeUsuario(String nomeUsuario){
+        return repo.findByNomeUsuario(nomeUsuario);
+    }
     
 }
