@@ -8,25 +8,21 @@ import org.springframework.stereotype.Service;
 import br.ufac.sgcmapi.service.UsuarioService;
 
 @Service
-public class PerfilUsuarioService implements UserDetailsService{
+public class PerfilUsuarioService implements UserDetailsService {
 
     private final UsuarioService servico;
-    public PerfilUsuarioService(UsuarioService servico){
+
+    public PerfilUsuarioService(UsuarioService servico) {
         this.servico = servico;
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-       var usuario = servico.consultarPorNomeUsuario(username);
-       
-       if(usuario == null){
-            throw new UsernameNotFoundException("Usuario não encontrado.");
+        var usuario = servico.consultarPorNomeUsuario(username);
+        if (usuario == null) {
+            throw new UsernameNotFoundException("Usuário não encontrado.");
         }
-       
         return new PerfilUsuario(usuario);
-
     }
-
-
     
 }

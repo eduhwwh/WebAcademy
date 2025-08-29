@@ -1,39 +1,60 @@
 package br.ufac.sgcmapi.config;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class Seguranca  {
+public class Seguranca {
 
     private final PerfilUsuarioService perfilUsuarioService;
 
-    public Seguranca(PerfilUsuarioService perfilUsuarioService){
+    public Seguranca(PerfilUsuarioService perfilUsuarioService) {
         this.perfilUsuarioService = perfilUsuarioService;
     }
 
     @Bean
-    AuthenticationManager authMenager(AuthenticationConfiguration config) throws Exception{
+    AuthenticationManager authManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
     @Bean
-    BCryptPasswordEncoder passwordEncoder(){
+    UserDetailsService udService() {
+        return perfilUsuarioService;
+    }
+
+    @Bean
+    BCryptPasswordEncoder passEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    DaoAuthenticationProvider authProvider(){
+    DaoAuthenticationProvider authProvider() {
         var provider = new DaoAuthenticationProvider(udService());
-        provider.setPasswordEncoder(passwordEncoder());
+        provider.setPasswordEncoder(passEncoder());
         return provider;
-        
+    }
+
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.httpBasic(withDefaults());
+        http.cors(withDefaults());
+        http.csrf(csrf -> csrf.disable());
+        http.authenticationProvider(authProvider());
+
+        http.authorizeHttpRequests(autorizacao -> autorizacao.anyRequest().authenticated());
+
+        return http.build();
     }
     
 }
