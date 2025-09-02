@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -16,9 +17,6 @@ import br.ufac.sgcmapi.config.PerfilUsuario;
 import br.ufac.sgcmapi.config.TokenService;
 import br.ufac.sgcmapi.model.Usuario;
 import br.ufac.sgcmapi.service.UsuarioService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @RestController
 @RequestMapping("/login")
@@ -51,24 +49,21 @@ public class LoginController {
 
     @GetMapping("/renovar")
     public ResponseEntity<String> renovar(
-        @RequestHeader("Authorization") String authHeader){
+            @RequestHeader("Authorization") String authHeader) {
 
-            var token = authHeader.replace("Bearer", "");
-            var tokenDecodificado = JWT.decode(token);
+        var token = authHeader.replace("Bearer ", "");
+        var tokenDecodificado = JWT.decode(token);
 
-            if(tokenService.isDataLimiteRenovacaoExpirada(tokenDecodificado)){
-                var mensagem = "Data limite de renovação expirada!";
-
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(mensagem);
-            }
-
-
-            var nomeUsuario = tokenDecodificado.getSubject();
-            var usuario = usuarioService.consultarPorNomeUsuario(nomeUsuario);
-            var tokenNovo = tokenService.criarToken(usuario);
-
-            return ResponseEntity.ok(null);
+        if (tokenService.isDataLimiteRenovacaoExpirada(tokenDecodificado)) {
+            var mensagem = "Data limite de renovação expirada!";
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(mensagem);
         }
-    
+
+        var nomeUsuario = tokenDecodificado.getSubject();
+        var usuario = usuarioService.consultarPorNomeUsuario(nomeUsuario);
+        var tokenNovo = tokenService.criarToken(usuario);
+
+        return ResponseEntity.ok(tokenNovo);
+    }
     
 }

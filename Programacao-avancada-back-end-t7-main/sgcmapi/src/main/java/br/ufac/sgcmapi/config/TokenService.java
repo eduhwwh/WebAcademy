@@ -34,28 +34,28 @@ public class TokenService {
             .withSubject(usuario.getNomeUsuario())
             .withClaim("nomeCompleto", usuario.getNomeCompleto())
             .withClaim("papel", usuario.getPapel().name())
+            .withClaim("dataLimiteRenovacao", LocalDate.now().toString())
             .withExpiresAt(gerarDataExpiracao())
             .sign(segredo);
         
         return token;
     }
 
-    public String validarToken(String token){
+    public String validarToken(String token) {
         var segredo = Algorithm.HMAC256(secret);
         var tokenValidado = JWT.require(segredo)
-        .withIssuer("SGCM")
-        .build()
-        .verify(token);
-
+            .withIssuer("SGCM")
+            .build()
+            .verify(token);
+        
         return tokenValidado.getSubject();
     }
 
-    public boolean isDataLimiteRenovacaoExpirada(DecodedJWT token){
-            var claimDataLimite = token.getClaim("dataLimiteRenovacao");
-            var dataLimite = LocalDate.parse(claimDataLimite.asString());
-            var hoje = LocalDate.now();
-
-            return hoje.isAfter(dataLimite);
+    public boolean isDataLimiteRenovacaoExpirada(DecodedJWT token) {
+        var claimDataLimite = token.getClaim("dataLimiteRenovacao");
+        var dataLimite = LocalDate.parse(claimDataLimite.asString());
+        var hoje = LocalDate.now();
+        return hoje.isAfter(dataLimite);
     }
     
 }

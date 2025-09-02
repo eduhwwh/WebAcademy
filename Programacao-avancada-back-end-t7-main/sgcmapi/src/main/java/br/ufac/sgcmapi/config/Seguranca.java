@@ -14,15 +14,20 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class Seguranca {
 
     private final PerfilUsuarioService perfilUsuarioService;
+    private final TokenFilter tokenFilter;
 
-    public Seguranca(PerfilUsuarioService perfilUsuarioService) {
+    public Seguranca(
+            PerfilUsuarioService perfilUsuarioService,
+            TokenFilter tokenFilter) {
         this.perfilUsuarioService = perfilUsuarioService;
+        this.tokenFilter = tokenFilter;
     }
 
     @Bean
@@ -49,18 +54,20 @@ public class Seguranca {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.httpBasic(withDefaults());
+        // http.httpBasic(withDefaults());
         http.cors(withDefaults());
         http.csrf(csrf -> csrf.disable());
         http.authenticationProvider(authProvider());
         http.sessionManagement(
-            sessao -> sessao.sessionCreationPolicy((SessionCreationPolicy.STATELESS))
-        );
+            sessao -> sessao.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http.authorizeHttpRequests(autorizacao -> autorizacao
-            .requestMatchers(HttpMethod.POST, "/login/autenticar").permitAll()
-            .requestMatchers("/config/**").hasRole("ADMIN")
-            .anyRequest().authenticated());
+        http.authorizeHttpRequests(
+            autorizacao -> autorizacao
+                .requestMatchers(HttpMethod.POST, "/login/autenticar").permitAll()
+                .requestMatchers("/config/**").hasRole("ADMIN")
+                .anyRequest().authenticated());
+        
+        http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
