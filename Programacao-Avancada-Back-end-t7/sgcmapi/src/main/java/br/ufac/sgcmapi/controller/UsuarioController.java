@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ufac.sgcmapi.controller.dto.UsuarioDto;
+import br.ufac.sgcmapi.controller.mapper.UsuarioMapper;
 import br.ufac.sgcmapi.service.UsuarioService;
 
 
@@ -22,16 +23,19 @@ import br.ufac.sgcmapi.service.UsuarioService;
 public class UsuarioController implements ICrudController<UsuarioDto> {
 
     private final UsuarioService servico;
+    private final UsuarioMapper mapper;
 
-    public UsuarioController(UsuarioService servico) {
+    public UsuarioController(UsuarioService servico, UsuarioMapper mapper) {
+        
         this.servico = servico;
+        this.mapper = mapper;
     }
 
     @Override
     @GetMapping("/consultar")
     public ResponseEntity<List<UsuarioDto>> consultar(@RequestParam(required = false) String termoBusca) {
         var registros = servico.consultar(termoBusca);
-        var dtos = registros.stream().map(item -> UsuarioDto.toDto(item)).toList();
+        var dtos = registros.stream().map( mapper::toDto).toList();
         return ResponseEntity.ok(dtos);
     }
 
@@ -42,14 +46,14 @@ public class UsuarioController implements ICrudController<UsuarioDto> {
         if (registro == null) {
             return ResponseEntity.notFound().build();
         }
-        var dto = UsuarioDto.toDto(registro);
+        var dto = mapper.toDto(registro);
         return ResponseEntity.ok(dto);
     }
 
     @Override
     @PostMapping("/inserir")
     public ResponseEntity<Long> inserir(@RequestBody UsuarioDto objeto) {
-        var objetoConvertido = UsuarioDto.toEntity(objeto);
+        var objetoConvertido = mapper.toEntity(objeto);
         var registro = servico.salvar(objetoConvertido);
         return ResponseEntity.created(null).body(registro.getId());
     }
@@ -57,7 +61,7 @@ public class UsuarioController implements ICrudController<UsuarioDto> {
     @Override
     @PutMapping("/atualizar")
     public ResponseEntity<Void> atualizar(@RequestBody UsuarioDto objeto) {
-        var objetoConvertido = UsuarioDto.toEntity(objeto);
+        var objetoConvertido = mapper.toEntity(objeto);
         servico.salvar(objetoConvertido);
         return ResponseEntity.ok().build();
     }
