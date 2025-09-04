@@ -25,8 +25,9 @@ public class UsuarioController implements ICrudController<UsuarioDto> {
     private final UsuarioService servico;
     private final UsuarioMapper mapper;
 
-    public UsuarioController(UsuarioService servico, UsuarioMapper mapper) {
-        
+    public UsuarioController(
+            UsuarioService servico,
+            UsuarioMapper mapper) {
         this.servico = servico;
         this.mapper = mapper;
     }
@@ -35,7 +36,7 @@ public class UsuarioController implements ICrudController<UsuarioDto> {
     @GetMapping("/consultar")
     public ResponseEntity<List<UsuarioDto>> consultar(@RequestParam(required = false) String termoBusca) {
         var registros = servico.consultar(termoBusca);
-        var dtos = registros.stream().map( mapper::toDto).toList();
+        var dtos = registros.stream().map(mapper::toDto).toList();
         return ResponseEntity.ok(dtos);
     }
 

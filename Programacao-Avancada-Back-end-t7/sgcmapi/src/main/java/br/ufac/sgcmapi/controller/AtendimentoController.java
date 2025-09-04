@@ -15,57 +15,67 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.ufac.sgcmapi.model.Atendimento;
+import br.ufac.sgcmapi.controller.dto.AtendimentoDto;
+import br.ufac.sgcmapi.controller.mapper.AtendimentoMapper;
 import br.ufac.sgcmapi.model.EStatus;
 import br.ufac.sgcmapi.service.AtendimentoService;
 
 @RestController
 @RequestMapping("/atendimento")
-public class AtendimentoController implements ICrudController<Atendimento> {
+public class AtendimentoController implements ICrudController<AtendimentoDto> {
 
     private final AtendimentoService servico;
+    private final AtendimentoMapper mapper;
 
-    public AtendimentoController(AtendimentoService servico) {
+    public AtendimentoController(
+            AtendimentoService servico,
+            AtendimentoMapper mapper) {
         this.servico = servico;
+        this.mapper = mapper;
     }
 
     @Override
     @GetMapping("/consultar")
-    public ResponseEntity<List<Atendimento>> consultar(
+    public ResponseEntity<List<AtendimentoDto>> consultar(
             @RequestParam(required = false) String termoBusca) {
         var registros = servico.consultar(termoBusca);
-        return ResponseEntity.ok(registros);
+        var dtos = registros.stream().map(mapper::toDto).toList();
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping(value = "/consultar", params = "status")
-    public ResponseEntity<List<Atendimento>> consultar(
+    public ResponseEntity<List<AtendimentoDto>> consultar(
             @RequestParam(required = false) String termoBusca,
             @RequestParam List<EStatus> status) {
         var registros = servico.consultar(termoBusca, status);
-        return ResponseEntity.ok(registros);
+        var dtos = registros.stream().map(mapper::toDto).toList();
+        return ResponseEntity.ok(dtos);
     }
 
     @Override
     @GetMapping("/consultar/{id}")
-    public ResponseEntity<Atendimento> consultar(@PathVariable Long id) {
+    public ResponseEntity<AtendimentoDto> consultar(@PathVariable Long id) {
         var registro = servico.consultar(id);
         if (registro == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(registro);
+        var dto = mapper.toDto(registro);
+        return ResponseEntity.ok(dto);
     }
 
     @Override
     @PostMapping("/inserir")
-    public ResponseEntity<Long> inserir(@RequestBody Atendimento objeto) {
-        var registro = servico.salvar(objeto);
+    public ResponseEntity<Long> inserir(@RequestBody AtendimentoDto objeto) {
+        var objetoConvertido = mapper.toEntity(objeto);
+        var registro = servico.salvar(objetoConvertido);
         return ResponseEntity.created(null).body(registro.getId());
     }
 
     @Override
     @PutMapping("/atualizar")
-    public ResponseEntity<Void> atualizar(@RequestBody Atendimento objeto) {
-        servico.salvar(objeto);
+    public ResponseEntity<Void> atualizar(@RequestBody AtendimentoDto objeto) {
+        var objetoConvertido = mapper.toEntity(objeto);
+        servico.salvar(objetoConvertido);
         return ResponseEntity.ok().build();
     }
 

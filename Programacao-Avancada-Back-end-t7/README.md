@@ -195,3 +195,31 @@ A demonstração de uso das ferramentas e tecnologias abordadas na capacitação
 - [Diagrama Entidade Relacionamento](https://github.com/webacademyufac/sgcmdocs#diagrama-entidade-relacionamento)
 
 </details>
+
+## Atividades práticas
+
+> [!NOTE]
+>
+> - As atividades serão realizadas com o GitHub Classroom e podem ser acessadas pelos links nas descrições das atividades.
+> - No primeiro acesso, _**cada aluno deverá selecionar seu nome na lista para vincular sua conta no GitHub**_ e aceitar o convite para a atividade prática.
+> - O repositório da atividade prática será criado automaticamente para cada aluno ou grupo (compartilhado entre os membros).
+> - O aluno deverá clonar o repositório para seu computador, fazer as modificações necessárias e subir o repositório para o GitHub (`git push`).
+> - Não é necessário nenhuma outra ação para submeter a atividade.
+> - Atividades em grupo:
+>   - Ao acessar o link da atividade, o aluno deverá criar seu grupo ou ingressar no seu respectivo grupo se existir.
+>   - O nome do grupo deve seguir o padrão: `Grupo_X`, onde `X` é o número do grupo.
+
+> [!IMPORTANT]
+> _**Todos os membros dos grupos devem participar das atividades**_, registrando esta participação por meio da identificação dos commits com seus respectivos usuários no GitHub.
+
+> [!CAUTION]
+> Para atividades avaliadas automaticamente, **não modifique ou exclua** os arquivos responsáveis pela avaliação. Dependendo do escopo da atividade, isso pode incluir arquivos localizados nos diretórios `src/test/java` e `.github/workflows`, bem como arquivos com extensão `*.spec.ts`, ou quaisquer outros destinados exclusivamente à automação da avaliação.
+
+1. [INDIVIDUAL] Criar um DTO para a entidade `Profissional` e alterar o retorno e parâmetros dos métodos da camada de controle para utilizarem o DTO.
+
+    - O DTO deve conter os atributos: id, nome, email, registroConselho, telefone, especialidade_id, especialidade_nome, unidade_id, unidade_nome.
+    - A conversão _**DTO <-> Entidade**_ deve ser feita na camada de controle.
+    - A utilização de bibliotecas de mapeamento (como MapStruct) é opcional, podendo a conversão ser feita por meio de métodos no próprio DTO.
+
+    - Link da atividade: <https://classroom.github.com/a/_snZ1oHl>
+    - Entrega: 04/09/2025 - 18:00

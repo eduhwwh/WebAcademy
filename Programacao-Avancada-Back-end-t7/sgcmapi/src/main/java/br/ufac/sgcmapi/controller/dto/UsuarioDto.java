@@ -1,8 +1,5 @@
 package br.ufac.sgcmapi.controller.dto;
 
-import br.ufac.sgcmapi.model.EPapel;
-import br.ufac.sgcmapi.model.Usuario;
-
 public record UsuarioDto(
     Long id,
     String nomeCompleto,
@@ -11,7 +8,5 @@ public record UsuarioDto(
     String papel,
     boolean ativo
 ) {
-
-    
     
 }
