@@ -19,6 +19,7 @@ import br.ufac.sgcmapi.controller.dto.AtendimentoDto;
 import br.ufac.sgcmapi.controller.mapper.AtendimentoMapper;
 import br.ufac.sgcmapi.model.EStatus;
 import br.ufac.sgcmapi.service.AtendimentoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/atendimento")
@@ -65,7 +66,7 @@ public class AtendimentoController implements ICrudController<AtendimentoDto> {
 
     @Override
     @PostMapping("/inserir")
-    public ResponseEntity<Long> inserir(@RequestBody AtendimentoDto objeto) {
+    public ResponseEntity<Long> inserir(@RequestBody @Valid AtendimentoDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
         var registro = servico.salvar(objetoConvertido);
         return ResponseEntity.created(null).body(registro.getId());
@@ -73,7 +74,7 @@ public class AtendimentoController implements ICrudController<AtendimentoDto> {
 
     @Override
     @PutMapping("/atualizar")
-    public ResponseEntity<Void> atualizar(@RequestBody AtendimentoDto objeto) {
+    public ResponseEntity<Void> atualizar(@RequestBody @Valid AtendimentoDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
         servico.salvar(objetoConvertido);
         return ResponseEntity.ok().build();
