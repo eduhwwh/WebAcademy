@@ -3,6 +3,7 @@ package br.ufac.sgcmapi.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ufac.sgcmapi.controller.dto.UsuarioDto;
 import br.ufac.sgcmapi.controller.mapper.UsuarioMapper;
 import br.ufac.sgcmapi.service.UsuarioService;
+import br.ufac.sgcmapi.validator.grupos.OnCreate;
+import br.ufac.sgcmapi.validator.grupos.OnUpdate;
 
 
 @RestController
@@ -53,7 +56,7 @@ public class UsuarioController implements ICrudController<UsuarioDto> {
 
     @Override
     @PostMapping("/inserir")
-    public ResponseEntity<Long> inserir(@RequestBody UsuarioDto objeto) {
+    public ResponseEntity<Long> inserir(@RequestBody @Validated(OnCreate.class) UsuarioDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
         var registro = servico.salvar(objetoConvertido);
         return ResponseEntity.created(null).body(registro.getId());
@@ -61,7 +64,7 @@ public class UsuarioController implements ICrudController<UsuarioDto> {
 
     @Override
     @PutMapping("/atualizar")
-    public ResponseEntity<Void> atualizar(@RequestBody UsuarioDto objeto) {
+    public ResponseEntity<Void> atualizar(@RequestBody @Validated(OnUpdate.class) UsuarioDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
         servico.salvar(objetoConvertido);
         return ResponseEntity.ok().build();

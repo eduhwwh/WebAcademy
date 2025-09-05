@@ -223,3 +223,12 @@ A demonstração de uso das ferramentas e tecnologias abordadas na capacitação
 
     - Link da atividade: <https://classroom.github.com/a/_snZ1oHl>
     - Entrega: 04/09/2025 - 18:00
+
+2. [INDIVIDUAL] Criar um validador customizado para senha do usuário, que deve ser utilizado tanto na inserção quanto na atualização.
+
+    - As senhas devem possuir no mínimo 1 letra maiúscula, 1 letra minúscula, 1 número e 8 caracteres no total.
+    - A implementação do validador deve utilizar a anotação **@Senha** já disponível no projeto da atividade.
+    - Senha em branco ou nulas devem ser permitidas ao atulizar um usuário.
+
+    - Link da atividade: <https://classroom.github.com/a/qygL6wZ7>
+    - Entrega: 05/09/2025 - 18:00

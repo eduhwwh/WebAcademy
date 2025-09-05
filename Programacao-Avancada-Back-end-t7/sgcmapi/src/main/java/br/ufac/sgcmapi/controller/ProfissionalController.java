@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ufac.sgcmapi.controller.dto.ProfissionalDto;
 import br.ufac.sgcmapi.controller.mapper.ProfissionalMapper;
 import br.ufac.sgcmapi.service.ProfissionalService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/profissional")
@@ -24,7 +25,9 @@ public class ProfissionalController implements ICrudController<ProfissionalDto> 
     private final ProfissionalService servico;
     private final ProfissionalMapper mapper;
 
-    public ProfissionalController(ProfissionalService servico, ProfissionalMapper mapper) {
+    public ProfissionalController(
+            ProfissionalService servico,
+            ProfissionalMapper mapper) {
         this.servico = servico;
         this.mapper = mapper;
     }
@@ -50,7 +53,7 @@ public class ProfissionalController implements ICrudController<ProfissionalDto> 
 
     @Override
     @PostMapping("/inserir")
-    public ResponseEntity<Long> inserir(@RequestBody ProfissionalDto objeto) {
+    public ResponseEntity<Long> inserir(@RequestBody @Valid ProfissionalDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
         var registro = servico.salvar(objetoConvertido);
         return ResponseEntity.created(null).body(registro.getId());
@@ -58,7 +61,7 @@ public class ProfissionalController implements ICrudController<ProfissionalDto> 
 
     @Override
     @PutMapping("/atualizar")
-    public ResponseEntity<Void> atualizar(@RequestBody ProfissionalDto objeto) {
+    public ResponseEntity<Void> atualizar(@RequestBody @Valid ProfissionalDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
         servico.salvar(objetoConvertido);
         return ResponseEntity.ok().build();
