@@ -13,47 +13,54 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.ufac.sgcmapi.model.Profissional;
+import br.ufac.sgcmapi.controller.dto.ProfissionalDto;
+import br.ufac.sgcmapi.controller.mapper.ProfissionalMapper;
 import br.ufac.sgcmapi.service.ProfissionalService;
 
 @RestController
 @RequestMapping("/profissional")
-public class ProfissionalController implements ICrudController<Profissional> {
+public class ProfissionalController implements ICrudController<ProfissionalDto> {
 
     private final ProfissionalService servico;
+    private final ProfissionalMapper mapper;
 
-    public ProfissionalController(ProfissionalService servico) {
+    public ProfissionalController(ProfissionalService servico, ProfissionalMapper mapper) {
         this.servico = servico;
+        this.mapper = mapper;
     }
 
     @Override
     @GetMapping("/consultar")
-    public ResponseEntity<List<Profissional>> consultar(@RequestParam(required = false) String termoBusca) {
+    public ResponseEntity<List<ProfissionalDto>> consultar(@RequestParam(required = false) String termoBusca) {
         var registros = servico.consultar(termoBusca);
-        return ResponseEntity.ok(registros);
+        var dtos = registros.stream().map(mapper::toDto).toList();
+        return ResponseEntity.ok(dtos);
     }
 
     @Override
     @GetMapping("/consultar/{id}")
-    public ResponseEntity<Profissional> consultar(@PathVariable Long id) {
+    public ResponseEntity<ProfissionalDto> consultar(@PathVariable Long id) {
         var registro = servico.consultar(id);
         if (registro == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(registro);
+        var dto = mapper.toDto(registro);
+        return ResponseEntity.ok(dto);
     }
 
     @Override
     @PostMapping("/inserir")
-    public ResponseEntity<Long> inserir(@RequestBody Profissional objeto) {
-        var registro = servico.salvar(objeto);
+    public ResponseEntity<Long> inserir(@RequestBody ProfissionalDto objeto) {
+        var objetoConvertido = mapper.toEntity(objeto);
+        var registro = servico.salvar(objetoConvertido);
         return ResponseEntity.created(null).body(registro.getId());
     }
 
     @Override
     @PutMapping("/atualizar")
-    public ResponseEntity<Void> atualizar(@RequestBody Profissional objeto) {
-        servico.salvar(objeto);
+    public ResponseEntity<Void> atualizar(@RequestBody ProfissionalDto objeto) {
+        var objetoConvertido = mapper.toEntity(objeto);
+        servico.salvar(objetoConvertido);
         return ResponseEntity.ok().build();
     }
 
