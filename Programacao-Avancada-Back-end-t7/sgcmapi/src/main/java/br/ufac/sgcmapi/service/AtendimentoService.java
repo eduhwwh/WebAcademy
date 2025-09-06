@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -12,9 +14,11 @@ import br.ufac.sgcmapi.model.EStatus;
 import br.ufac.sgcmapi.repository.AtendimentoRepository;
 
 @Service
-public class AtendimentoService implements ICrudService<Atendimento> {
+public class AtendimentoService implements ICrudService<Atendimento>, IPageService<Atendimento> {
 
     private final AtendimentoRepository repo;
+
+    private static final Pageable PAGINACAO = Pageable.unpaged();
 
     public AtendimentoService(AtendimentoRepository repo) {
         this.repo = repo;
@@ -22,11 +26,20 @@ public class AtendimentoService implements ICrudService<Atendimento> {
 
     @Override
     public List<Atendimento> consultar(String termoBusca) {
-        return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), null);
+        return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), null, PAGINACAO).getContent();
     }
 
     public List<Atendimento> consultar(String termoBusca, List<EStatus> status) {
-        return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), status);
+        return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), status, PAGINACAO).getContent();
+    }
+
+    @Override
+    public Page<Atendimento> consultar(String termoBusca, Pageable paginacao) {
+        return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), null, paginacao);
+    }
+
+    public Page<Atendimento> consultar(String termoBusca, List<EStatus> status, Pageable paginacao) {
+        return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), status, paginacao);
     }
 
     @Override

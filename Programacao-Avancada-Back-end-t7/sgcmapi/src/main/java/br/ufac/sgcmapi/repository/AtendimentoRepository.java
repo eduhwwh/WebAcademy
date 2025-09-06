@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -25,7 +27,7 @@ public interface AtendimentoRepository extends JpaRepository<Atendimento, Long> 
         OR u.nome LIKE %:termoBusca%)
         AND (:status IS NULL OR a.status IN :status)
     """)
-    public List<Atendimento> consultar(String termoBusca, List<EStatus> status);
+    public Page<Atendimento> consultar(String termoBusca, List<EStatus> status, Pageable paginacao);
 
     @Query("""
         SELECT a.hora FROM Atendimento a

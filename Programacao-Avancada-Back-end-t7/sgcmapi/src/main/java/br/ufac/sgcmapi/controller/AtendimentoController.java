@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +27,7 @@ import br.ufac.sgcmapi.validator.grupos.OnUpdate;
 
 @RestController
 @RequestMapping("/atendimento")
-public class AtendimentoController implements ICrudController<AtendimentoDto> {
+public class AtendimentoController implements ICrudController<AtendimentoDto>, IPageController<AtendimentoDto> {
 
     private final AtendimentoService servico;
     private final AtendimentoMapper mapper;
@@ -52,6 +54,14 @@ public class AtendimentoController implements ICrudController<AtendimentoDto> {
             @RequestParam List<EStatus> status) {
         var registros = servico.consultar(termoBusca, status);
         var dtos = registros.stream().map(mapper::toDto).toList();
+        return ResponseEntity.ok(dtos);
+    }
+
+    @Override
+    @GetMapping(value = "/consultar", params = "page")
+    public ResponseEntity<Page<AtendimentoDto>> consultar(String termoBusca, Pageable paginacao) {
+        var registros = servico.consultar(termoBusca, paginacao);
+        var dtos = registros.map(mapper::toDto);
         return ResponseEntity.ok(dtos);
     }
 

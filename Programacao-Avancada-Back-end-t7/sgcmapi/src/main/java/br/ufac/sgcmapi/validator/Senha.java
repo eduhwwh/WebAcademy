@@ -10,9 +10,9 @@ import jakarta.validation.Payload;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = HorarioAtendimentoValidator.class)
+@Constraint(validatedBy = SenhaValidator.class)
 public @interface Senha {
-    String message() default "deve conter no minimo 1 letra maiuscula e 1 minuscula ";
+    String message() default "deve conter no mínimo 1 letra maiúscula, 1 minúscula, 1 número, e 8 caracteres.";
     Class<?>[] groups() default {};
-    Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};    
 }
