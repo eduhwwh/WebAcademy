@@ -79,6 +79,17 @@ A aplicação vai iniciar no endereço <http://localhost:9000/>, com acesso loca
 - **Docker Desktop**
   - <https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe>
   - Tutorial de instalação: <https://docs.docker.com/desktop/setup/install/windows-install/#install-docker-desktop-on-windows>
+  - Para verificar se o Docker está corretamente instalado e configurado, digite no prompt de comandos:
+
+    ```console
+    docker info
+    ```
+  
+  - Baixar imagem do Redis:
+
+    ```console
+    docker image pull redis:alpine
+    ```
 
 </details>
 
@@ -224,6 +235,8 @@ A demonstração de uso das ferramentas e tecnologias abordadas na capacitação
     - Link da atividade: <https://classroom.github.com/a/_snZ1oHl>
     - Entrega: 04/09/2025 - 18:00
 
+    **Solução:** <https://github.com/webacademyufac/programacao-avancada-back-end-t7/commit/c92e8ba>
+
 2. [INDIVIDUAL] Criar um validador customizado para senha do usuário, que deve ser utilizado tanto na inserção quanto na atualização.
 
     - As senhas devem possuir no mínimo 1 letra maiúscula, 1 letra minúscula, 1 número e 8 caracteres no total.
@@ -232,3 +245,14 @@ A demonstração de uso das ferramentas e tecnologias abordadas na capacitação
 
     - Link da atividade: <https://classroom.github.com/a/qygL6wZ7>
     - Entrega: 05/09/2025 - 18:00
+
+    **Solução:** <https://github.com/webacademyufac/programacao-avancada-back-end-t7/commit/4be8e52>
+
+3. [INDIVIDUAL] Implementar as funcionalidades de paginação de resultados e ordenação para as demais entidades do SGCM, a exemplo do que foi feito para o agendamento/atendimento.
+
+    - Deve ser definida a ordenação padrão, em ordem crescente, para entidades `Convenio`, `Especialidade`, `Paciente` e `Profissional`, `Unidade` e `Usuario`.
+      - A ordenação padrão deve ser feita pelo atributo **nome**, exceto para `Usuario`, que deve ser pelo **nome completo**.
+    - O recurso que permite retornar todos os registros sem paginação deve ser implementado para todas as entidades, e deve usar a ordenação padrão definida para a lista paginada.
+
+    - Link da atividade: <https://classroom.github.com/a/zvqmYqox>
+    - Entrega: 08/09/2025 - 18:00

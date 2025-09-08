@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
+import org.springframework.data.web.SortDefault.SortDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -59,8 +62,28 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
 
     @Override
     @GetMapping(value = "/consultar", params = "page")
-    public ResponseEntity<Page<AtendimentoDto>> consultar(String termoBusca, Pageable paginacao) {
+    public ResponseEntity<Page<AtendimentoDto>> consultar(
+            @RequestParam(required = false) String termoBusca,
+            @SortDefaults({
+                @SortDefault(sort = "data", direction = Sort.Direction.DESC),
+                @SortDefault(sort = "hora", direction = Sort.Direction.ASC)
+            })
+            Pageable paginacao) {
         var registros = servico.consultar(termoBusca, paginacao);
+        var dtos = registros.map(mapper::toDto);
+        return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping(value = "/consultar", params = {"page", "status"})
+    public ResponseEntity<Page<AtendimentoDto>> consultar(
+            @RequestParam(required = false) String termoBusca,
+            @RequestParam List<EStatus> status,
+            @SortDefaults({
+                @SortDefault(sort = "data", direction = Sort.Direction.DESC),
+                @SortDefault(sort = "hora", direction = Sort.Direction.ASC)
+            })
+            Pageable paginacao) {
+        var registros = servico.consultar(termoBusca, status, paginacao);
         var dtos = registros.map(mapper::toDto);
         return ResponseEntity.ok(dtos);
     }

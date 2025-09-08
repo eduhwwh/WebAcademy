@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -18,7 +19,10 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
 
     private final AtendimentoRepository repo;
 
-    private static final Pageable PAGINACAO = Pageable.unpaged();
+    private static final Pageable PAGINACAO = Pageable.unpaged(
+        Sort.by(Sort.Direction.DESC, "data")
+        .and(Sort.by(Sort.Direction.ASC, "hora"))
+    );
 
     public AtendimentoService(AtendimentoRepository repo) {
         this.repo = repo;
