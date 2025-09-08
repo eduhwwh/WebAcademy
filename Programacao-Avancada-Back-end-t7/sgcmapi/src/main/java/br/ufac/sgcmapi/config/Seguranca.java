@@ -64,6 +64,7 @@ public class Seguranca {
         http.authorizeHttpRequests(
             autorizacao -> autorizacao
                 .requestMatchers(HttpMethod.POST, "/login/autenticar").permitAll()
+                .requestMatchers("/v3/api-docs/**", "/v3/api-docs*", "/swagger-ui/**").permitAll()
                 .requestMatchers("/config/**").hasRole("ADMIN")
                 .anyRequest().authenticated());
         

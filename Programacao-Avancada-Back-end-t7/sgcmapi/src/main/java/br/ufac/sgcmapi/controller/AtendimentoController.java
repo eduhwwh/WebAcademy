@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -27,9 +28,15 @@ import br.ufac.sgcmapi.model.EStatus;
 import br.ufac.sgcmapi.service.AtendimentoService;
 import br.ufac.sgcmapi.validator.grupos.OnCreate;
 import br.ufac.sgcmapi.validator.grupos.OnUpdate;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/atendimento")
+@Tag(name = "Atendimento", description = "Endpoits para gerenciar atendimentos")
 public class AtendimentoController implements ICrudController<AtendimentoDto>, IPageController<AtendimentoDto> {
 
     private final AtendimentoService servico;
@@ -68,21 +75,25 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
                 @SortDefault(sort = "data", direction = Sort.Direction.DESC),
                 @SortDefault(sort = "hora", direction = Sort.Direction.ASC)
             })
-            Pageable paginacao) {
+            @ParameterObject Pageable paginacao) {
         var registros = servico.consultar(termoBusca, paginacao);
         var dtos = registros.map(mapper::toDto);
         return ResponseEntity.ok(dtos);
     }
 
     @GetMapping(value = "/consultar", params = {"page", "status"})
+    @Operation(
+        summary = "Obter todos os atendimentos ou filtrar por termo de busca e status (com opcao de paginação)",
+        description = "Obtem uma lista de todos os atendimentos cadastrados no sistema "
+    )
     public ResponseEntity<Page<AtendimentoDto>> consultar(
             @RequestParam(required = false) String termoBusca,
-            @RequestParam List<EStatus> status,
+            @RequestParam (required = false)List<EStatus> status,
             @SortDefaults({
                 @SortDefault(sort = "data", direction = Sort.Direction.DESC),
                 @SortDefault(sort = "hora", direction = Sort.Direction.ASC)
             })
-            Pageable paginacao) {
+            @ParameterObject Pageable paginacao) {
         var registros = servico.consultar(termoBusca, status, paginacao);
         var dtos = registros.map(mapper::toDto);
         return ResponseEntity.ok(dtos);
@@ -90,6 +101,14 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
 
     @Override
     @GetMapping("/consultar/{id}")
+    @Operation(
+        summary = "Obter um atendimento", 
+        description = "Obtem um atendimento cadastrado no sistema baseado no ID informado."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Atendimento encontrado"),
+        @ApiResponse(responseCode = "400", description = "Atendimento não encontrado", content =  @Content())
+    })
     public ResponseEntity<AtendimentoDto> consultar(@PathVariable Long id) {
         var registro = servico.consultar(id);
         if (registro == null) {
