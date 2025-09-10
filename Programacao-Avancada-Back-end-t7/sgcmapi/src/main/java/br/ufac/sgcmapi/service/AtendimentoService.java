@@ -5,7 +5,9 @@ import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -39,7 +41,13 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
         return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), status, PAGINACAO).getContent();
     }
 
+
     @Override
+    @Cacheable(
+        value = "atendimento",
+        key = "'paginado' + '-page:' + #paginacao.pegeNumber + '-size:' + #paginacao.pagesize + '-sort:' + #paginacao.sort.toString()",
+    condition = "#termoBusca == null or #termoBusca.isBlank()"
+    )
     public Page<Atendimento> consultar(String termoBusca, Pageable paginacao) {
         return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), null, paginacao);
     }
@@ -56,13 +64,25 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
     }
 
     @Override
-    @CacheEvict(value = "atendimento", key = "#objeto.id")
+    @Caching(
+        evict = {
+            @CacheEvict(value = "atendimento", key = "#objeto.id"),
+            @CacheEvict(value = "atendimentos", allEntries = true)
+        }
+    )
+    
     public Atendimento salvar(Atendimento objeto) {
         System.out.println("Salvando atendimento.");
         return repo.save(objeto);
     }
 
     @Override
+    @Caching(
+        evict = {
+            @CacheEvict(value = "atendimento", key = "#objeto.id"),
+            @CacheEvict(value = "atendimentos", allEntries = true)
+        }
+    )
     public void remover(Long id) {
         var registro = this.consultar(id);
         if (registro != null) {
@@ -71,6 +91,11 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
         }
     }
 
+    @Caching(
+        put = {@CachePut(value = "atendimento", key = "#id")},
+        evict = {@CacheEvict(value = "atendimentos", allEntries = true)} 
+        
+    )
     public Atendimento atualizarStatus(Long id) {
         var registro = this.consultar(id);
         if (registro != null) {
