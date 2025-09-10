@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -47,12 +49,16 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
     }
 
     @Override
+    @Cacheable(value = "atendimento", unless = "#result == null")
     public Atendimento consultar(Long id) {
+        System.out.println("Consultando atendimento " + id + " sem cache.");
         return repo.findById(id).orElse(null);
     }
 
     @Override
+    @CacheEvict(value = "atendimento", key = "#objeto.id")
     public Atendimento salvar(Atendimento objeto) {
+        System.out.println("Salvando atendimento.");
         return repo.save(objeto);
     }
 

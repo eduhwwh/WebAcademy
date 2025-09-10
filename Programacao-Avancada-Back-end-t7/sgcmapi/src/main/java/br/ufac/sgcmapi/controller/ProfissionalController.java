@@ -2,7 +2,12 @@ package br.ufac.sgcmapi.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ufac.sgcmapi.controller.dto.ProfissionalDto;
 import br.ufac.sgcmapi.controller.mapper.ProfissionalMapper;
 import br.ufac.sgcmapi.service.ProfissionalService;
-import jakarta.validation.Valid;
+import br.ufac.sgcmapi.validator.grupos.OnCreate;
+import br.ufac.sgcmapi.validator.grupos.OnUpdate;
 
 @RestController
 @RequestMapping("/profissional")
-public class ProfissionalController implements ICrudController<ProfissionalDto> {
+public class ProfissionalController implements ICrudController<ProfissionalDto>, IPageController<ProfissionalDto> {
 
     private final ProfissionalService servico;
     private final ProfissionalMapper mapper;
@@ -41,6 +47,17 @@ public class ProfissionalController implements ICrudController<ProfissionalDto> 
     }
 
     @Override
+    @GetMapping(value = "/consultar", params = "page")
+    public ResponseEntity<Page<ProfissionalDto>> consultar(
+            @RequestParam(required = false) String termoBusca,
+            @SortDefault(sort = "nome", direction = Sort.Direction.ASC)
+            Pageable paginacao) {
+        var registros = servico.consultar(termoBusca, paginacao);
+        var dtos = registros.map(mapper::toDto);
+        return ResponseEntity.ok(dtos);
+    }
+
+    @Override
     @GetMapping("/consultar/{id}")
     public ResponseEntity<ProfissionalDto> consultar(@PathVariable Long id) {
         var registro = servico.consultar(id);
@@ -53,7 +70,7 @@ public class ProfissionalController implements ICrudController<ProfissionalDto> 
 
     @Override
     @PostMapping("/inserir")
-    public ResponseEntity<Long> inserir(@RequestBody @Valid ProfissionalDto objeto) {
+    public ResponseEntity<Long> inserir(@RequestBody @Validated(OnCreate.class) ProfissionalDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
         var registro = servico.salvar(objetoConvertido);
         return ResponseEntity.created(null).body(registro.getId());
@@ -61,7 +78,7 @@ public class ProfissionalController implements ICrudController<ProfissionalDto> 
 
     @Override
     @PutMapping("/atualizar")
-    public ResponseEntity<Void> atualizar(@RequestBody @Valid ProfissionalDto objeto) {
+    public ResponseEntity<Void> atualizar(@RequestBody @Validated(OnUpdate.class) ProfissionalDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
         servico.salvar(objetoConvertido);
         return ResponseEntity.ok().build();

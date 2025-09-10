@@ -2,6 +2,10 @@ package br.ufac.sgcmapi.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +22,7 @@ import br.ufac.sgcmapi.service.ConvenioService;
 
 @RestController
 @RequestMapping("/convenio")
-public class ConvenioController implements ICrudController<Convenio> {
+public class ConvenioController implements ICrudController<Convenio>, IPageController<Convenio> {
 
     private final ConvenioService servico;
 
@@ -30,6 +34,16 @@ public class ConvenioController implements ICrudController<Convenio> {
     @GetMapping("/consultar")
     public ResponseEntity<List<Convenio>> consultar(@RequestParam(required = false) String termoBusca) {
         var registros = servico.consultar(termoBusca);
+        return ResponseEntity.ok(registros);
+    }
+
+    @Override
+    @GetMapping(value = "/consultar", params = "page")
+    public ResponseEntity<Page<Convenio>> consultar(
+            @RequestParam(required = false) String termoBusca,
+            @SortDefault(sort = "nome", direction = Sort.Direction.ASC)
+            Pageable paginacao) {
+        var registros = servico.consultar(termoBusca, paginacao);
         return ResponseEntity.ok(registros);
     }
 

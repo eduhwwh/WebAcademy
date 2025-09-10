@@ -256,3 +256,17 @@ A demonstração de uso das ferramentas e tecnologias abordadas na capacitação
 
     - Link da atividade: <https://classroom.github.com/a/zvqmYqox>
     - Entrega: 08/09/2025 - 18:00
+
+    **Solução:** <https://github.com/webacademyufac/programacao-avancada-back-end-t7/commit/e64ef83>
+
+4. [GRUPO] Documentar todos os endpoints da API do SGCM utilizando o Swagger, seguindo o exemplo apresentado em aula, e atendendo aos seguintes requisitos mínimos:
+
+    - Nomear e descrever todas as classes da camada de controle (**@Tag**).
+    - Descrever todos os endpoints (**@Operation**).
+    - Anotar os parâmetros Pageable com **@ParameterObject**.
+    - Documentar tipos de repostas para entradas inválidas (400), novo item criado (201) e item não encontrado (404).
+      - Para entradas inválidas, o conteúdo do retorno deve ser baseado no tipo `RespostaErro`.
+      - Para itens não encontrados, o retorno não deve ter conteúdo.
+
+    - Link da atividade: <https://classroom.github.com/a/rcznJXB6>
+    - Entrega: 15/09/2025 - 18:00

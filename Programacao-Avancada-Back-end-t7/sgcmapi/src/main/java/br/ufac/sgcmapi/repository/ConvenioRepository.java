@@ -2,6 +2,8 @@ package br.ufac.sgcmapi.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -19,7 +21,7 @@ public interface ConvenioRepository extends JpaRepository<Convenio, Long> {
         OR c.email LIKE %:termoBusca%
         OR c.telefone LIKE %:termoBusca%
     """)
-    public List<Convenio> consultar(String termoBusca);
+    public Page<Convenio> consultar(String termoBusca, Pageable paginacao);
 
     public List<Convenio> findByAtivo(boolean ativo);
     

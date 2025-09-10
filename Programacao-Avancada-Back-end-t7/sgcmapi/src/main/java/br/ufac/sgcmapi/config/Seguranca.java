@@ -4,6 +4,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -53,6 +54,26 @@ public class Seguranca {
     }
 
     @Bean
+    @Order(1)
+    SecurityFilterChain swaggerFilterChain(HttpSecurity http) throws Exception {
+        http.securityMatcher(
+            "/v3/api-docs/**",
+            "/v3/api-docs*",
+            "/swagger-ui/**",
+            "/login",
+            "default-ui.css");
+        http.formLogin(form -> form.defaultSuccessUrl("/swagger-ui/index.html"));
+        http.csrf(csrf -> csrf.disable());
+        http.authenticationProvider(authProvider());
+        http.authorizeHttpRequests(
+            autorizacao -> autorizacao.anyRequest().hasRole("ADMIN")
+        );
+
+        return http.build();
+    }
+
+    @Bean
+    @Order(2)
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // http.httpBasic(withDefaults());
         http.cors(withDefaults());
@@ -64,7 +85,6 @@ public class Seguranca {
         http.authorizeHttpRequests(
             autorizacao -> autorizacao
                 .requestMatchers(HttpMethod.POST, "/login/autenticar").permitAll()
-                .requestMatchers("/v3/api-docs/**", "/v3/api-docs*", "/swagger-ui/**").permitAll()
                 .requestMatchers("/config/**").hasRole("ADMIN")
                 .anyRequest().authenticated());
         

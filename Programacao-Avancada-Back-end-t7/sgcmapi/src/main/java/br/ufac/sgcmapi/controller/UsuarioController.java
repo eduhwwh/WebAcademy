@@ -2,6 +2,10 @@ package br.ufac.sgcmapi.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,10 +24,9 @@ import br.ufac.sgcmapi.service.UsuarioService;
 import br.ufac.sgcmapi.validator.grupos.OnCreate;
 import br.ufac.sgcmapi.validator.grupos.OnUpdate;
 
-
 @RestController
 @RequestMapping("/config/usuario")
-public class UsuarioController implements ICrudController<UsuarioDto> {
+public class UsuarioController implements ICrudController<UsuarioDto>, IPageController<UsuarioDto> {
 
     private final UsuarioService servico;
     private final UsuarioMapper mapper;
@@ -40,6 +43,17 @@ public class UsuarioController implements ICrudController<UsuarioDto> {
     public ResponseEntity<List<UsuarioDto>> consultar(@RequestParam(required = false) String termoBusca) {
         var registros = servico.consultar(termoBusca);
         var dtos = registros.stream().map(mapper::toDto).toList();
+        return ResponseEntity.ok(dtos);
+    }
+
+    @Override
+    @GetMapping(value = "/consultar", params = "page")
+    public ResponseEntity<Page<UsuarioDto>> consultar(
+            @RequestParam(required = false) String termoBusca,
+            @SortDefault(sort = "nomeCompleto", direction = Sort.Direction.ASC)
+            Pageable paginacao) {
+        var registros = servico.consultar(termoBusca, paginacao);
+        var dtos = registros.map(mapper::toDto);
         return ResponseEntity.ok(dtos);
     }
 

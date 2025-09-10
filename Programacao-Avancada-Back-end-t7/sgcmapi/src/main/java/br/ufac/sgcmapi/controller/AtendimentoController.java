@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
 import org.springframework.data.web.SortDefault.SortDefaults;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,18 +26,20 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ufac.sgcmapi.controller.dto.AtendimentoDto;
 import br.ufac.sgcmapi.controller.mapper.AtendimentoMapper;
 import br.ufac.sgcmapi.model.EStatus;
+import br.ufac.sgcmapi.model.RespostaErro;
 import br.ufac.sgcmapi.service.AtendimentoService;
 import br.ufac.sgcmapi.validator.grupos.OnCreate;
 import br.ufac.sgcmapi.validator.grupos.OnUpdate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/atendimento")
-@Tag(name = "Atendimento", description = "Endpoits para gerenciar atendimentos")
+@Tag(name = "Atendimento", description = "Endpoints para gerenciar atendimentos")
 public class AtendimentoController implements ICrudController<AtendimentoDto>, IPageController<AtendimentoDto> {
 
     private final AtendimentoService servico;
@@ -50,7 +53,7 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
     }
 
     @Override
-    @GetMapping("/consultar")
+    @GetMapping(value = "/consultar", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AtendimentoDto>> consultar(
             @RequestParam(required = false) String termoBusca) {
         var registros = servico.consultar(termoBusca);
@@ -58,17 +61,17 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
         return ResponseEntity.ok(dtos);
     }
 
-    @GetMapping(value = "/consultar", params = "status")
+    @GetMapping(value = "/consultar", params = "status", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AtendimentoDto>> consultar(
             @RequestParam(required = false) String termoBusca,
-            @RequestParam List<EStatus> status) {
+            @RequestParam(required = false) List<EStatus> status) {
         var registros = servico.consultar(termoBusca, status);
         var dtos = registros.stream().map(mapper::toDto).toList();
         return ResponseEntity.ok(dtos);
     }
 
     @Override
-    @GetMapping(value = "/consultar", params = "page")
+    @GetMapping(value = "/consultar", params = "page", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<AtendimentoDto>> consultar(
             @RequestParam(required = false) String termoBusca,
             @SortDefaults({
@@ -81,14 +84,14 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
         return ResponseEntity.ok(dtos);
     }
 
-    @GetMapping(value = "/consultar", params = {"page", "status"})
+    @GetMapping(value = "/consultar", params = {"page", "status"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
-        summary = "Obter todos os atendimentos ou filtrar por termo de busca e status (com opcao de paginação)",
-        description = "Obtem uma lista de todos os atendimentos cadastrados no sistema "
+        summary = "Obter todos os atendimentos ou filtrar por termo de busca e status (com opção de paginação)",
+        description = "Obtém uma lista de todos os atendimentos cadastrados no sitema ou que contenham o termo de busca ou o status informado."
     )
     public ResponseEntity<Page<AtendimentoDto>> consultar(
             @RequestParam(required = false) String termoBusca,
-            @RequestParam (required = false)List<EStatus> status,
+            @RequestParam(required = false) List<EStatus> status,
             @SortDefaults({
                 @SortDefault(sort = "data", direction = Sort.Direction.DESC),
                 @SortDefault(sort = "hora", direction = Sort.Direction.ASC)
@@ -100,14 +103,14 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
     }
 
     @Override
-    @GetMapping("/consultar/{id}")
+    @GetMapping(value = "/consultar/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
-        summary = "Obter um atendimento", 
-        description = "Obtem um atendimento cadastrado no sistema baseado no ID informado."
+        summary = "Obter um atendimento",
+        description = "Obtém um atendimento cadastrado no sistema baseado no ID informado."
     )
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Atendimento encontrado"),
-        @ApiResponse(responseCode = "400", description = "Atendimento não encontrado", content =  @Content())
+        @ApiResponse(responseCode = "404", description = "Atendimento não encontrado", content = @Content())
     })
     public ResponseEntity<AtendimentoDto> consultar(@PathVariable Long id) {
         var registro = servico.consultar(id);
@@ -119,7 +122,18 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
     }
 
     @Override
-    @PostMapping("/inserir")
+    @PostMapping(value = "/inserir", produces = MediaType.TEXT_PLAIN_VALUE)
+    @Operation(
+        summary = "Cadastrar um novo atendimento",
+        description = "Cadastra um novo atendimento no sistema."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Atendimento cadastrado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos", content = @Content(
+            mediaType = MediaType.APPLICATION_JSON_VALUE,
+            schema = @Schema(implementation = RespostaErro.class)
+        ))
+    })
     public ResponseEntity<Long> inserir(@RequestBody @Validated(OnCreate.class) AtendimentoDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
         var registro = servico.salvar(objetoConvertido);
@@ -127,7 +141,18 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
     }
 
     @Override
-    @PutMapping("/atualizar")
+    @PutMapping(value = "/atualizar", produces = MediaType.TEXT_PLAIN_VALUE)
+    @Operation(
+        summary = "Atualizar um novo atendimento",
+        description = "Atualiza um novo atendimento no sistema."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Atendimento atualizado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos", content = @Content(
+            mediaType = MediaType.APPLICATION_JSON_VALUE,
+            schema = @Schema(implementation = RespostaErro.class)
+        ))
+    })
     public ResponseEntity<Void> atualizar(@RequestBody @Validated(OnUpdate.class) AtendimentoDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
         servico.salvar(objetoConvertido);

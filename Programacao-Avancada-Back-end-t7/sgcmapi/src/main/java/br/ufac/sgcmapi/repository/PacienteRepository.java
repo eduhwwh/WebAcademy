@@ -1,6 +1,7 @@
 package br.ufac.sgcmapi.repository;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -17,6 +18,6 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
         OR p.cep LIKE %:termoBusca%
         OR p.endereco LIKE %:termoBusca%
     """)
-    public List<Paciente> consultar(String termoBusca);
+    public Page<Paciente> consultar(String termoBusca, Pageable paginacao);
     
 }

@@ -1,7 +1,7 @@
 package br.ufac.sgcmapi.repository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -21,6 +21,6 @@ public interface ProfissionalRepository extends JpaRepository<Profissional, Long
         OR e.nome LIKE %:termoBusca%
         OR u.nome LIKE %:termoBusca%
     """)
-    public List<Profissional> consultar(String termoBusca);
+    public Page<Profissional> consultar(String termoBusca, Pageable paginacao);
     
 }

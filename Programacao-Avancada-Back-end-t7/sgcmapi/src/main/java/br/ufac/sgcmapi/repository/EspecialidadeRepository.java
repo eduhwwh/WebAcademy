@@ -1,7 +1,7 @@
 package br.ufac.sgcmapi.repository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,6 +14,6 @@ public interface EspecialidadeRepository extends JpaRepository<Especialidade, Lo
         WHERE :termoBusca IS NULL
         OR e.nome LIKE %:termoBusca%
     """)
-    public List<Especialidade> consultar(String termoBusca);
+    public Page<Especialidade> consultar(String termoBusca, Pageable paginacao);
     
 }

@@ -2,6 +2,10 @@ package br.ufac.sgcmapi.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +22,7 @@ import br.ufac.sgcmapi.service.EspecialidadeService;
 
 @RestController
 @RequestMapping("/config/especialidade")
-public class EspecialidadeController implements ICrudController<Especialidade> {
+public class EspecialidadeController implements ICrudController<Especialidade>, IPageController<Especialidade> {
 
     private EspecialidadeService servico;
 
@@ -30,6 +34,16 @@ public class EspecialidadeController implements ICrudController<Especialidade> {
     @GetMapping("/consultar")
     public ResponseEntity<List<Especialidade>> consultar(@RequestParam(required = false) String termoBusca) {
         var registros = servico.consultar(termoBusca);
+        return ResponseEntity.ok(registros);
+    }
+
+    @Override
+    @GetMapping(value = "/consultar", params = "page")
+    public ResponseEntity<Page<Especialidade>> consultar(
+            @RequestParam(required = false) String termoBusca,
+            @SortDefault(sort = "nome", direction = Sort.Direction.ASC)
+            Pageable paginacao) {
+        var registros = servico.consultar(termoBusca, paginacao);
         return ResponseEntity.ok(registros);
     }
 
