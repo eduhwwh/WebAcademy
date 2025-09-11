@@ -1,0 +1,9 @@
+{
+    "markdownlint.config": {
+        "MD033": {
+            "allowed_elements": ["details", "summary", "h2"]
+        },
+        "MD028": false
+    },
+    "java.configuration.updateBuildConfiguration": "automatic"
+}
