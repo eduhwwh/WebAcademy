@@ -270,3 +270,13 @@ A demonstração de uso das ferramentas e tecnologias abordadas na capacitação
 
     - Link da atividade: <https://classroom.github.com/a/rcznJXB6>
     - Entrega: 15/09/2025 - 18:00
+
+5. [GRUPO] Implementar o armazenamento em cache para os métodos da classes da camada de serviço do SGCM, seguindo o mesmo padrão adotado no exemplo apresentado em aula.
+
+    - O método consultar(termoBusca) e consultar(termoBusca, page) só devem utilizar cache quando termoBusca for nulo ou vazio.
+    - O método consultar(id) só deve utilizar cache quando o resultado não for nulo.
+    - O método consultar(objeto) e remover(id) devem limpar o cache para todos os registros.
+    - O método consultar(objeto) e remover(id) devem limpar o cache para o registro atualizado.
+
+    - Link da atividade: <https://classroom.github.com/a/t4gx9OUl>
+    - Entrega: 15/09/2025 - 18:00

@@ -6,9 +6,10 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 
 @Configuration
 public class CacheConfig {
-    
+
     @Bean
-    RedisCacheConfiguration config(){
-        return RedisCacheConfiguration.defaultCacheConfig(); 
+    RedisCacheConfiguration config() {
+        return RedisCacheConfiguration.defaultCacheConfig();
     }
+    
 }

@@ -33,7 +33,13 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
     }
 
     @Override
+    @Cacheable(
+        value = "atendimentos",
+        key = "'todos'",
+        condition = "#termoBusca == null or #termoBusca.isBlank()"
+    )
     public List<Atendimento> consultar(String termoBusca) {
+        System.out.println("Consultando todos sem cache");
         return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), null, PAGINACAO).getContent();
     }
 
@@ -41,14 +47,14 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
         return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), status, PAGINACAO).getContent();
     }
 
-
     @Override
     @Cacheable(
-        value = "atendimento",
-        key = "'paginado' + '-page:' + #paginacao.pegeNumber + '-size:' + #paginacao.pagesize + '-sort:' + #paginacao.sort.toString()",
-    condition = "#termoBusca == null or #termoBusca.isBlank()"
+        value = "atendimentos",
+        key = "'paginado' + '-page:' + #paginacao.pageNumber + '-size:' + #paginacao.pageSize + '-sort:' + #paginacao.sort.toString()",
+        condition = "#termoBusca == null or #termoBusca.isBlank()"
     )
     public Page<Atendimento> consultar(String termoBusca, Pageable paginacao) {
+        System.out.println("Consultando paginado sem cache");
         return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), null, paginacao);
     }
 
@@ -70,7 +76,6 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
             @CacheEvict(value = "atendimentos", allEntries = true)
         }
     )
-    
     public Atendimento salvar(Atendimento objeto) {
         System.out.println("Salvando atendimento.");
         return repo.save(objeto);
@@ -79,7 +84,7 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
     @Override
     @Caching(
         evict = {
-            @CacheEvict(value = "atendimento", key = "#objeto.id"),
+            @CacheEvict(value = "atendimento", key = "#id"),
             @CacheEvict(value = "atendimentos", allEntries = true)
         }
     )
@@ -92,9 +97,8 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
     }
 
     @Caching(
-        put = {@CachePut(value = "atendimento", key = "#id")},
-        evict = {@CacheEvict(value = "atendimentos", allEntries = true)} 
-        
+        put = { @CachePut(value = "atendimento", key = "#id") },
+        evict = { @CacheEvict(value = "atendimentos", allEntries = true) }
     )
     public Atendimento atualizarStatus(Long id) {
         var registro = this.consultar(id);
