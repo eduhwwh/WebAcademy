@@ -18,10 +18,10 @@
         <tr>
             <td class="fit">{{ item.data | date: 'dd/MM/yyyy' }}</td>
             <td class="fit">{{ item.hora | slice: 0:5 }}</td>
-            <td>{{ item.paciente.nome }}</td>
-            <td>{{ item.profissional.nome }}</td>
-            <td>{{ item.profissional.unidade.nome }}</td>
-            <td>{{ item.convenio?.nome || 'Sem convênio' }}</td>
+            <td>{{ item.paciente_nome }}</td>
+            <td>{{ item.profissional_nome }}</td>
+            <td>{{ item.unidade_nome }}</td>
+            <td>{{ item.convenio_nome || 'Sem convênio' }}</td>
             <td>
                 <a (click)="atualizarStatus(item.id)"
                    class="botao chegada"

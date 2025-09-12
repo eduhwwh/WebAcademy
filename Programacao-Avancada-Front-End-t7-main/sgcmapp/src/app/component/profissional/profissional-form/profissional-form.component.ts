@@ -43,10 +43,6 @@ export class ProfissionalFormComponent implements ICrudForm<Profissional>, OnIni
   registro: Profissional = <Profissional>{};
   especialidades: Especialidade[] = [];
   unidades: Unidade[] = [];
-
-  compareById = (a: any, b: any) => {
-    return a && b && a.id == b.id || !a && !b;
-  }
   
   salvar(): void {
     this.servico.salvar(this.registro).subscribe({

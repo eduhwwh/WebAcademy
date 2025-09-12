@@ -4,19 +4,17 @@
 
         <label for="profissional">Profissional</label>
         <select name="profissional" id="profissional" required
-                [(ngModel)]="registro.profissional"
-                [compareWith]="compararPorId">
+                [(ngModel)]="registro.profissional_id">
             @for (item of profissionais; track item.id) {
-                <option [ngValue]="item">{{item.nome}}</option>
+                <option [ngValue]="item.id">{{item.nome}}</option>
             }
         </select>
 
         <label for="paciente">Paciente</label>
         <select name="paciente" id="paciente" required
-                [(ngModel)]="registro.paciente"
-                [compareWith]="compararPorId">
+                [(ngModel)]="registro.paciente_id">
             @for (item of pacientes; track item.id) {
-                <option [ngValue]="item">{{item.nome}}</option>
+                <option [ngValue]="item.id">{{item.nome}}</option>
             }
         </select>
 
@@ -45,11 +43,10 @@
 
         <label for="convenio">Convênio</label>
         <select name="convenio" id="convenio"
-                [(ngModel)]="registro.convenio"
-                [compareWith]="compararPorId">
+                [(ngModel)]="registro.convenio_id">
             <option [ngValue]="null">Sem convênio</option>
             @for (item of convenios; track item.id) {
-                <option [ngValue]="item">{{item.nome}}</option>
+                <option [ngValue]="item.id">{{item.nome}}</option>
             }
         </select>
 

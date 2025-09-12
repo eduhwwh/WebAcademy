@@ -22,7 +22,6 @@ public record AtendimentoDto(
     Long profissional_id,
     String profissional_nome,
     String unidade_nome,
-    @NotNull(groups = { OnCreate.class, OnUpdate.class })
     Long convenio_id,
     String convenio_nome,
     @NotNull(groups = { OnCreate.class, OnUpdate.class })
