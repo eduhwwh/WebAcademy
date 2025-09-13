@@ -1,4 +1,5 @@
-body, app-root {
+body,
+app-root {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -8,25 +9,28 @@ app-root {
     flex-direction: column;
 }
 
-html, body, app-root {
+html,
+body,
+app-root {
     height: 100%;
 }
 
 /* Header e Footer */
 
-div#logo span {
-    font-weight: bold;
-    font-size: 2em;
-}
-
 div#logo {
     margin: auto 0;
+
+    span {
+        font-weight: bold;
+        font-size: 2em;
+    }
+
+    * {
+        vertical-align: middle;
+        margin-left: 0.5em;
+    }
 }
 
-div#logo * {
-    vertical-align: middle;
-    margin-left: 0.5em;
-}
 
 header {
     background-image: linear-gradient(#003366, #006699);
@@ -40,17 +44,23 @@ footer {
     background-color: #003366;
 }
 
-header, footer {
+header,
+footer {
     color: white;
     padding: 0.5em;
 }
 
 footer a {
     color: inherit;
+    
+    span{
+        @extend %shared-span;
+    }
 }
 
-div#usuarioInfo a.botao {
-    border: 1px solid white;
+%shared-span{
+    display: block;
+    margin-bottom: 0.5em;
 }
 
 div#usuarioInfo span,
@@ -58,8 +68,14 @@ footer span {
     display: block;
     margin-bottom: 0.5em;
 }
+
 div#usuarioInfo {
     text-align: right;
+
+    a.botao {
+        border: 1px solid white;
+    }
+
 }
 
 @media screen and (max-width: 450px) {
@@ -111,7 +127,9 @@ input[type="submit"] {
     height: 2em;
 }
 
-input, select, a.botao {
+input,
+select,
+a.botao {
     font-size: 1em;
 }
 
@@ -180,7 +198,8 @@ form.inativo {
     display: none;
 }
 
-input, select {
+input,
+select {
     height: 2em;
     border-width: 1px;
     border-style: solid;
@@ -241,7 +260,8 @@ table {
     overflow-x: auto;
 }
 
-table td, table th {
+table td,
+table th {
     padding: 0.5em;
 }
 
@@ -354,7 +374,11 @@ div#comandos {
 
 @media print {
 
-    header, nav, footer, form, div#comandos {
+    header,
+    nav,
+    footer,
+    form,
+    div#comandos {
         display: none;
     }
 
@@ -368,7 +392,8 @@ div#comandos {
         background-color: none;
     }
 
-    table th, table td {
+    table th,
+    table td {
         border: 1px solid black;
     }
 
