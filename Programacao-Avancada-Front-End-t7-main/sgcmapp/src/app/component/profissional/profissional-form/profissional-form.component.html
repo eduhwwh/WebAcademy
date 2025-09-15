@@ -4,6 +4,7 @@
 
     <label for="nome">Nome</label>
     <input type="text" name="nome" id="nome" required
+        class="form-control"
       [(ngModel)]="registro.nome">
 
     <label for="registroConselho">Registro</label>
@@ -12,6 +13,7 @@
 
     <label for="especialidade">Especialidade</label>
     <select name="especialidade" id="especialidade" required
+          class="form-control"
         [(ngModel)]="registro.especialidade_id">
       @for (item of especialidades; track item) {
         <option [ngValue]="item.id">{{item.nome}}</option>
@@ -20,6 +22,7 @@
 
     <label for="unidade">Unidade</label>
     <select name="unidade" id="unidade" required
+          class="form-control"
         [(ngModel)]="registro.unidade_id">
       @for (item of unidades; track item) {
         <option [ngValue]="item.id">{{item.nome}}</option>
