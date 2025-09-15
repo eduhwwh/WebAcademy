@@ -8,10 +8,11 @@ import { EspecialidadeService } from '../../../service/especialidade.service';
 import { ProfissionalService } from '../../../service/profissional.service';
 import { UnidadeService } from '../../../service/unidade.service';
 import { ICrudForm } from '../../i-crud-form';
+import { NgClass } from "../../../../../node_modules/@angular/common/common_module.d-NEF7UaHr";
 
 @Component({
   selector: 'app-profissional-form',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, NgClass],
   templateUrl: './profissional-form.component.html',
   styles: ``
 })
