@@ -12,7 +12,7 @@ import { NgClass } from "../../../../../node_modules/@angular/common/common_modu
 
 @Component({
   selector: 'app-profissional-form',
-  imports: [FormsModule, RouterLink, NgClass],
+  imports: [FormsModule, RouterLink],
   templateUrl: './profissional-form.component.html',
   styles: ``
 })

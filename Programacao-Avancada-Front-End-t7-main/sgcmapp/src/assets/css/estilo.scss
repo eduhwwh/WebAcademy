@@ -124,7 +124,7 @@ a.botao {
     &.chegada,
     &.iniciar,
     &.finalizar {
-        width: 5.5em;
+        width: 6.5em;
     }
     &.confirmacao {
         @include corBotao($cor-botao-confirmacao);

@@ -25,15 +25,27 @@
             <td>
                 <a (click)="atualizarStatus(item.id)"
                    class="botao chegada"
-                   [ngClass]="{ 'inativo': item.status == 'AGENDADO' }"><i class="bi bi-check2-all"></i>CHEGADA></i></a>
+                   [ngClass]="{ 'inativo': item.status == 'AGENDADO' }"
+                   ngbTooltip="Informar chegada">
+                   <i class="bi bi-check2-all"></i>
+                   Chegada</a>
                 <a (click)="atualizarStatus(item.id)"
                    class="botao confirmacao"
-                   [ngClass]="{ 'inativo': item.status == 'CONFIRMADO' }"><i class="bi bi-check2"></i>></i>Confirmar</a>
+                   [ngClass]="{ 'inativo': item.status == 'CONFIRMADO' }"
+                   ngbTooltip="Confirmar agendamento">
+                   <i class="bi bi-check2"></i>
+                   Confirmar</a>
                 <a routerLink="/agenda-form"
                    [queryParams]="{id: item.id}"
-                   class="botao">Editar</a>
+                   class="botao"
+                   ngbTooltip="Editar agendamento">
+                   <i class="bi bi-pencil-square"></i>
+                   Editar</a>
                 <a (click)="remover(item.id)"
-                   class="botao excluir">Cancelar</a>
+                   class="botao excluir"
+                   ngbTooltip="Cancelar agendamento">
+                   <i class="bi bi-x-square"></i>
+                   Cancelar</a>
             </td>
         </tr>
         }

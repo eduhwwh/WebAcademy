@@ -5,16 +5,19 @@ import { Atendimento } from '../../../model/atendimento';
 import { AtendimentoService } from '../../../service/atendimento.service';
 import { BarraComandosComponent } from "../../barra-comandos/barra-comandos.component";
 import { ICrudList } from '../../i-crud-list';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmacaoService } from '../../../service/confirmacao.service';
 
 @Component({
   selector: 'app-agenda-list',
-  imports: [CommonModule, BarraComandosComponent, RouterLink],
+  imports: [CommonModule, BarraComandosComponent, RouterLink, NgbTooltipModule],
   templateUrl: './agenda-list.component.html',
   styles: ``
 })
 export class AgendaListComponent implements ICrudList<Atendimento>, OnInit {
 
   private servico = inject(AtendimentoService);
+  private confirmacao = inject(ConfirmacaoService);
 
   ngOnInit(): void {
     this.consultar();
@@ -37,8 +40,11 @@ export class AgendaListComponent implements ICrudList<Atendimento>, OnInit {
     }
   }
   
-  atualizarStatus(id: number): void {
-    if (confirm('Confirma alteração no status do agendamento?')) {
+  async atualizarStatus(id: number): Promise<void> {
+    const confirmado = await this.confirmacao.confirmar(
+      'Confirma alteração no status do agendamento?'
+    );
+    if (confirmado) {
       this.servico.atualizarStatus(id).subscribe({
         next: status => alert(`Status alterado para ${status}`),
         complete: () => this.consultar()
