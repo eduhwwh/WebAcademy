@@ -2,6 +2,9 @@ package br.ufac.sgcmapi.service;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,26 +27,45 @@ public class UnidadeService implements ICrudService<Unidade>, IPageService<Unida
     }
 
     @Override
+    @Cacheable(
+        value = "unidades",
+        key = "'todos'",
+        condition = "#termoBusca == null or #termoBusca.isBlank()"
+    )
     public List<Unidade> consultar(String termoBusca) {
         return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), PAGINACAO).getContent();
     }
 
     @Override
+    @Cacheable(
+        value = "unidades",
+        key = "'paginado' + '-page:' + #paginacao.pageNumber + '-size:' + #paginacao.pageSize + '-sort:' + #paginacao.sort.toString()",
+        condition = "#termoBusca == null or #termoBusca.isBlank()"
+    )
     public Page<Unidade> consultar(String termoBusca, Pageable paginacao) {
         return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), paginacao);
     }
 
     @Override
+    @Cacheable(value = "unidade", unless = "#result == null")
     public Unidade consultar(Long id) {
         return repo.findById(id).orElse(null);
     }
 
     @Override
+    @Caching(evict = {
+        @CacheEvict(value = "unidade", key = "#objeto.id"),
+        @CacheEvict(value = "unidades", allEntries = true)
+    })
     public Unidade salvar(Unidade objeto) {
         return repo.save(objeto);
     }
 
     @Override
+    @Caching(evict = {
+        @CacheEvict(value = "unidade", key = "#id"),
+        @CacheEvict(value = "unidades", allEntries = true)
+    })
     public void remover(Long id) {
         repo.deleteById(id);        
     }

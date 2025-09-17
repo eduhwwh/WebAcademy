@@ -25,8 +25,7 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
 
     private static final Pageable PAGINACAO = Pageable.unpaged(
         Sort.by(Sort.Direction.DESC, "data")
-        .and(Sort.by(Sort.Direction.ASC, "hora"))
-    );
+        .and(Sort.by(Sort.Direction.ASC, "hora")));
 
     public AtendimentoService(AtendimentoRepository repo) {
         this.repo = repo;
@@ -39,6 +38,7 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
         condition = "#termoBusca == null or #termoBusca.isBlank()"
     )
     public List<Atendimento> consultar(String termoBusca) {
+        System.out.println("Consultando todos sem cache");
         return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), null, PAGINACAO).getContent();
     }
 
@@ -53,6 +53,7 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
         condition = "#termoBusca == null or #termoBusca.isBlank()"
     )
     public Page<Atendimento> consultar(String termoBusca, Pageable paginacao) {
+        System.out.println("Consultando paginado sem cache");
         return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), null, paginacao);
     }
 
@@ -63,28 +64,25 @@ public class AtendimentoService implements ICrudService<Atendimento>, IPageServi
     @Override
     @Cacheable(value = "atendimento", unless = "#result == null")
     public Atendimento consultar(Long id) {
+        System.out.println("Consultando atendimento " + id + " sem cache.");
         return repo.findById(id).orElse(null);
     }
 
     @Override
-    @Caching(
-        evict = {
-            @CacheEvict(value = "atendimento", key = "#objeto.id"),
-            @CacheEvict(value = "atendimentos", allEntries = true)
-        }
-    )
+    @Caching(evict = {
+        @CacheEvict(value = "atendimento", key = "#objeto.id"),
+        @CacheEvict(value = "atendimentos", allEntries = true)
+    })
     public Atendimento salvar(Atendimento objeto) {
         System.out.println("Salvando atendimento.");
         return repo.save(objeto);
     }
 
     @Override
-    @Caching(
-        evict = {
-            @CacheEvict(value = "atendimento", key = "#id"),
-            @CacheEvict(value = "atendimentos", allEntries = true)
-        }
-    )
+    @Caching(evict = {
+        @CacheEvict(value = "atendimento", key = "#id"),
+        @CacheEvict(value = "atendimentos", allEntries = true)
+    })
     public void remover(Long id) {
         var registro = this.consultar(id);
         if (registro != null) {

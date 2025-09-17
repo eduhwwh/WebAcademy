@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,12 +21,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.ufac.sgcmapi.controller.dto.ProfissionalDto;
 import br.ufac.sgcmapi.controller.mapper.ProfissionalMapper;
+import br.ufac.sgcmapi.model.RespostaErro;
 import br.ufac.sgcmapi.service.ProfissionalService;
 import br.ufac.sgcmapi.validator.grupos.OnCreate;
 import br.ufac.sgcmapi.validator.grupos.OnUpdate;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
 
 @RestController
 @RequestMapping("/profissional")
+@Tag(name = "Profissional", description = "Endpoints para gerenciar profissionais")
 public class ProfissionalController implements ICrudController<ProfissionalDto>, IPageController<ProfissionalDto> {
 
     private final ProfissionalService servico;
@@ -48,10 +58,13 @@ public class ProfissionalController implements ICrudController<ProfissionalDto>,
 
     @Override
     @GetMapping(value = "/consultar", params = "page")
+    @Operation(
+        summary = "Obter todos os profissionais ou filtrar por termo de busca (com opção de paginação)",
+        description = "Obtém uma lista de todos os profissionais cadastrados no sistema ou que contenham o termo de busca informado.")
     public ResponseEntity<Page<ProfissionalDto>> consultar(
             @RequestParam(required = false) String termoBusca,
             @SortDefault(sort = "nome", direction = Sort.Direction.ASC)
-            Pageable paginacao) {
+            @ParameterObject Pageable paginacao) {
         var registros = servico.consultar(termoBusca, paginacao);
         var dtos = registros.map(mapper::toDto);
         return ResponseEntity.ok(dtos);
@@ -59,6 +72,13 @@ public class ProfissionalController implements ICrudController<ProfissionalDto>,
 
     @Override
     @GetMapping("/consultar/{id}")
+    @Operation(
+        summary = "Obter um profissional",
+        description = "Obtém um profissional cadastrado no sistema baseado no ID informado.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Profissional encontrado"),
+        @ApiResponse(responseCode = "404", description = "Profissional não encontrado", content = @Content())
+    })
     public ResponseEntity<ProfissionalDto> consultar(@PathVariable Long id) {
         var registro = servico.consultar(id);
         if (registro == null) {
@@ -69,7 +89,16 @@ public class ProfissionalController implements ICrudController<ProfissionalDto>,
     }
 
     @Override
-    @PostMapping("/inserir")
+    @PostMapping(value = "/inserir", produces = MediaType.TEXT_PLAIN_VALUE)
+    @Operation(
+        summary = "Cadastrar um novo profissional",
+        description = "Cadastra um novo profissional no sistema.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Profissional cadastrado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos", content = @Content(
+            mediaType = MediaType.APPLICATION_JSON_VALUE,
+            schema = @Schema(implementation = RespostaErro.class)))
+    })
     public ResponseEntity<Long> inserir(@RequestBody @Validated(OnCreate.class) ProfissionalDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
         var registro = servico.salvar(objetoConvertido);
@@ -77,7 +106,16 @@ public class ProfissionalController implements ICrudController<ProfissionalDto>,
     }
 
     @Override
-    @PutMapping("/atualizar")
+    @PutMapping(value = "/atualizar", produces = MediaType.TEXT_PLAIN_VALUE)
+    @Operation(
+        summary = "Atualizar um profissional",
+        description = "Atualiza um profissional cadastrado no sistema.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Profissional atualizado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos", content = @Content(
+            mediaType = MediaType.APPLICATION_JSON_VALUE,
+            schema = @Schema(implementation = RespostaErro.class)))
+    })
     public ResponseEntity<Void> atualizar(@RequestBody @Validated(OnUpdate.class) ProfissionalDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
         servico.salvar(objetoConvertido);
@@ -85,7 +123,10 @@ public class ProfissionalController implements ICrudController<ProfissionalDto>,
     }
 
     @Override
-    @DeleteMapping("/remover/{id}")
+    @DeleteMapping(value = "/remover/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
+    @Operation(
+        summary = "Remover um profissional",
+        description = "Remove um profissional cadastrado no sistema.")
     public ResponseEntity<Void> remover(@PathVariable Long id) {
         servico.remover(id);
         return ResponseEntity.ok().build();

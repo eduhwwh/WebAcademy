@@ -1,8 +1,7 @@
-@for(notificacao of servico.notificacoes(); track $index){
-    <ngb-toast [class] ="'bg-' + notificacao.tipo + ' text-light p-2'"
-        (hidden)="fechar($index)">
-
-    {{notificacao.mensagem}}
-        
+@for (notificacao of servico.notificacoes(); track $index) {
+    <ngb-toast
+            [class]="'bg-' + notificacao.tipo + ' text-light p-2'"
+            (hidden)="fechar($index)">
+        {{notificacao.mensagem}}
     </ngb-toast>
 }

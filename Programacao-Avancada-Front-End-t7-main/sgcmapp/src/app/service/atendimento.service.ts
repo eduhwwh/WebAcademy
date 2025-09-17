@@ -1,4 +1,4 @@
- import { inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ICrudService } from './i-crud-service';
 import { Atendimento } from '../model/atendimento';
 import { Observable } from 'rxjs';
@@ -12,7 +12,6 @@ import { RespostaPaginada } from '../model/resposta-paginada';
   providedIn: 'root'
 })
 export class AtendimentoService implements ICrudService<Atendimento>, IPageService<Atendimento> {
-
 
   private http = inject(HttpClient);
 
@@ -31,7 +30,8 @@ export class AtendimentoService implements ICrudService<Atendimento>, IPageServi
 
     return this.http.get<Atendimento[]>(url, { params: parametros });
   }
-  consutarPaginado(termoBusca?: string, paginacao?: RequisicaoPaginada): Observable<RespostaPaginada<Atendimento>> {
+
+  consultarPaginado(termoBusca?: string, paginacao?: RequisicaoPaginada, status?: string[]): Observable<RespostaPaginada<Atendimento>> {
     let url = `${this.apiUrl}/consultar`;
     let parametros = new HttpParams();
 
@@ -41,8 +41,12 @@ export class AtendimentoService implements ICrudService<Atendimento>, IPageServi
     if (status) {
       parametros = parametros.set('status', status.join(','));
     }
+    if (paginacao) {
+      parametros = parametros.set('page', paginacao.page);
+      parametros = parametros.set('size', paginacao.size);
+    }
 
-    return this.http.get<Atendimento[]>(url, { params: parametros });
+    return this.http.get<RespostaPaginada<Atendimento>>(url, { params: parametros });
   }
 
   consultarPorId(id: number): Observable<Atendimento> {

@@ -15,9 +15,7 @@ import { CommonModule } from '@angular/common';
 export class NotificacaoComponent {
   servico = inject(NotificacaoService);
 
-  fechar(indice: number): void{
+  fechar(indice: number): void {
     this.servico.remover(indice);
-
   }
-
 }

@@ -84,30 +84,28 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
         return ResponseEntity.ok(dtos);
     }
 
-    @GetMapping(value = "/consultar", params = {"page", "status"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/consultar", params = {"status", "page"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Obter todos os atendimentos ou filtrar por termo de busca e status (com opção de paginação)",
-        description = "Obtém uma lista de todos os atendimentos cadastrados no sitema ou que contenham o termo de busca ou o status informado."
-    )
+        description = "Obtém uma lista de todos os atendimentos cadastrados no sistema ou que contenham o termo de busca ou o status informado.")
     public ResponseEntity<Page<AtendimentoDto>> consultar(
             @RequestParam(required = false) String termoBusca,
-            @RequestParam(required = false) List<EStatus> status,
+            @RequestParam List<EStatus> status,
             @SortDefaults({
                 @SortDefault(sort = "data", direction = Sort.Direction.DESC),
                 @SortDefault(sort = "hora", direction = Sort.Direction.ASC)
             })
-            @ParameterObject Pageable paginacao) {
+           Pageable paginacao) {
         var registros = servico.consultar(termoBusca, status, paginacao);
         var dtos = registros.map(mapper::toDto);
         return ResponseEntity.ok(dtos);
     }
 
     @Override
-    @GetMapping(value = "/consultar/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/consultar/{id}")
     @Operation(
         summary = "Obter um atendimento",
-        description = "Obtém um atendimento cadastrado no sistema baseado no ID informado."
-    )
+        description = "Obtém um atendimento cadastrado no sistema baseado no ID informado.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Atendimento encontrado"),
         @ApiResponse(responseCode = "404", description = "Atendimento não encontrado", content = @Content())
@@ -125,14 +123,12 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
     @PostMapping(value = "/inserir", produces = MediaType.TEXT_PLAIN_VALUE)
     @Operation(
         summary = "Cadastrar um novo atendimento",
-        description = "Cadastra um novo atendimento no sistema."
-    )
+        description = "Cadastra um novo atendimento no sistema.")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Atendimento cadastrado com sucesso"),
+        @ApiResponse(responseCode = "201", description = "Atendimento cadastrado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos", content = @Content(
             mediaType = MediaType.APPLICATION_JSON_VALUE,
-            schema = @Schema(implementation = RespostaErro.class)
-        ))
+            schema = @Schema(implementation = RespostaErro.class)))
     })
     public ResponseEntity<Long> inserir(@RequestBody @Validated(OnCreate.class) AtendimentoDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
@@ -143,15 +139,13 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
     @Override
     @PutMapping(value = "/atualizar", produces = MediaType.TEXT_PLAIN_VALUE)
     @Operation(
-        summary = "Atualizar um novo atendimento",
-        description = "Atualiza um novo atendimento no sistema."
-    )
+        summary = "Atualizar um atendimento",
+        description = "Atualiza um atendimento cadastrado no sistema.")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Atendimento atualizado com sucesso"),
+        @ApiResponse(responseCode = "201", description = "Atendimento atualizado com sucesso"),
         @ApiResponse(responseCode = "400", description = "Dados inválidos", content = @Content(
             mediaType = MediaType.APPLICATION_JSON_VALUE,
-            schema = @Schema(implementation = RespostaErro.class)
-        ))
+            schema = @Schema(implementation = RespostaErro.class)))
     })
     public ResponseEntity<Void> atualizar(@RequestBody @Validated(OnUpdate.class) AtendimentoDto objeto) {
         var objetoConvertido = mapper.toEntity(objeto);
@@ -160,19 +154,28 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
     }
 
     @Override
-    @DeleteMapping("/remover/{id}")
+    @DeleteMapping(value = "/remover/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
+    @Operation(
+        summary = "Cancelar um agendamento",
+        description = "Altera o status de um agendamento para CANCELADO.")
     public ResponseEntity<Void> remover(@PathVariable Long id) {
         servico.remover(id);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/status/{id}")
+    @PutMapping(value = "/status/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(
+        summary = "Atualizar o status de um atendimento",
+        description = "Altera o status para o próximo valor de acordo com o fluxo de atendimento: AGENDADO > CONFIRMADO > CHEGADA > ATENDIMENTO > ENCERRADO.")
     public ResponseEntity<EStatus> atualizarStatus(@PathVariable Long id) {
         var registro = servico.atualizarStatus(id);
         return ResponseEntity.ok(registro.getStatus());
     }
 
-    @GetMapping("/horarios-ocupados-profissional")
+    @GetMapping(value = "/horarios-ocupados-profissional", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(
+        summary = "Obter horários ocupados para um profissional",
+        description = "Obtém uma lista de horários ocupados para um profissional em uma determinada data.")
     public ResponseEntity<List<LocalTime>> consultarHorariosOcupadosProfissional(
             Long id,
             LocalDate data) {
@@ -180,7 +183,10 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
         return ResponseEntity.ok(horarios);
     }
 
-    @GetMapping("/horarios-ocupados-paciente")
+    @GetMapping(value = "/horarios-ocupados-paciente", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(
+        summary = "Obter horários ocupados para um paciente",
+        description = "Obtém uma lista de horários ocupados para um paciente em uma determinada data.")
     public ResponseEntity<List<LocalTime>> consultarHorariosOcupadosPaciente(
             Long id,
             LocalDate data) {

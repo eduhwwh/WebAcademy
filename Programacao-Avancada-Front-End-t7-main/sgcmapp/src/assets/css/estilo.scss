@@ -375,3 +375,9 @@ div#comandos {
     }
 
 }
+
+/* AppAtendimento */
+
+app-atendimento div#comandos a#add {
+    visibility: hidden;
+}

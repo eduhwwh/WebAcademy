@@ -2,9 +2,13 @@ package br.ufac.sgcmapi.service;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -24,33 +28,55 @@ public class UsuarioService implements ICrudService<Usuario>, IPageService<Usuar
     }
 
     @Override
+    @Cacheable(
+        value = "usuarios",
+        key = "'todos'",
+        condition = "#termoBusca == null or #termoBusca.isBlank()"
+    )
     public List<Usuario> consultar(String termoBusca) {
         return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), PAGINACAO).getContent();
     }
 
     @Override
+    @Cacheable(
+        value = "usuarios",
+        key = "'paginado' + '-page:' + #paginacao.pageNumber + '-size:' + #paginacao.pageSize + '-sort:' + #paginacao.sort.toString()",
+        condition = "#termoBusca == null or #termoBusca.isBlank()"
+    )
     public Page<Usuario> consultar(String termoBusca, Pageable paginacao) {
         return repo.consultar(StringUtils.trimAllWhitespace(termoBusca), paginacao);
     }
 
     @Override
+    @Cacheable(value = "usuario", unless = "#result == null")
     public Usuario consultar(Long id) {
         return repo.findById(id).orElse(null);
     }
 
     @Override
+    @Caching(evict = {
+        @CacheEvict(value = "usuario", key = "#objeto.id"),
+        @CacheEvict(value = "usuarios", allEntries = true)
+    })
     public Usuario salvar(Usuario objeto) {
         if (objeto.getSenha() == null || objeto.getSenha().isBlank()) {
-            var id = objeto.getId();
-            var usuario = consultar(id);
+            var usuario = this.consultar(objeto.getId());
             if (usuario != null) {
                 objeto.setSenha(usuario.getSenha());
             }
+        } else {
+            var encoder = new BCryptPasswordEncoder();
+            var senhaCriptografada = encoder.encode(objeto.getSenha());
+            objeto.setSenha(senhaCriptografada);
         }
         return repo.save(objeto);
     }
 
     @Override
+    @Caching(evict = {
+        @CacheEvict(value = "usuario", key = "#id"),
+        @CacheEvict(value = "usuarios", allEntries = true)
+    })
     public void remover(Long id) {
         repo.deleteById(id);
     }

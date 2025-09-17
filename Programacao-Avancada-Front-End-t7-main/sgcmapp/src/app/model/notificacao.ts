@@ -1,4 +1,4 @@
-import { ETipoNotificacao } from "./e-tipo-notificacao";
+import { ETipoNotificacao } from "./e-tipo-notificacao"
 
 export type Notificacao = {
     tipo: ETipoNotificacao;
