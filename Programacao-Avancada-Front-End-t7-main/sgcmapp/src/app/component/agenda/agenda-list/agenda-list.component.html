@@ -64,4 +64,5 @@
 </table>
 <ngb-pagination
     [collectionSize]="respostaPaginada.totalElements"
-    [pageSize]="respostaPaginada.size"></ngb-pagination>
+    [pageSize]="respostaPaginada.size"
+    (pageChange)="mudarPagina($event)"></ngb-pagination>

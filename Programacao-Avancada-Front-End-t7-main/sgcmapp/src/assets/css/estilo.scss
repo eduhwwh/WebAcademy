@@ -381,3 +381,16 @@ div#comandos {
 app-atendimento div#comandos a#add {
     visibility: hidden;
 }
+
+
+// Paginação
+
+$cor-paginacao-borda: gray;
+$pagination-border-color: $cor-paginacao-borda;
+$pagination-hover-border-color: $cor-paginacao-borda;
+$pagination-active-border-color: $cor-paginacao-borda;
+$pagination-disabled-border-color: $cor-paginacao-borda;
+
+ngb-pagination ul{
+    justify-content: center;
+}

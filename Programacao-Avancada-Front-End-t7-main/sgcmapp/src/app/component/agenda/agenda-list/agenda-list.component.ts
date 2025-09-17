@@ -22,6 +22,7 @@ export class AgendaListComponent implements ICrudList<Atendimento>, OnInit {
   private servico = inject(AtendimentoService);
   private confirmacao = inject(ConfirmacaoService);
   private servicoNotificacao = inject(NotificacaoService);
+  private termoBusca: string | undefined = '';
 
   ngOnInit(): void {
     this.consultar();
@@ -31,7 +32,13 @@ export class AgendaListComponent implements ICrudList<Atendimento>, OnInit {
   respostaPaginada: RespostaPaginada<Atendimento> = <RespostaPaginada<Atendimento>>{};
   requisicaoPaginada: RequisicaoPaginada = new RequisicaoPaginada();
 
+  mudarPagina(pagina: number):void{
+    this.requisicaoPaginada.page = pagina - 1;
+    this.consultar(this.termoBusca);
+  }
+
   consultar(termoBusca?: string): void {
+    this.termoBusca = termoBusca;
     const status = ['AGENDADO', 'CONFIRMADO']
     this.servico.consultarPaginado(termoBusca, this.requisicaoPaginada, status).subscribe({
       next: resposta => {
