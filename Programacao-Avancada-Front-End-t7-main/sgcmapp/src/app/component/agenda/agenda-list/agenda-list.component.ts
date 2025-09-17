@@ -7,6 +7,7 @@ import { BarraComandosComponent } from "../../barra-comandos/barra-comandos.comp
 import { ICrudList } from '../../i-crud-list';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmacaoService } from '../../../service/confirmacao.service';
+import { NotificacaoService } from '../../../service/notificacao.service';
 
 @Component({
   selector: 'app-agenda-list',
@@ -18,6 +19,7 @@ export class AgendaListComponent implements ICrudList<Atendimento>, OnInit {
 
   private servico = inject(AtendimentoService);
   private confirmacao = inject(ConfirmacaoService);
+  private servicoNotificacao = inject(NotificacaoService)
 
   ngOnInit(): void {
     this.consultar();
@@ -46,8 +48,13 @@ export class AgendaListComponent implements ICrudList<Atendimento>, OnInit {
     );
     if (confirmado) {
       this.servico.atualizarStatus(id).subscribe({
-        next: status => alert(`Status alterado para ${status}`),
-        complete: () => this.consultar()
+        next: status => this.servicoNotificacao.enviarNotificacaoInfo
+        (`Status alterado para ${status}`),
+        complete: () =>{
+          this.servicoNotificacao.enviarNotificacaoSucesso(),
+          this.consultar();
+        }
+          
       })
     }
   }
