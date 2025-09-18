@@ -10,10 +10,11 @@ import { ConfirmacaoService } from '../../../service/confirmacao.service';
 import { NotificacaoService } from '../../../service/notificacao.service';
 import { RespostaPaginada } from '../../../model/resposta-paginada';
 import { RequisicaoPaginada } from '../../../model/requisicao-paginada';
+import { OrdenacaoDirective } from '../../../directive/ordenacao.directive';
 
 @Component({
   selector: 'app-agenda-list',
-  imports: [CommonModule, BarraComandosComponent, RouterLink, NgbTooltipModule, NgbPaginationModule],
+  imports: [CommonModule, BarraComandosComponent, RouterLink, NgbTooltipModule, NgbPaginationModule, OrdenacaoDirective],
   templateUrl: './agenda-list.component.html',
   styles: ``
 })
@@ -22,7 +23,7 @@ export class AgendaListComponent implements ICrudList<Atendimento>, OnInit {
   private servico = inject(AtendimentoService);
   private confirmacao = inject(ConfirmacaoService);
   private servicoNotificacao = inject(NotificacaoService);
-  private termoBusca: string | undefined = '';
+  private termoBusca: string | undefined = ''; 
 
   ngOnInit(): void {
     this.consultar();
@@ -32,8 +33,14 @@ export class AgendaListComponent implements ICrudList<Atendimento>, OnInit {
   respostaPaginada: RespostaPaginada<Atendimento> = <RespostaPaginada<Atendimento>>{};
   requisicaoPaginada: RequisicaoPaginada = new RequisicaoPaginada();
 
-  mudarPagina(pagina: number):void{
+  mudarPagina(pagina: number): void {
     this.requisicaoPaginada.page = pagina - 1;
+    this.consultar(this.termoBusca);
+  }
+
+  ordenar(ordenacao: string[]): void {
+    this.requisicaoPaginada.sort = ordenacao;
+    this.requisicaoPaginada.page = 0;
     this.consultar(this.termoBusca);
   }
 

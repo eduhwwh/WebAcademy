@@ -44,6 +44,9 @@ export class AtendimentoService implements ICrudService<Atendimento>, IPageServi
     if (paginacao) {
       parametros = parametros.set('page', paginacao.page);
       parametros = parametros.set('size', paginacao.size);
+      paginacao.sort.forEach(campo => {
+        parametros = parametros.set('sort', campo);
+      });
     }
 
     return this.http.get<RespostaPaginada<Atendimento>>(url, { params: parametros });

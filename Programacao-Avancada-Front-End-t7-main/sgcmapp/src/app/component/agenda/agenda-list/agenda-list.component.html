@@ -2,14 +2,14 @@
     (eventoBusca)="consultar($event)"
     linkForm="/agenda-form"></app-barra-comandos>
 <table>
-    <thead>
+    <thead ordenacao (ordenacaoAtualizada)="ordenar($event)">
         <tr>
-            <th>Data</th>
-            <th>Hora</th>
-            <th>Paciente</th>
-            <th>Profissional</th>
-            <th>Unidade</th>
-            <th>Convênio</th>
+            <th sort="data">Data</th>
+            <th sort="hora">Hora</th>
+            <th sort="paciente.nome">Paciente</th>
+            <th sort="profissional.nome">Profissional</th>
+            <th sort="profissional.unidade.nome">Unidade</th>
+            <th sort="convenio.nome">Convênio</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -63,6 +63,7 @@
     </tfoot>
 </table>
 <ngb-pagination
+    [page]="requisicaoPaginada.page + 1"
     [collectionSize]="respostaPaginada.totalElements"
     [pageSize]="respostaPaginada.size"
     (pageChange)="mudarPagina($event)"></ngb-pagination>
