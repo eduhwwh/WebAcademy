@@ -241,6 +241,20 @@ table td, table th {
 table th {
     background-color: #003366;
     color: white;
+    &[sort]{
+        cursor: pointer;
+        &.ativo-asc::after,
+        &.ativo-desc::after{
+            margin-left: 0.5em;
+        }
+        &.ativo-asc::after{
+            content: '\1F879';
+        }
+        &.ativo-desc::after{
+            content: '\1F87B';
+        }
+    }
+    
 }
 
 table tbody tr:nth-child(odd) {
