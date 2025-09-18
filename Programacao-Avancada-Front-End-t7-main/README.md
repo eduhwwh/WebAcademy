@@ -71,33 +71,10 @@ A aplicação vai iniciar no endereço <http://localhost:9000/>, com acesso loca
 
 </details>
 
-<details open>
-
-<summary>
-    <h2>Ferramentas</h2>
-</summary>
-
-- **Docker Desktop**
-  - <https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe>
-  - Tutorial de instalação: <https://docs.docker.com/desktop/setup/install/windows-install/#install-docker-desktop-on-windows>
-  - Para verificar se o Docker está corretamente instalado e configurado, digite no prompt de comandos:
-
-    ```console
-    docker info
-    ```
-  
-  - Baixar imagem do Redis:
-
-    ```console
-    docker image pull redis:alpine
-    ```
-
-</details>
-
 <details>
 
 <summary>
-    <h2>Outras ferramentas</h2>
+    <h2>Ferramentas</h2>
 </summary>
 
 - **Visual Studio Code**
@@ -207,3 +184,33 @@ A demonstração de uso das ferramentas e tecnologias abordadas na capacitação
 - [Diagrama Entidade Relacionamento](https://github.com/webacademyufac/sgcmdocs#diagrama-entidade-relacionamento)
 
 </details>
+
+## Atividades práticas
+
+> [!NOTE]
+>
+> - As atividades serão realizadas com o GitHub Classroom e podem ser acessadas pelos links nas descrições das atividades.
+> - No primeiro acesso, _**cada aluno deverá selecionar seu nome na lista para vincular sua conta no GitHub**_ e aceitar o convite para a atividade prática.
+> - O repositório da atividade prática será criado automaticamente para cada aluno ou grupo (compartilhado entre os membros).
+> - O aluno deverá clonar o repositório para seu computador, fazer as modificações necessárias e subir o repositório para o GitHub (`git push`).
+> - Não é necessário nenhuma outra ação para submeter a atividade.
+> - Atividades em grupo:
+>   - Ao acessar o link da atividade, o aluno deverá criar seu grupo ou ingressar no seu respectivo grupo se existir.
+
+> [!IMPORTANT]
+> _**Todos os membros dos grupos devem participar das atividades**_, registrando esta participação por meio da identificação dos commits com seus respectivos usuários no GitHub.
+
+> [!CAUTION]
+> Para atividades avaliadas automaticamente, **não modifique ou exclua** os arquivos responsáveis pela avaliação. Dependendo do escopo da atividade, isso pode incluir arquivos localizados nos diretórios `src/test/java` e `.github/workflows`, bem como arquivos com extensão `*.spec.ts`, ou quaisquer outros destinados exclusivamente à automação da avaliação.
+
+1. [GRUPO] Implementar melhorias nos demais componentes do SGCM usando **Bootstrap** e **ng-bootstrap**, baseando-se no `AgendaListComponent`.
+
+    - Adicionar ícones em todos os botões.
+    - Substituir todas as chamadas `alert()` pelo `NotificacaoService`.
+    - Substituir todas as chamadas `confirm()` pelo `ConfirmacaoService`.
+    - Implementar paginação com ng-bootstrap em todas os componentes que listam registros.
+      - Deve usar também a diretiva de ordenação nos mesmo componentes.
+    - Adicionar uma funcionalidade ao recurso de paginação que permita ao usuário selecionar a quantidade de itens por página.
+
+    - Link da atividade: <https://classroom.github.com/a/LbUK67lG>
+    - Entrega: 22/09/2025 - 18:00

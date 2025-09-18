@@ -34,19 +34,20 @@ export class OrdenacaoDirective implements AfterViewInit {
     this.ordenacaoAtualizada.emit(this.ordenacao);
   }
 
-  private atualizarClasses(): void{
-    this.el.nativeElement.querySelectorAll('th[sort]').forEach((th: HTMLElement) =>{
+  private atualizarClasses(): void {
+    this.el.nativeElement.querySelectorAll('th[sort]').forEach((th: HTMLElement) => {
       const campo = th.getAttribute('sort');
-      if(!campo){
+      if (!campo) {
         return;
       }
 
       th.classList.remove('ativo-asc', 'ativo-desc');
-      if(this.ordenacao.includes(campo)){
+      if (this.ordenacao.includes(campo)) {
         th.classList.add('ativo-asc');
-      }else if(this.ordenacao.includes(`${campo},desc`)){
+      } else if (this.ordenacao.includes(`${campo},desc`)) {
         th.classList.add('ativo-desc');
       }
     });
   }
+
 }
