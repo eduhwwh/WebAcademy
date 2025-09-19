@@ -2,6 +2,7 @@
     (eventoBusca)="consultar($event)"
     linkForm="/agenda-form"></app-barra-comandos>
 <table>
+    <caption class="visually-hidden">Atendimentos com status AGENDADO ou CONFIRMADO</caption>
     <thead ordenacao (ordenacaoAtualizada)="ordenar($event)">
         <tr>
             <th sort="data">Data</th>
@@ -18,34 +19,33 @@
         <tr>
             <td class="fit">{{ item.data | date: 'dd/MM/yyyy' }}</td>
             <td class="fit">{{ item.hora | slice: 0:5 }}</td>
-            <td>{{ item.paciente_nome }}</td>
+            <th scope="row">{{ item.paciente_nome }}</th>
             <td>{{ item.profissional_nome }}</td>
             <td>{{ item.unidade_nome }}</td>
             <td>{{ item.convenio_nome || 'Sem convênio' }}</td>
             <td>
                 <a (click)="atualizarStatus(item.id)"
-                href="javascript:void(0)"
+                   href="javascript:void(0)"
                    class="botao chegada"
                    [ngClass]="{ 'inativo': item.status == 'AGENDADO' }"
                    ngbTooltip="Informar chegada">
                    <i class="bi bi-check2-all"></i>
                    Chegada</a>
                 <a (click)="atualizarStatus(item.id)"
-                    href="javascript:void(0)"
+                   href="javascript:void(0)"
                    class="botao confirmacao"
                    [ngClass]="{ 'inativo': item.status == 'CONFIRMADO' }"
                    ngbTooltip="Confirmar agendamento">
                    <i class="bi bi-check2"></i>
                    Confirmar</a>
                 <a routerLink="/agenda-form"
-                    href="javascript:void(0)"
                    [queryParams]="{id: item.id}"
                    class="botao"
                    ngbTooltip="Editar agendamento">
                    <i class="bi bi-pencil-square"></i>
                    Editar</a>
                 <a (click)="remover(item.id)"
-                    href="javascript:void(0)"
+                   href="javascript:void(0)"
                    class="botao excluir"
                    ngbTooltip="Cancelar agendamento">
                    <i class="bi bi-x-square"></i>

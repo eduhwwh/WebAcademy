@@ -232,13 +232,14 @@ table {
     /* Responsivo */
     display: block;
     overflow-x: auto;
+    overflow-y: hidden;
 }
 
 table td, table th {
     padding: 0.5em;
 }
 
-table th {
+table thead th {
     background-color: #003366;
     color: white;
     &[sort] {
@@ -254,6 +255,10 @@ table th {
             content: '\1F87B';
         }
     }
+}
+
+table tbody th {
+    font-weight: unset;
 }
 
 table tbody tr:nth-child(odd) {
@@ -321,9 +326,9 @@ nav div#dropdown_menu a {
     display: block;
 }
 
-nav ul li#dropdown:hover div#dropdown_menu, 
+nav ul li#dropdown:hover div#dropdown_menu,
 nav ul li#dropdown a:focus + div#dropdown_menu,
-nav ul li#dropdown:focus-within div#dropdown_mmenu{
+nav ul li#dropdown:focus-within div#dropdown_menu {
     display: block;
 }
 
