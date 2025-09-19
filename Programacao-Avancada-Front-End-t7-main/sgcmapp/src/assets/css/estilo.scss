@@ -321,7 +321,9 @@ nav div#dropdown_menu a {
     display: block;
 }
 
-nav ul li#dropdown:hover div#dropdown_menu {
+nav ul li#dropdown:hover div#dropdown_menu, 
+nav ul li#dropdown a:focus + div#dropdown_menu,
+nav ul li#dropdown:focus-within div#dropdown_mmenu{
     display: block;
 }
 

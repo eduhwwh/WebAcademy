@@ -24,24 +24,28 @@
             <td>{{ item.convenio_nome || 'Sem convênio' }}</td>
             <td>
                 <a (click)="atualizarStatus(item.id)"
+                href="javascript:void(0)"
                    class="botao chegada"
                    [ngClass]="{ 'inativo': item.status == 'AGENDADO' }"
                    ngbTooltip="Informar chegada">
                    <i class="bi bi-check2-all"></i>
                    Chegada</a>
                 <a (click)="atualizarStatus(item.id)"
+                    href="javascript:void(0)"
                    class="botao confirmacao"
                    [ngClass]="{ 'inativo': item.status == 'CONFIRMADO' }"
                    ngbTooltip="Confirmar agendamento">
                    <i class="bi bi-check2"></i>
                    Confirmar</a>
                 <a routerLink="/agenda-form"
+                    href="javascript:void(0)"
                    [queryParams]="{id: item.id}"
                    class="botao"
                    ngbTooltip="Editar agendamento">
                    <i class="bi bi-pencil-square"></i>
                    Editar</a>
                 <a (click)="remover(item.id)"
+                    href="javascript:void(0)"
                    class="botao excluir"
                    ngbTooltip="Cancelar agendamento">
                    <i class="bi bi-x-square"></i>
