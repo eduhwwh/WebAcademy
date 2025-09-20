@@ -1,48 +1,57 @@
-<form (submit)="salvar()" #form="ngForm">
+<form (submit)="salvar()" [formGroup]="formProfissional">
 
   <div class="grid">
 
     <label for="nome">Nome</label>
     <input type="text" name="nome" id="nome" required
       class="form-control"
-      [(ngModel)]="registro.nome">
+      formControlName="nome"
+      [ngClass]="{'is-invalid': form.nome.invalid, 'is-valid': form.nome.valid}">
+    @if (form.nome.touched && form.nome.invalid) {
+    <div class="invalid-feedback">Campo obrigatório</div>
+    }
 
     <label for="registroConselho">Registro</label>
     <input type="text" name="registroConselho" id="registroConselho" required
       class="form-control"
-      [(ngModel)]="registro.registroConselho">
+      formControlName="registroConselho">
+    <div class="invalid-feedback">Campo obrigatório</div>
 
     <label for="especialidade">Especialidade</label>
     <select name="especialidade" id="especialidade" required
         class="form-select"
-        [(ngModel)]="registro.especialidade_id">
+        formControlName="especialidade_id">
       @for (item of especialidades; track item) {
         <option [ngValue]="item.id">{{item.nome}}</option>
       }
     </select>
+    <div class="invalid-feedback">Campo obrigatório</div>
 
     <label for="unidade">Unidade</label>
     <select name="unidade" id="unidade" required
         class="form-select"
-        [(ngModel)]="registro.unidade_id">
+        formControlName="unidade_id">
       @for (item of unidades; track item) {
         <option [ngValue]="item.id">{{item.nome}}</option>
       }
     </select>
+    <div class="invalid-feedback">Campo obrigatório</div>
 
     <label for="telefone">Telefone</label>
     <input type="text" name="telefone" id="telefone" required
       class="form-control"
-      [(ngModel)]="registro.telefone">
+      formControlName="telefone">
+    <div class="invalid-feedback">Campo obrigatório</div>
 
     <label for="email">E-mail</label>
     <input type="email" name="email" id="email" required
       class="form-control"
-      [(ngModel)]="registro.email">
+      formControlName="email">
+    <div class="invalid-feedback">Campo obrigatório</div>
 
   </div>
 
   <input type="button" value="Cancelar" routerLink="/profissional-list">
-  <input type="submit" value="Salvar" [disabled]="form.invalid">
+  <input type="submit" value="Salvar" [disabled]="formProfissional.invalid">
 
 </form>

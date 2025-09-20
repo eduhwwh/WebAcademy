@@ -184,6 +184,11 @@ input, select {
 form div.grid input,
 form div.grid select {
     width: 18em;
+    &~div.invalid-feedback {
+        grid-column: 2;
+        text-align: left;
+        margin-top: 0;
+    }
 }
 
 input:invalid,
