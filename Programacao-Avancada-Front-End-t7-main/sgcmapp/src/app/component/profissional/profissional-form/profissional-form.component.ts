@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Especialidade } from '../../../model/especialidade';
 import { Profissional } from '../../../model/profissional';
@@ -9,6 +9,7 @@ import { ProfissionalService } from '../../../service/profissional.service';
 import { UnidadeService } from '../../../service/unidade.service';
 import { ICrudForm } from '../../i-crud-form';
 import { CommonModule } from '@angular/common';
+import { notBlankValidator } from '../../../validator/not-blank.validator';
 
 @Component({
   selector: 'app-profissional-form',
@@ -49,12 +50,12 @@ export class ProfissionalFormComponent implements ICrudForm<Profissional>, OnIni
   unidades: Unidade[] = [];
 
   formProfissional = new FormGroup({
-    nome: new FormControl<string | null>(null),
+    nome: new FormControl<string | null>(null, notBlankValidator(5)),
     registroConselho: new FormControl<string | null>(null),
     especialidade_id: new FormControl<number | null>(null),
     unidade_id: new FormControl<number | null>(null),
-    telefone: new FormControl<string | null>(null),
-    email: new FormControl<string | null>(null)
+    telefone: new FormControl<string | null>(null, Validators.pattern('^\\(\\d{2}\\) \\d{4,5}-\\d{4}$')),
+    email: new FormControl<string | null>(null, Validators.email)
   });
 
   get form() {

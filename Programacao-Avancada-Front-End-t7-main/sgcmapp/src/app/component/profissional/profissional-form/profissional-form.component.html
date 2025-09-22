@@ -7,47 +7,77 @@
       class="form-control"
       formControlName="nome"
       [ngClass]="{'is-invalid': form.nome.invalid, 'is-valid': form.nome.valid}">
-    @if (form.nome.touched && form.nome.invalid) {
-    <div class="invalid-feedback">Campo obrigatório</div>
+    @if (form.nome.touched) {
+      @if (form.nome.hasError('required')) {
+        <div class="invalid-feedback">Campo obrigatório</div>
+      }
+      @if (form.nome.hasError('notBlank')) {
+        <div class="invalid-feedback">Digite ao menos 5 caracteres (se considerar espaço em branco)</div>
+      }
     }
 
     <label for="registroConselho">Registro</label>
     <input type="text" name="registroConselho" id="registroConselho" required
       class="form-control"
-      formControlName="registroConselho">
-    <div class="invalid-feedback">Campo obrigatório</div>
+      formControlName="registroConselho"
+      [ngClass]="{'is-invalid': form.registroConselho.invalid, 'is-valid': form.registroConselho.valid}">
+    @if (form.registroConselho.touched && form.registroConselho.hasError('required')) {
+      <div class="invalid-feedback">Campo obrigatório</div>
+    }
 
     <label for="especialidade">Especialidade</label>
     <select name="especialidade" id="especialidade" required
         class="form-select"
-        formControlName="especialidade_id">
+        formControlName="especialidade_id"
+        [ngClass]="{'is-invalid': form.especialidade_id.invalid, 'is-valid': form.especialidade_id.valid}">
       @for (item of especialidades; track item) {
         <option [ngValue]="item.id">{{item.nome}}</option>
       }
     </select>
-    <div class="invalid-feedback">Campo obrigatório</div>
+    @if (form.especialidade_id.touched && form.especialidade_id.hasError('required')) {
+      <div class="invalid-feedback">Campo obrigatório</div>
+    }
 
     <label for="unidade">Unidade</label>
     <select name="unidade" id="unidade" required
         class="form-select"
-        formControlName="unidade_id">
+        formControlName="unidade_id"
+        [ngClass]="{'is-invalid': form.unidade_id.invalid, 'is-valid': form.unidade_id.valid}">
       @for (item of unidades; track item) {
         <option [ngValue]="item.id">{{item.nome}}</option>
       }
     </select>
-    <div class="invalid-feedback">Campo obrigatório</div>
+    @if (form.unidade_id.touched && form.unidade_id.hasError('required')) {
+      <div class="invalid-feedback">Campo obrigatório</div>
+    }
 
     <label for="telefone">Telefone</label>
     <input type="text" name="telefone" id="telefone" required
       class="form-control"
-      formControlName="telefone">
-    <div class="invalid-feedback">Campo obrigatório</div>
+      formControlName="telefone"
+      [ngClass]="{'is-invalid': form.telefone.invalid, 'is-valid': form.telefone.valid}">
+    @if (form.telefone.touched) {
+      @if (form.telefone.hasError('required')) {
+        <div class="invalid-feedback">Campo obrigatório</div>
+      }
+      @if (form.telefone.hasError('pattern')) {
+        <div class="invalid-feedback">Deve seguir o formato (55) 55555-5555</div>
+      }
+    }
 
     <label for="email">E-mail</label>
     <input type="email" name="email" id="email" required
       class="form-control"
-      formControlName="email">
-    <div class="invalid-feedback">Campo obrigatório</div>
+      formControlName="email"
+      [ngClass]="{'is-invalid': form.email.invalid, 'is-valid': form.email.valid}">
+    @if (form.email.touched) {
+      @if (form.email.hasError('required')) {
+        <div class="invalid-feedback">Campo obrigatório</div>
+      }
+      @if (form.email.hasError('email')) {
+        <div class="invalid-feedback">E-mail inválido</div>
+      }
+    }
 
   </div>
 

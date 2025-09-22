@@ -214,3 +214,17 @@ A demonstração de uso das ferramentas e tecnologias abordadas na capacitação
 
     - Link da atividade: <https://classroom.github.com/a/LbUK67lG>
     - Entrega: 22/09/2025 - 18:00
+
+2. [INDIVIDUAL] Validar os campos do formulário de agendamento utilizando os recursos de validação de formulários reativos do Angular.
+
+    - Todos os campos, exceto convênio, são obrigatórios.
+    - Deve exibir mensagem "Campo obrigatório" abaixo do campo, caso o usuário não preencha.
+    - O campo data deve ser marcado como inválido quando o usuário selecionar sábado ou domingo, e exibir a mensagem "Não é um dia útil" abaixo do campo.
+    - As mensagens de erro devem ser exibidas utilizando o elemento `div` com classe `invalid-feedback`.
+    - Os campos devem aplicar as classes `is-valid` quando válidos e `is-invalid` quando inválidos.
+    - O formulário deve ser carregado com os dados do agendamento ao inicializar o componente, caso o `id` seja informado na rota.
+    - Os dados do formulário devem ser copiados para o objeto `registro` ao executar o método `salvar()`.
+    - O campo data deve impedir a seleção de datas anteriores à data atual, usando o atributo `min`.
+
+    - Link da atividade: <https://classroom.github.com/a/wGEkzRl6>
+    - Entrega: 22/09/2025 - 18:00
