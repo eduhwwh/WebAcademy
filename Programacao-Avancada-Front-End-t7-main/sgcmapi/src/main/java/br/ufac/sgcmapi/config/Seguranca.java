@@ -84,10 +84,10 @@ public class Seguranca {
 
         http.authorizeHttpRequests(
             autorizacao -> autorizacao
-                .anyRequest().permitAll()
-                // .requestMatchers(HttpMethod.POST, "/login/autenticar").permitAll()
-                // .requestMatchers("/config/**").hasRole("ADMIN")
-                // .anyRequest().authenticated()
+                // .anyRequest().permitAll()
+                .requestMatchers(HttpMethod.POST, "/login/autenticar").permitAll()
+                .requestMatchers("/config/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
             );
         
         http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);

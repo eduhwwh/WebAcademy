@@ -14,6 +14,7 @@ import { UnidadeFormComponent } from './component/unidade/unidade-form/unidade-f
 import { UnidadeListComponent } from './component/unidade/unidade-list/unidade-list.component';
 import { UsuarioFormComponent } from './component/usuario/usuario-form/usuario-form.component';
 import { UsuarioListComponent } from './component/usuario/usuario-list/usuario-list.component';
+import { LoginComponent } from './component/login/login.component';
 
 export const routes: Routes = [
   { path: 'agenda-list', component: AgendaListComponent },
@@ -32,5 +33,7 @@ export const routes: Routes = [
     { path: 'unidade-form', component: UnidadeFormComponent },
     { path: 'usuario-list', component: UsuarioListComponent },
     { path: 'usuario-form', component: UsuarioFormComponent }
-  ] }
+  ] },
+
+  {path: 'login', component: LoginComponent}
 ];
