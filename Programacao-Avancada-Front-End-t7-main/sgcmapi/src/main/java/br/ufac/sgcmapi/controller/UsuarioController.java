@@ -89,7 +89,7 @@ public class UsuarioController implements ICrudController<UsuarioDto>, IPageCont
     }
 
     @Override
-    @PostMapping(value = "/inserir", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PostMapping(value = "/inserir", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Cadastrar um novo usuário",
         description = "Cadastra um novo usuário no sistema.")
@@ -106,7 +106,7 @@ public class UsuarioController implements ICrudController<UsuarioDto>, IPageCont
     }
 
     @Override
-    @PutMapping(value = "/atualizar", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PutMapping(value = "/atualizar", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Atualizar um usuário",
         description = "Atualiza um usuário cadastrado no sistema.")

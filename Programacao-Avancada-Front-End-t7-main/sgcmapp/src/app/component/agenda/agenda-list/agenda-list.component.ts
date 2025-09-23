@@ -11,10 +11,11 @@ import { NotificacaoService } from '../../../service/notificacao.service';
 import { RespostaPaginada } from '../../../model/resposta-paginada';
 import { RequisicaoPaginada } from '../../../model/requisicao-paginada';
 import { OrdenacaoDirective } from '../../../directive/ordenacao.directive';
+import { SeletorTamanhoPaginaComponent } from '../../seletor-tamanho-pagina/seletor-tamanho-pagina.component';
 
 @Component({
   selector: 'app-agenda-list',
-  imports: [CommonModule, BarraComandosComponent, RouterLink, NgbTooltipModule, NgbPaginationModule, OrdenacaoDirective],
+  imports: [CommonModule, BarraComandosComponent, RouterLink, NgbTooltipModule, NgbPaginationModule, OrdenacaoDirective, SeletorTamanhoPaginaComponent],
   templateUrl: './agenda-list.component.html',
   styles: ``
 })
@@ -32,6 +33,7 @@ export class AgendaListComponent implements ICrudList<Atendimento>, OnInit {
   registros: Atendimento[] = [];
   respostaPaginada: RespostaPaginada<Atendimento> = <RespostaPaginada<Atendimento>>{};
   requisicaoPaginada: RequisicaoPaginada = new RequisicaoPaginada();
+  itensPorPagina = [5, 10, 20, 50];
 
   mudarPagina(pagina: number): void {
     this.requisicaoPaginada.page = pagina - 1;
@@ -40,6 +42,12 @@ export class AgendaListComponent implements ICrudList<Atendimento>, OnInit {
 
   ordenar(ordenacao: string[]): void {
     this.requisicaoPaginada.sort = ordenacao;
+    this.requisicaoPaginada.page = 0;
+    this.consultar(this.termoBusca);
+  }
+
+  alterarTamanhoPagina(novoTamanho: number): void {
+    this.requisicaoPaginada.size = novoTamanho;
     this.requisicaoPaginada.page = 0;
     this.consultar(this.termoBusca);
   }
@@ -55,10 +63,14 @@ export class AgendaListComponent implements ICrudList<Atendimento>, OnInit {
     });
   }
 
-  remover(id: number): void {
-    if (confirm('Confirma cancelamento do agendamento?')){
+  async remover(id: number): Promise<void> {
+    const confirmado = await this.confirmacao.confirmar('Confirma cancelamento do agendamento?');
+    if (confirmado) {
       this.servico.remover(id).subscribe({
-        complete: () => this.consultar()
+        complete: () => {
+          this.servicoNotificacao.enviarNotificacaoSucesso();
+          this.consultar();
+        }
       });
     }
   }

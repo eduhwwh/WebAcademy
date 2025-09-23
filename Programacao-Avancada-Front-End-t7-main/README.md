@@ -215,6 +215,8 @@ A demonstração de uso das ferramentas e tecnologias abordadas na capacitação
     - Link da atividade: <https://classroom.github.com/a/LbUK67lG>
     - Entrega: 22/09/2025 - 18:00
 
+    **Solução:** <https://github.com/webacademyufac/programacao-avancada-front-end-t7/commit/3c462827>
+
 2. [INDIVIDUAL] Validar os campos do formulário de agendamento utilizando os recursos de validação de formulários reativos do Angular.
 
     - Todos os campos, exceto convênio, são obrigatórios.
@@ -228,3 +230,5 @@ A demonstração de uso das ferramentas e tecnologias abordadas na capacitação
 
     - Link da atividade: <https://classroom.github.com/a/wGEkzRl6>
     - Entrega: 22/09/2025 - 18:00
+
+    **Solução:** <https://github.com/webacademyufac/programacao-avancada-front-end-t7/commit/c2451c8>

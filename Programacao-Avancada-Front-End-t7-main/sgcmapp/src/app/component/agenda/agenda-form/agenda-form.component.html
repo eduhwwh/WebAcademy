@@ -1,30 +1,55 @@
-<form (submit)="salvar()" #form="ngForm">
+<form (ngSubmit)="salvar()" [formGroup]="formAgenda">
 
     <div class="grid">
 
         <label for="profissional">Profissional</label>
-        <select name="profissional" id="profissional" required
-                [(ngModel)]="registro.profissional_id">
+        <select name="profissional" id="profissional" 
+                class="form-select"
+                formControlName="profissional_id"
+                [ngClass]="{'is-invalid': form.profissional_id.invalid, 'is-valid': form.profissional_id.valid}">
+            <option value="">Selecione</option>
             @for (item of profissionais; track item.id) {
                 <option [ngValue]="item.id">{{item.nome}}</option>
             }
         </select>
+        @if (form.profissional_id.touched && form.profissional_id.hasError('required')) {
+            <div class="invalid-feedback">Campo obrigatório</div>
+        }
 
         <label for="paciente">Paciente</label>
-        <select name="paciente" id="paciente" required
-                [(ngModel)]="registro.paciente_id">
+        <select name="paciente" id="paciente" 
+                class="form-select"
+                formControlName="paciente_id"
+                [ngClass]="{'is-invalid': form.paciente_id.invalid, 'is-valid': form.paciente_id.valid}">
+            <option value="">Selecione</option>
             @for (item of pacientes; track item.id) {
                 <option [ngValue]="item.id">{{item.nome}}</option>
             }
         </select>
+        @if (form.paciente_id.touched && form.paciente_id.hasError('required')) {
+            <div class="invalid-feedback">Campo obrigatório</div>
+        }
 
         <label for="data">Data</label>
-        <input type="date" name="data" id="data" required
-               [(ngModel)]="registro.data">
+        <input type="date" name="data" id="data" 
+               class="form-control"
+               formControlName="data"
+               [min]="dataMinima"
+               [ngClass]="{'is-invalid': form.data.invalid, 'is-valid': form.data.valid}">
+        @if (form.data.touched) {
+            @if (form.data.hasError('required')) {
+                <div class="invalid-feedback">Campo obrigatório</div>
+            }
+            @if (form.data.hasError('diaUtil')) {
+                <div class="invalid-feedback">Não é um dia útil</div>
+            }
+        }
 
         <label for="hora">Hora</label>
-        <select name="hora" id="hora" required
-                [(ngModel)]="registro.hora">
+        <select name="hora" id="hora" 
+                class="form-select"
+                formControlName="hora"
+                [ngClass]="{'is-invalid': form.hora.invalid, 'is-valid': form.hora.valid}">
             <option value="">Selecione</option>
             <option value="14:00:00">14:00</option>
             <option value="14:30:00">14:30</option>
@@ -40,10 +65,15 @@
             <option value="19:30:00">19:30</option>
             <option value="20:00:00">20:00</option>
         </select>
+        @if (form.hora.touched && form.hora.hasError('required')) {
+            <div class="invalid-feedback">Campo obrigatório</div>
+        }
 
         <label for="convenio">Convênio</label>
-        <select name="convenio" id="convenio"
-                [(ngModel)]="registro.convenio_id">
+        <select name="convenio" id="convenio" 
+                class="form-select"
+                formControlName="convenio_id"
+                [ngClass]="{'is-invalid': form.convenio_id.invalid, 'is-valid': form.convenio_id.valid}">
             <option [ngValue]="null">Sem convênio</option>
             @for (item of convenios; track item.id) {
                 <option [ngValue]="item.id">{{item.nome}}</option>
@@ -53,6 +83,6 @@
     </div>
 
     <input type="button" value="Cancelar" routerLink="/agenda-list">
-    <input type="submit" value="Salvar" [disabled]="form.invalid">
+    <input type="submit" value="Salvar" [disabled]="formAgenda.invalid">
 
 </form>

@@ -1,14 +1,9 @@
 <form (submit)="login()" #form="ngForm">
-    
     <div class="grid">
         <label for="nomeUsuario">Usuário</label>
         <input type="text" id="nomeUsuario" name="nomeUsuario" [(ngModel)]="usuario.nomeUsuario" required>
-
         <label for="senha">Senha</label>
         <input type="password" id="senha" name="senha" [(ngModel)]="usuario.senha" required>
-
     </div>
-
-    <input type="submit" value="login" [disabled] ="form.invalid">
-
+    <input type="submit" value="Login" [disabled]="form.invalid">
 </form>

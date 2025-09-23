@@ -4,11 +4,14 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Paciente } from '../model/paciente';
 import { ICrudService } from './i-crud-service';
+import { IPageService } from './i-page-service';
+import { RequisicaoPaginada } from '../model/requisicao-paginada';
+import { RespostaPaginada } from '../model/resposta-paginada';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PacienteService implements ICrudService<Paciente> {
+export class PacienteService implements ICrudService<Paciente>, IPageService<Paciente> {
 
   private http = inject(HttpClient);
 
@@ -44,6 +47,24 @@ export class PacienteService implements ICrudService<Paciente> {
   remover(id: number): Observable<void> {
     let url = `${this.apiUrl}/remover/${id}`;
     return this.http.delete<void>(url);
+  }
+
+  consultarPaginado(termoBusca?: string, paginacao?: RequisicaoPaginada): Observable<RespostaPaginada<Paciente>> {
+    let url = `${this.apiUrl}/consultar`;
+    let parametros = new HttpParams();
+
+    if (termoBusca) {
+      parametros = parametros.set('termoBusca', termoBusca);
+    }
+    if (paginacao) {
+      parametros = parametros.set('page', paginacao.page);
+      parametros = parametros.set('size', paginacao.size);
+      paginacao.sort.forEach(campo => {
+        parametros = parametros.append('sort', campo);
+      });
+    }
+
+    return this.http.get<RespostaPaginada<Paciente>>(url, { params: parametros });
   }
 
 }

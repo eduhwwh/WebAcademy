@@ -78,7 +78,7 @@ public class UnidadeController implements ICrudController<Unidade>, IPageControl
     }
 
     @Override
-    @PostMapping(value = "/inserir", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PostMapping(value = "/inserir", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Cadastrar uma nova unidade",
         description = "Cadastra uma nova unidade no sistema.")
@@ -94,7 +94,7 @@ public class UnidadeController implements ICrudController<Unidade>, IPageControl
     }
 
     @Override
-    @PutMapping(value = "/atualizar", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PutMapping(value = "/atualizar", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Atualizar uma unidade",
         description = "Atualiza uma unidade cadastrada no sistema.")

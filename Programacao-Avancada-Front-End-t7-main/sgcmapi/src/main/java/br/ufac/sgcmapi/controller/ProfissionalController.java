@@ -89,7 +89,7 @@ public class ProfissionalController implements ICrudController<ProfissionalDto>,
     }
 
     @Override
-    @PostMapping(value = "/inserir", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PostMapping(value = "/inserir", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Cadastrar um novo profissional",
         description = "Cadastra um novo profissional no sistema.")
@@ -106,7 +106,7 @@ public class ProfissionalController implements ICrudController<ProfissionalDto>,
     }
 
     @Override
-    @PutMapping(value = "/atualizar", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PutMapping(value = "/atualizar", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Atualizar um profissional",
         description = "Atualiza um profissional cadastrado no sistema.")

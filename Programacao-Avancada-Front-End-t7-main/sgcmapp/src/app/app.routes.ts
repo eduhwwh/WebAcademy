@@ -34,6 +34,5 @@ export const routes: Routes = [
     { path: 'usuario-list', component: UsuarioListComponent },
     { path: 'usuario-form', component: UsuarioFormComponent }
   ] },
-
-  {path: 'login', component: LoginComponent}
+  { path: 'login', component: LoginComponent }
 ];

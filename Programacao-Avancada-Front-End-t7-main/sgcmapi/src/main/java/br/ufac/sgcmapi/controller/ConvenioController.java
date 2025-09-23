@@ -78,7 +78,7 @@ public class ConvenioController implements ICrudController<Convenio>, IPageContr
     }
 
     @Override
-    @PostMapping(value = "/inserir", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PostMapping(value = "/inserir", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Cadastrar um novo convênio",
         description = "Cadastra um novo convênio no sistema.")
@@ -94,7 +94,7 @@ public class ConvenioController implements ICrudController<Convenio>, IPageContr
     }
 
     @Override
-    @PutMapping(value = "/atualizar", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PutMapping(value = "/atualizar", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Atualizar um convênio",
         description = "Atualiza um convênio cadastrado no sistema.")

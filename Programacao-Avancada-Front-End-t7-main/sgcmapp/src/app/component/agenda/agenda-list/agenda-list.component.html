@@ -58,7 +58,7 @@
         <tr>
             <td colspan="7">
                 @if (registros.length > 0) {
-                    <span>Total de registros: {{ registros.length }}</span>
+                    <span>Total de registros: {{ respostaPaginada.totalElements }}</span>
                 } @else {
                     <span>Nenhum registro encontrado</span>
                 }
@@ -66,8 +66,14 @@
         </tr>
     </tfoot>
 </table>
-<ngb-pagination
-    [page]="requisicaoPaginada.page + 1"
-    [collectionSize]="respostaPaginada.totalElements"
-    [pageSize]="respostaPaginada.size"
-    (pageChange)="mudarPagina($event)"></ngb-pagination>
+<div class="d-flex justify-content-between align-items-center">
+  <app-seletor-tamanho-pagina
+    [tamanhoAtual]="requisicaoPaginada.size"
+    [opcoes]="itensPorPagina"
+    (mudancaTamanho)="alterarTamanhoPagina($event)"></app-seletor-tamanho-pagina>
+  <ngb-pagination
+      [page]="requisicaoPaginada.page + 1"
+      [collectionSize]="respostaPaginada.totalElements"
+      [pageSize]="respostaPaginada.size"
+      (pageChange)="mudarPagina($event)"></ngb-pagination>
+</div>

@@ -1,36 +1,75 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { Unidade } from '../../../model/unidade';
 import { UnidadeService } from '../../../service/unidade.service';
 import { BarraComandosComponent } from '../../barra-comandos/barra-comandos.component';
 import { ICrudList } from '../../i-crud-list';
+import { ConfirmacaoService } from '../../../service/confirmacao.service';
+import { NotificacaoService } from '../../../service/notificacao.service';
+import { RespostaPaginada } from '../../../model/resposta-paginada';
+import { RequisicaoPaginada } from '../../../model/requisicao-paginada';
+import { OrdenacaoDirective } from '../../../directive/ordenacao.directive';
+import { SeletorTamanhoPaginaComponent } from '../../seletor-tamanho-pagina/seletor-tamanho-pagina.component';
 
 @Component({
   selector: 'app-unidade-list',
-  imports: [RouterLink, BarraComandosComponent],
+  imports: [CommonModule, BarraComandosComponent, RouterLink, NgbTooltipModule, NgbPaginationModule, OrdenacaoDirective, SeletorTamanhoPaginaComponent],
   templateUrl: './unidade-list.component.html',
   styles: ``
 })
 export class UnidadeListComponent implements ICrudList<Unidade>, OnInit {
 
   private servico = inject(UnidadeService);
+  private confirmacao = inject(ConfirmacaoService);
+  private servicoNotificacao = inject(NotificacaoService);
+  private termoBusca: string | undefined = '';
 
   ngOnInit(): void {
     this.consultar();
   }
 
   registros: Unidade[] = [];
+  respostaPaginada: RespostaPaginada<Unidade> = <RespostaPaginada<Unidade>>{};
+  requisicaoPaginada: RequisicaoPaginada = new RequisicaoPaginada();
+  itensPorPagina = [5, 10, 20, 50];
+
+  mudarPagina(pagina: number): void {
+    this.requisicaoPaginada.page = pagina - 1;
+    this.consultar(this.termoBusca);
+  }
+
+  ordenar(ordenacao: string[]): void {
+    this.requisicaoPaginada.sort = ordenacao;
+    this.requisicaoPaginada.page = 0;
+    this.consultar(this.termoBusca);
+  }
+
+  alterarTamanhoPagina(novoTamanho: number): void {
+    this.requisicaoPaginada.size = novoTamanho;
+    this.requisicaoPaginada.page = 0;
+    this.consultar(this.termoBusca);
+  }
 
   consultar(termoBusca?: string): void {
-    this.servico.consultar(termoBusca).subscribe({
-      next: (resposta: Unidade[]) => this.registros = resposta
+    this.termoBusca = termoBusca;
+    this.servico.consultarPaginado(termoBusca, this.requisicaoPaginada).subscribe({
+      next: resposta => {
+        this.registros = resposta.content;
+        this.respostaPaginada = resposta;
+      }
     });
   }
 
-  remover(id: number): void {
-    if (confirm('Confirma a exclusão da unidade?')) {
+  async remover(id: number): Promise<void> {
+    const confirmado = await this.confirmacao.confirmar('Confirma a exclusão da unidade?');
+    if (confirmado) {
       this.servico.remover(id).subscribe({
-        complete: () => this.consultar()
+        complete: () => {
+          this.servicoNotificacao.enviarNotificacaoSucesso();
+          this.consultar();
+        }
       });
     }
   }

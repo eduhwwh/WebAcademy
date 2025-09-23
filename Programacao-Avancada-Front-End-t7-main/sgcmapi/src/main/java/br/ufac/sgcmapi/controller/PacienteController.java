@@ -79,7 +79,7 @@ public class PacienteController implements ICrudController<Paciente>, IPageContr
     }
 
     @Override
-    @PostMapping(value = "/inserir", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PostMapping(value = "/inserir", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Cadastrar um novo paciente",
         description = "Cadastra um novo paciente no sistema.")
@@ -95,7 +95,7 @@ public class PacienteController implements ICrudController<Paciente>, IPageContr
     }
 
     @Override
-    @PutMapping(value = "/atualizar", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PutMapping(value = "/atualizar", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Atualizar um paciente",
         description = "Atualiza um paciente cadastrado no sistema.")

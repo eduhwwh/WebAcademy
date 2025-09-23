@@ -120,7 +120,7 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
     }
 
     @Override
-    @PostMapping(value = "/inserir", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PostMapping(value = "/inserir", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Cadastrar um novo atendimento",
         description = "Cadastra um novo atendimento no sistema.")
@@ -137,7 +137,7 @@ public class AtendimentoController implements ICrudController<AtendimentoDto>, I
     }
 
     @Override
-    @PutMapping(value = "/atualizar", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PutMapping(value = "/atualizar", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Atualizar um atendimento",
         description = "Atualiza um atendimento cadastrado no sistema.")

@@ -2,21 +2,24 @@
   (eventoBusca)="consultar($event)"
   linkForm="/profissional-form"></app-barra-comandos>
 <table>
-  <thead>
-    <th>ID</th>
-    <th>Nome</th>
-    <th>Registro</th>
-    <th>Especialidade</th>
-    <th>Unidade</th>
-    <th>Telefone</th>
-    <th>E-mail</th>
-    <th>Ações</th>
+  <caption class="visually-hidden">Lista de profissionais</caption>
+  <thead ordenacao (ordenacaoAtualizada)="ordenar($event)">
+    <tr>
+      <th sort="id">ID</th>
+      <th sort="nome">Nome</th>
+      <th sort="registroConselho">Registro</th>
+      <th sort="especialidade.nome">Especialidade</th>
+      <th sort="unidade.nome">Unidade</th>
+      <th sort="telefone">Telefone</th>
+      <th sort="email">E-mail</th>
+      <th>Ações</th>
+    </tr>
   </thead>
   <tbody>
-    @for (item of registros; track item) {
+    @for (item of registros; track item.id) {
       <tr>
         <td class="fit">{{ item.id }}</td>
-        <td>{{ item.nome }}</td>
+        <th scope="row">{{ item.nome }}</th>
         <td>{{ item.registroConselho }}</td>
         <td>{{ item.especialidade_nome }}</td>
         <td>{{ item.unidade_nome }}</td>
@@ -25,9 +28,16 @@
         <td>
           <a class="botao"
             routerLink="/profissional-form"
-            [queryParams]="{id: item.id}">Editar</a>
+            [queryParams]="{id: item.id}"
+            ngbTooltip="Editar profissional">
+            <i class="bi bi-pencil-square"></i>
+            Editar</a>
           <a class="botao excluir"
-            (click)="remover(item.id)">Excluir</a>
+            (click)="remover(item.id)"
+            href="javascript:void(0)"
+            ngbTooltip="Excluir profissional">
+            <i class="bi bi-trash"></i>
+            Excluir</a>
         </td>
       </tr>
     }
@@ -36,7 +46,7 @@
     <tr>
       <td colspan="8">
         @if (registros.length > 0) {
-          <span>Total de registros: {{ registros.length }}</span>
+          <span>Total de registros: {{ respostaPaginada.totalElements }}</span>
         } @else {
           <span>Nenhum registro encontrado</span>
         }
@@ -44,3 +54,14 @@
     </tr>
   </tfoot>
 </table>
+<div class="d-flex justify-content-between align-items-center">
+  <app-seletor-tamanho-pagina
+    [tamanhoAtual]="requisicaoPaginada.size"
+    [opcoes]="itensPorPagina"
+    (mudancaTamanho)="alterarTamanhoPagina($event)"></app-seletor-tamanho-pagina>
+  <ngb-pagination
+    [page]="requisicaoPaginada.page + 1"
+    [collectionSize]="respostaPaginada.totalElements"
+    [pageSize]="respostaPaginada.size"
+    (pageChange)="mudarPagina($event)"></ngb-pagination>
+</div>

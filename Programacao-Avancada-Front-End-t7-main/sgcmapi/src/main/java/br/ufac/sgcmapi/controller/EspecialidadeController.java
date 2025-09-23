@@ -78,7 +78,7 @@ public class EspecialidadeController implements ICrudController<Especialidade>, 
     }
 
     @Override
-    @PostMapping(value = "/inserir", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PostMapping(value = "/inserir", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Cadastrar uma nova especialidade",
         description = "Cadastra uma nova especialidade no sistema.")
@@ -94,7 +94,7 @@ public class EspecialidadeController implements ICrudController<Especialidade>, 
     }
 
     @Override
-    @PutMapping(value = "/atualizar", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PutMapping(value = "/atualizar", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
         summary = "Atualizar uma especialidade",
         description = "Atualiza uma especialidade cadastrada no sistema.")

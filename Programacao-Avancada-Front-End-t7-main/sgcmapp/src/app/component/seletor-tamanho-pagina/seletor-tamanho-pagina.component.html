@@ -1,0 +1,9 @@
+<div>
+  <label for="itensPorPagina" class="form-label me-2">Itens por página:</label>
+  <select id="itensPorPagina" class="form-select d-inline-block" style="width: auto;" 
+          [value]="tamanhoAtual" (change)="alterarTamanho($event)">
+    @for (tamanho of opcoes; track tamanho) {
+      <option [value]="tamanho">{{ tamanho }}</option>
+    }
+  </select>
+</div>
