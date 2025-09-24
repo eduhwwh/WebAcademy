@@ -1,8 +1,8 @@
-import { inject, Injectable } from '@angular/core';
-import { Usuario } from '../model/usuario';
 import { HttpClient, HttpRequest } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
+import { Usuario } from '../model/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,13 @@ import { Router } from '@angular/router';
 export class LoginService {
   private http: HttpClient = inject(HttpClient);
   private roteador: Router = inject(Router);
+  usuarioAutenticado: WritableSignal<Usuario> = signal<Usuario>(<Usuario>{});
 
-  constructor() { }
+  constructor() {
+    const dadosUsuario = sessionStorage.getItem('usuario') || '{}';
+    const usuario = JSON.parse(dadosUsuario);
+    this.usuarioAutenticado.set(usuario);
+  }
 
   private iniciarSessaoUsuario(token: string): void {
     const dados = token.split('.')[1];
@@ -28,6 +33,8 @@ export class LoginService {
     sessionStorage.setItem('token', token);
     sessionStorage.setItem('usuario', JSON.stringify(usuario));
     sessionStorage.setItem('tokenExp', expiracao.toString());
+
+    this.usuarioAutenticado.set(usuario);
   }
 
   login(usuario: Usuario): void {
@@ -40,6 +47,30 @@ export class LoginService {
         this.roteador.navigate(['/']);
       }
     });
+  }
+
+  logout(): void {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('usuario');
+    sessionStorage.removeItem('tokenExp');
+    this.roteador.navigate(['/login']);
+  }
+
+  isUsuarioAutenticado(): boolean {
+    const token = sessionStorage.getItem('token');
+    if (token == null) {
+      return false;
+    }
+
+    const expiracao = sessionStorage.getItem('tokenExp');
+    const dataExpiracao = new Date(Number(expiracao));
+    const agora = new Date();
+    const isTokenExpirado = dataExpiracao < agora;
+    if (isTokenExpirado) {
+      this.logout();
+    }
+
+    return !isTokenExpirado;
   }
 
   alterarCabecalho(req: HttpRequest<any>): HttpRequest<any> {
