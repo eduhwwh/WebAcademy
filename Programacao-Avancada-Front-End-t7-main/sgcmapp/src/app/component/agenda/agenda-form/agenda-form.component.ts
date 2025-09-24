@@ -12,6 +12,7 @@ import { PacienteService } from '../../../service/paciente.service';
 import { ProfissionalService } from '../../../service/profissional.service';
 import { diaUtilValidator } from '../../../validator/dia-util.validator';
 import { ICrudForm } from '../../i-crud-form';
+import { NotificacaoService } from '../../../service/notificacao.service';
 
 @Component({
   selector: 'app-agenda-form',
@@ -27,6 +28,7 @@ export class AgendaFormComponent implements ICrudForm<Atendimento>, OnInit {
   private servicoProfissional = inject(ProfissionalService);
   private roteador = inject(Router);
   private rota = inject(ActivatedRoute);
+  private notificacao = inject(NotificacaoService);
   private id = this.rota.snapshot.queryParamMap.get('id');
 
   ngOnInit(): void {
@@ -78,12 +80,12 @@ export class AgendaFormComponent implements ICrudForm<Atendimento>, OnInit {
     this.servico.salvar(this.registro).subscribe({
       next: id => {
         if (!this.id) {
-          alert(`ID gerado: ${id}`);
+          this.notificacao.enviarNotificacaoInfo(`ID gerado: ${id}`);
         }
       },
-      error: () => alert('Falha na operação.'),
+      error: () => this.notificacao.enviarNotificacaoErro('Falha na operação.'),
       complete: () => {
-        alert('Operação realizada com sucesso.');
+        this.notificacao.enviarNotificacaoSucesso('Operação realizada com sucesso.');
         this.roteador.navigate(['/agenda-list']);
       }
     });

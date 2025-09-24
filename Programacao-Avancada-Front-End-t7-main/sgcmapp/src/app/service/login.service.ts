@@ -10,12 +10,36 @@ import { Usuario } from '../model/usuario';
 export class LoginService {
   private http: HttpClient = inject(HttpClient);
   private roteador: Router = inject(Router);
+  private isRequisicaoRecente: boolean = false;
+  private intervaloRenovacaoToken: any;
   usuarioAutenticado: WritableSignal<Usuario> = signal<Usuario>(<Usuario>{});
 
   constructor() {
     const dadosUsuario = sessionStorage.getItem('usuario') || '{}';
     const usuario = JSON.parse(dadosUsuario);
     this.usuarioAutenticado.set(usuario);
+    if (this.isUsuarioAutenticado()) {
+      this.agendarRenovacaoToken();
+    }
+  }
+
+  private agendarRenovacaoToken(): void {
+    const intervalo = 60000;
+    this.intervaloRenovacaoToken = setInterval(() => {
+      if (this.isRequisicaoRecente) {
+        this.renovarToken();
+        this.isRequisicaoRecente = false;
+      }
+    }, intervalo);
+  }
+
+  private renovarToken(): void {
+    const url = `${environment.API_URL}/login/renovar`;
+    this.http.get(url, {responseType: 'text'}).subscribe({
+      next: (token: string) => {
+        this.iniciarSessaoUsuario(token);
+      }
+    });
   }
 
   private iniciarSessaoUsuario(token: string): void {
@@ -42,6 +66,7 @@ export class LoginService {
     this.http.post(url, usuario, {responseType: 'text'}).subscribe({
       next: (token: string) => {
         this.iniciarSessaoUsuario(token);
+        this.agendarRenovacaoToken();
       },
       complete: () => {
         this.roteador.navigate(['/']);
@@ -53,6 +78,7 @@ export class LoginService {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('usuario');
     sessionStorage.removeItem('tokenExp');
+    clearInterval(this.intervaloRenovacaoToken);
     this.roteador.navigate(['/login']);
   }
 
@@ -76,6 +102,7 @@ export class LoginService {
   alterarCabecalho(req: HttpRequest<any>): HttpRequest<any> {
     const token = sessionStorage.getItem('token');
     if (token) {
+      this.isRequisicaoRecente = true;
       return req.clone({
         setHeaders: {
           'Authorization': `Bearer ${token}`

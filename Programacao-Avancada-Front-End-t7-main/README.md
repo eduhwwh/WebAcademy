@@ -232,3 +232,13 @@ A demonstração de uso das ferramentas e tecnologias abordadas na capacitação
     - Entrega: 22/09/2025 - 18:00
 
     **Solução:** <https://github.com/webacademyufac/programacao-avancada-front-end-t7/commit/c2451c8>
+
+3. [INDIVIDUAL] Modificar o controle de acesso por rotas, adicionando redirecionamento automático para usuários não autorizados.
+
+    - Criar um componente que exiba uma mensagem informando que o usuário não tem acesso à rota solicitada.
+    - O componente deve incluir um botão ou link "Voltar ao início" que redirecione para a página principal.
+    - O componente deve estar vinculado à rota "/nao-autorizado".
+    - Quando o acesso for negado, o usuário deve ser automaticamente redirecionado para o componente de erro.
+
+    - Link da atividade: <https://classroom.github.com/a/nvqL185g>
+    - Entrega: 25/09/2025 - 18:00

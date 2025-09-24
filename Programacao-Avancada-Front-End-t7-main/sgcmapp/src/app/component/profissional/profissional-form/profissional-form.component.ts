@@ -10,6 +10,7 @@ import { UnidadeService } from '../../../service/unidade.service';
 import { ICrudForm } from '../../i-crud-form';
 import { CommonModule } from '@angular/common';
 import { notBlankValidator } from '../../../validator/not-blank.validator';
+import { NotificacaoService } from '../../../service/notificacao.service';
 
 @Component({
   selector: 'app-profissional-form',
@@ -24,6 +25,8 @@ export class ProfissionalFormComponent implements ICrudForm<Profissional>, OnIni
   private servicoUnidade = inject(UnidadeService);
   private roteador = inject(Router);
   private rota = inject(ActivatedRoute);
+  private notificacao = inject(NotificacaoService);
+  private id = this.rota.snapshot.queryParamMap.get('id');
 
   ngOnInit(): void {
     this.servicoEspecialidade.consultar().subscribe({
@@ -34,9 +37,8 @@ export class ProfissionalFormComponent implements ICrudForm<Profissional>, OnIni
       next: resposta => this.unidades = resposta
     });
 
-    const id = this.rota.snapshot.queryParamMap.get('id');
-    if (id) {
-      this.servico.consultarPorId(+id).subscribe({
+    if (this.id) {
+      this.servico.consultarPorId(+this.id).subscribe({
         next: resposta => {
           this.registro = resposta;
           this.formProfissional.patchValue(this.registro);
@@ -65,9 +67,14 @@ export class ProfissionalFormComponent implements ICrudForm<Profissional>, OnIni
   salvar(): void {
     this.registro = Object.assign(this.registro, this.formProfissional.value);
     this.servico.salvar(this.registro).subscribe({
-      next: id => alert(`ID gerado: ${id}`),
+      next: id => {
+        if (!this.id) {
+          this.notificacao.enviarNotificacaoInfo(`ID gerado: ${id}`);
+        }
+      },
+      error: () => this.notificacao.enviarNotificacaoErro('Falha na operação.'),
       complete: () => {
-        alert('Operação realizada com sucesso.');
+        this.notificacao.enviarNotificacaoSucesso('Operação realizada com sucesso.');
         this.roteador.navigate(['/profissional-list']);
       }
     });

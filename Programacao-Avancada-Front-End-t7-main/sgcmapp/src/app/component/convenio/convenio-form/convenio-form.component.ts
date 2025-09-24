@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Convenio } from '../../../model/convenio';
 import { ConvenioService } from '../../../service/convenio.service';
 import { ICrudForm } from '../../i-crud-form';
+import { NotificacaoService } from '../../../service/notificacao.service';
 
 @Component({
   selector: 'app-convenio-form',
@@ -16,11 +17,12 @@ export class ConvenioFormComponent implements ICrudForm<Convenio>, OnInit {
   private servico = inject(ConvenioService);
   private roteador = inject(Router);
   private rota = inject(ActivatedRoute);
+  private notificacao = inject(NotificacaoService);
+  private id = this.rota.snapshot.queryParamMap.get('id');
 
   ngOnInit(): void {
-    const id = this.rota.snapshot.queryParamMap.get('id');
-    if (id) {
-      this.servico.consultarPorId(+id).subscribe({
+    if (this.id) {
+      this.servico.consultarPorId(+this.id).subscribe({
         next: resposta => this.registro = resposta
       });
     }
@@ -30,9 +32,14 @@ export class ConvenioFormComponent implements ICrudForm<Convenio>, OnInit {
   
   salvar(): void {
     this.servico.salvar(this.registro).subscribe({
-      next: id => alert(`ID gerado: ${id}`),
+      next: id => {
+        if (!this.id) {
+          this.notificacao.enviarNotificacaoInfo(`ID gerado: ${id}`);
+        }
+      },
+      error: () => this.notificacao.enviarNotificacaoErro('Falha na operação.'),
       complete: () => {
-        alert('Operação realizada com sucesso.');
+        this.notificacao.enviarNotificacaoSucesso('Operação realizada com sucesso.');
         this.roteador.navigate(['/convenio-list']);
       }
     });
