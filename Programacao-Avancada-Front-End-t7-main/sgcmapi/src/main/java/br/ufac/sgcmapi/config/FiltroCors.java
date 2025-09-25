@@ -14,6 +14,7 @@ public class FiltroCors {
     @Bean
     CorsFilter corsFilter() {
         var config = new CorsConfiguration();
+        config.setAllowCredentials(true);
         config.setAllowedOrigins(Arrays.asList("http://127.0.0.1:5500", "http://localhost:4200"));
         config.setAllowedMethods(Arrays.asList("*"));
         config.setAllowedHeaders(Arrays.asList("*"));

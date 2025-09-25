@@ -4,6 +4,10 @@ import { inject } from '@angular/core';
 
 export const autenticacaoGuard: CanActivateFn = (route, state) => {
   const servicoLogin = inject(LoginService);
+  if (!servicoLogin.isUsuarioAutenticado()) {
+    servicoLogin.logout();
+    return false;
+  }
   const papelExigido = route.data['papel'];
   const papelUsuario = servicoLogin.usuarioAutenticado().papel;
   const podeAcessar = papelExigido == papelUsuario || !papelExigido;

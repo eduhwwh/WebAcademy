@@ -78,6 +78,7 @@ export class LoginService {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('usuario');
     sessionStorage.removeItem('tokenExp');
+    document.cookie = 'XSRF-TOKEN=; Max-Age=0; Path=/';
     clearInterval(this.intervaloRenovacaoToken);
     this.roteador.navigate(['/login']);
   }
@@ -104,6 +105,7 @@ export class LoginService {
     if (token) {
       this.isRequisicaoRecente = true;
       return req.clone({
+        withCredentials: true,
         setHeaders: {
           'Authorization': `Bearer ${token}`
         }
